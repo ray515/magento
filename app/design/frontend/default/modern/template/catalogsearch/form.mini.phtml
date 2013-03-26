@@ -10,7 +10,7 @@
         jQuery(document).ready(function ($){ 
             if($('#search')==null){$('#search').val('Search KensToolSupply.com');}
 			var baseUrl='<?php echo $this->getBaseUrl(); ?>';
-            $('#search').autocomplete({  source: function(request,response){$.getJSON(baseUrl+'solr/index/index',{sug:request.term},response);}	});
+            $('#search').autocomplete({  source: function(request,response){$.getJSON('http://127.0.0.1/solr/index/index',{sug:request.term},response);}	});
 			var srchTxt="Search KensToolSupply.com";
 			$('#search').val("Search KensToolSupply.com");
 			$('#search').focus(  function(){  if($('#search').val(srchTxt)){  $('#search').val("");  }  });

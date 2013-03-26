@@ -9,7 +9,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 			//echo "test";
 		}
 		if($_REQUEST['sug']){
-			$this->searchMage1($_REQUEST['sDir'],$_REQUEST['sug']);
+			$this->searchMage1($_REQUEST['sug']);
 		}
 		if($_REQUEST['sku']){
 			$this->getCataIds($_REQUEST['sDir']);
@@ -115,7 +115,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		echo $out;		
 	}
 	
-	public function searchMage1($sDir,$sugStr){
+	public function searchMage1($sugStr){
 		$sugStr=urlencode($sugStr);
 		$url=self::SURL.'/suggest?wt=json&q='.$sugStr;
 		// using curl method
@@ -480,9 +480,10 @@ function sGo(){
 
 		// set ajax load cookie to control filter data reloading
 		if($.cookie('KTS_ALD')){$.cookie('KTS_ALD','1');}
-			
+			escape(outDone);alert("outDone "+outDone);
 		// and... make it so, number one.
-			var getit1 = $.post('http://65.60.97.68/solr/index/index/',{qRec:outDone});
+			var getit1 = $.post('http://127.0.0.1/solr/index/index/',{qRec:outDone});
+			//var getit1 = $.post('http://127.0.0.1/solr/index/index/',{qRec:'text:bosch AND price:"[100 TO 199]"'});
 				getit1.done(function(data){
 					$('#tt').val('sGo');
 					$('#solrBurn').html(data);					

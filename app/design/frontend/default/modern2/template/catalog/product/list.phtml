@@ -69,27 +69,6 @@ if($prodByCat) {
 	}	
 }
 
-
-// depricated moved to ajax see gfilter/helper/data and filterFunk.js 
-//display Filter Results if there is a filter string and rf is not true	
-/*
-$atList="";
-if(isset($_POST['use_mat'])){
-	$filAt1[0]=$_POST['use_mat'];
-	$atList=array('Good','Best');
-}else{
-	$filAt1=array_keys($_POST);
-	foreach($_POST as $p2=>$p3){
-		foreach($p3 as $p4){$atList[]=$p4;}
-	}
-}
-if(!isset($_POST['rf'])){$rf=false;}else{$rf=true;}
-if(count($atList)>0 && $rf!=true){
-	$filtAtts='Filter Results';
-	array_push($matsChar,$filtAtts);
-}
-*/
-
 // start tabs section
 print_r('<div id="tabs"><ul><li id="fResTab"><a href="#fRes"><span>Filter Results1</span></li>');
 $tabCt=1;
@@ -99,9 +78,6 @@ foreach($ct_tabs as $ct_tab){
 }
 print_r("</ul>");
 //end build tab
-
-//TODO: Rebuild product display (not using tables... lol).
-//start tab content
 
 //filter results shell
 print_r('<div id="fRes"></div>');
@@ -113,7 +89,6 @@ foreach($ct_tabs as $ct_tab){
 			->addIdFilter($pgCol)
 			->addAttributeToSelect('*')
 			->load();
-
 
 		foreach($prodCol as $prod){
 			print_r('<li>');
@@ -143,11 +118,11 @@ foreach($ct_tabs as $ct_tab){
 										<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>
 										<div id="slTable">
 											<table id="listTable">
-											<caption>'.$name.'</caption><tr><td class="col1">'.$desc.'<br/></td>
+												<caption>'.$name.'</caption><tr><td class="col1">'.$desc.'<br/></td>
 												<td class="col2 regular-price">
 													<span class="price listingPrice">'.$price.'</span>
-															<p id="cartBut">
-															<button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button></p></td></tr>
+														<p id="cartBut"><button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button></p>
+												</td></tr>
 											</table>
 										</div>
 									</div></div>';
@@ -183,23 +158,8 @@ foreach($ct_tabs as $ct_tab){
 				print_r('</ol></div>'); //close prodList
 //				print_r('</div>'); //close fList
 				print_r('<hr/>');
-				
 		}
-		
-/*		foreach($prodCol as $hssCol){
-			$productNameStripped = strip_tags($hssCol->getName());
-			echo '<table id="conTable1">';
-			echo '  <tr id="conRow1">';
-			echo '    <td id="conCell1a"><a href="'.$hssCol->getProductUrl() .'" title="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true) .'" class="product-image"><img src="'.$this->helper('catalog/image')->init($hssCol, 'small_image')->resize(70).'" width="70" height="70" alt="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true).'" /></a></td>';
-			echo '    <td id="conCell1b"><table id="conTable2"><tr><td><h2>'.$hssCol->getSku().'</h2></td></tr><tr><td><h2 class="product-name"><a href="'.$hssCol->getProductUrl().'" title="'.$productNameStripped.'">'.$hssCol->getName().'</a></h2><p>'.$_helper->productAttribute($hssCol, $hssCol->getShortDescription(), 'short_description').'</p></td></tr></table></td>';
-			echo '    <td id="conCell1c">'.$this->getPriceHtml($hssCol, true).'<p><button type="button" title="'.$this->__('Add to Cart') .'" class="button btn-cart" onclick=setLocation("'.$this->getAddToCartUrl($hssCol) .'")><span><span>'.$this->__('Add to Cart').'</span></span></button></p></td>';
-			echo '   </tr>';
-			echo '</table>'; 
-		}
-		echo '</div>';
 
-	$panCt++;
-	}*/
 echo '</div>';
 echo '<div id="listCon"></div>';
 $pCol = json_encode($pgCol); 
@@ -210,7 +170,6 @@ $pCol = json_encode($pgCol);
 <!--
 //captin... full filteration system activated
 jQuery("#tabs").tabs();
-//alert("Tabs up...");
 var fJSON=<?php echo Mage::helper('gfilter')->getFilterData($prodByCat); ?>;
 var jsCol=<?php echo $pCol; ?>;
 -->
