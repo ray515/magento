@@ -12,8 +12,8 @@ extras/documentation
 
 var/*
 app/etc/*
-.htaccess
-.htaccess.*
+##.htaccess
+##.htaccess.*
 .metadata
 .project
 .settings
