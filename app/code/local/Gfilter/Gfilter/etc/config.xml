@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Gfilter_Gfilter>
+			<version>0.1.0</version>
+		</Gfilter_Gfilter>
+	</modules>
+	  
+    <frontend>
+    	<routers>
+    		<gfilter>
+    			<use>standard</use>
+    			<args>
+    				<module>Gfilter_Gfilter</module>
+    				<frontName>gfilter</frontName>
+    			</args>
+    		</gfilter>
+    	</routers>
+    </frontend>
+    
+    <global>
+    	<helpers>
+            <gfilter>
+                <class>Gfilter_Gfilter_Helper</class>
+            </gfilter>
+        </helpers>
+        <blocks>
+            <gfilter>
+                <class>Gfilter_Gfilter_Block</class>
+            </gfilter>
+        </blocks>
+    </global>
+    
+</config>

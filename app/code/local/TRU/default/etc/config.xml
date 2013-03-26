@@ -1,0 +1,33 @@
+<config>
+    <modules>
+        <TRU_default>
+            <version>0.1.0</version>
+        </TRU_default>
+    </modules>
+<!--    <admin>
+        <routers>
+            <prod_up>
+                <use>admin</use>
+                <args>
+                    <module>TRU</module>
+                    <frontName>TRU</frontName>
+                </args>
+            </prod_up>
+        </routers>
+    </admin>
+    <adminhtml>
+        <menu>
+            <TRU_MENU>
+                <title>TRU Menu</title>
+                <sort_order>9999</sort_order>
+                <children>
+                    <first_page module="TRU">
+                        <title>Product Upload</title>
+                        <action>TRU/ProdUp/index</action>
+                    </first_page>
+                </children>
+            </tru_menu>
+        </menu>
+    </adminhtml>
+    -->
+</config>

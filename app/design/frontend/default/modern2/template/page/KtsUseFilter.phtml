@@ -1,0 +1,19 @@
+<?php $thisPgLoc=$this->getRequest()->getOriginalPathInfo();?>
+<div>
+<h3>Filter by Material</h3>
+<form id="use_form" action="<?php $thisPgLoc?>" method="post">
+	<select name="use_mat">
+		<option value="use_alum">Aluminum Alloy</option>
+		<option value="use_csteel">Carbon Steel</option>
+		<option value="use_asteel">Alloy Steel</option>
+		<option value="use_hsteel">Hardened Steel</option>
+		<option value="use_nickel">Nickel/Inconel Alloy</option>
+		<option value="use_ssteel">Stainless Steel</option>
+		<option value="use_ciron">Cast Iron</option>
+		<option value="use_tit">Titanium</option>
+	</select>
+	<button type="submit">Find My Tool</button>
+</form>
+</div>
+<br/>
+<hr/>

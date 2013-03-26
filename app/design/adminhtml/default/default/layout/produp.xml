@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <produp_adminhtml_produp_index>
+        <reference name="content">
+            <block type="produp/adminhtml_produp" name="produp" />
+        </reference>
+    </produp_adminhtml_produp_index>
+</layout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Searcher_Sajax>
+			<version>0.1.0</version>
+		</Searcher_Sajax>
+	</modules>
+	  
+    <frontend>
+    	<routers>
+    		<sajax>
+    			<use>standard</use>
+    			<args>
+    				<module>Searcher_Sajax</module>
+    				<frontName>sajax</frontName>
+    			</args>
+    		</sajax>
+    	</routers>
+    	<layout>
+    		<updates>
+    			<sajax>
+    				<file>sajax.xml</file>
+    			</sajax>
+    		</updates>
+    	</layout>
+    </frontend>    
+</config>

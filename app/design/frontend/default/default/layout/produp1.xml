@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <produp1_index_index>
+        <reference name="content">
+            <block type="produp1/produp1" name="produp1" template="produp1/produp1.phtml" />
+        </reference>
+    </produp1_index_index>
+</layout> 

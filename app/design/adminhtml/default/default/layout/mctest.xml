@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <mctest_adminhtml_mctest_index>
+        <reference name="content">
+            <block type="mctest/adminhtml_mctest" name="mctest" />
+        </reference>
+    </mctest_adminhtml_mctest_index>
+</layout>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+ <default>
+    <reference name="head">
+        <block type="core/text" name="google.cdn.jquery">
+            <action method="setText">
+                <text><![CDATA[<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script><script type="text/javascript">jQuery.noConflict();</script>]]>
+                </text>
+            </action>
+        </block>
+    </reference>
+</default> 

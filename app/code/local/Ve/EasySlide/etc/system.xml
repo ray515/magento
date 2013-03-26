@@ -1,0 +1,307 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+        <ve_easyslide>
+            <label>Ve EasySlide</label>
+            <tab>catalog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+            	<ve_easyslide translate="label">
+                    <label>Ve EasySlide: Config General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>     
+                    	<show translate="label" module="core">
+							<label>Enabled</label>
+							<sort_order>10</sort_order>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</show>	
+						<title translate="label">
+                            <label>Module Title </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <comment>Empty for hide</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title> 
+						<folder translate="label">
+                            <label>Images Folder </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <comment>Path to images folder. Eg: media/easyslide</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </folder> 						 
+						<height translate="label">
+                            <label>Height of Thumbnail </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </height>         
+                        <width translate="label">
+                            <label>Width of Thumbnail </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </width>
+						<thumbnailMode translate="label">
+                            <label>Thumbnail Mode</label>
+                            <frontend_type>select</frontend_type>							
+                            <source_model>ve_easyslide/system_config_source_listThumbnailMode</source_model>
+                            <sort_order>35</sort_order>
+                            <comment>If you like use image thumbnail which render from the image source, then you choose ''Using Image Croping'' or ''Using Image Resizing''</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </thumbnailMode>
+						<autoplay translate="label">
+                            <label>Auto play </label>
+                            <frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <comment>If yes, the slideshow will auto switch based on time interval?</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </autoplay>
+						<duration translate="label">
+                            <label>Duration</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <comment>Duration</comment>							
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </duration> 
+						<interval translate="label">
+                            <label>Interval</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <comment>Time (in seconds) for next play/run</comment>							
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </interval>
+                        <npbutton translate="label">
+                            <label>Show Next/Prev Button</label>
+                            <frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <comment>If yes, the slideshow will show next/prev button?</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </npbutton>
+                        <controlnumber translate="label">
+                            <label>Show Navigation</label>
+                            <frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <comment>If yes, the slideshow will show navigation button?</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </controlnumber>
+						<image1 translate="label">
+                            <label>Image 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image1>
+						<link1 translate="label">
+                            <label>Link 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link1>
+						<image2 translate="label">
+                            <label>Image 2</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image2>
+						<link2 translate="label">
+                            <label>Link 2</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link2>
+						<image3 translate="label">
+                            <label>Image 3</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image3>
+						<link3 translate="label">
+                            <label>Link 3</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link3>
+						<image4 translate="label">
+                            <label>Image 4</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image4>
+						<link4 translate="label">
+                            <label>Link 4</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>130</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link4>
+						<image5 translate="label">
+                            <label>Image 5</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>140</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image5>
+						<link5 translate="label">
+                            <label>Link 5</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link5>
+						<image6 translate="label">
+                            <label>Image 6</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image6>
+						<link6 translate="label">
+                            <label>Link 6</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>170</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link6>
+						<image7 translate="label">
+                            <label>Image 7</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>180</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image7>
+						<link7 translate="label">
+                            <label>Link 7</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>190</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link7>
+						<image8 translate="label">
+                            <label>Image 8</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image8>
+						<link8 translate="label">
+                            <label>Link 8</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link8>
+						<image9 translate="label">
+                            <label>Image 9</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>220</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image9>
+						<link9 translate="label">
+                            <label>Link 9</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>230</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link9>
+						<image10 translate="label">
+                            <label>Image 10</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>240</sort_order>
+                            <comment>Name of image</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image10>
+						<link10 translate="label">
+                            <label>Link 10</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>250</sort_order>
+                            <comment>Url</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link10>
+            		</fields>
+            	</ve_easyslide>
+            </groups>
+        </ve_easyslide>
+    </sections>    
+</config>

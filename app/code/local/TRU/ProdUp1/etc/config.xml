@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * @category   TRU
+ * @package    TRU_ProdUp1
+ * @author     ModuleCreator
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <TRU_ProdUp1>
+            <version>0.1.0</version>
+        </TRU_ProdUp1>
+    </modules>
+    <frontend>
+        <routers>
+            <produp1>
+                <use>standard</use>
+                <args>
+                    <module>TRU</module>
+                    <frontName>produp1</frontName>
+                </args>
+            </produp1>
+        </routers>
+        <layout>
+            <updates>
+                <produp1>
+                    <file>produp1.xml</file>
+                </produp1>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<produp1>
+				<use>admin</use>
+				<args>
+					<module>TRU_ProdUp1</module>
+					<frontName>produp1</frontName>
+				</args>
+			</produp1>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<produp1 module="produp1">
+				<title>TRU</title>
+				<sort_order>9999</sort_order>               
+				<children>
+					<items module="produp1">
+						<title>Manage Uploads</title>
+						<sort_order>0</sort_order>
+						<action>produp1/adminhtml_produp1</action>
+					</items>
+				</children>
+			</produp1>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<TRU_ProdUp1>
+							<title>ProdUp1 Module</title>
+							<sort_order>10</sort_order>
+						</TRU_ProdUp1>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<produp1>
+					<file>produp1.xml</file>
+				</produp1>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <produp1>
+                <class>TRU_ProdUp1_Model</class>
+                <resourceModel>produp1_mysql4</resourceModel>
+            </produp1>
+            <produp1_mysql4>
+                <class>TRU_ProdUp1_Model_Mysql4</class>
+                <entities>
+                    <produp1>
+                        <table>produp1</table>
+                    </produp1>
+                </entities>
+            </produp1_mysql4>
+        </models>
+        <resources>
+            <produp1_setup>
+                <setup>
+                    <module>TRU_ProdUp1</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </produp1_setup>
+            <produp1_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </produp1_write>
+            <produp1_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </produp1_read>
+        </resources>
+        <blocks>
+            <produp1>
+                <class>TRU_ProdUp1_Block</class>
+            </produp1>
+        </blocks>
+        <helpers>
+            <produp1>
+                <class>TRU_ProdUp1_Helper</class>
+            </produp1>
+        </helpers>
+    </global>
+</config>

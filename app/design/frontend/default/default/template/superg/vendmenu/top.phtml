@@ -1,0 +1,27 @@
+<?php $_categories = $this->getStoreCategories() ?>
+<?php if(count($_categories)): ?>
+<div class="nav-container">
+    <div id="vendmenu">
+        <?php if ($this->showHomeLink()) : ?>
+        <div class="menu">
+            <div class="parentMenu">
+                <a href="<?php echo $this->getUrl('') ?>">
+                    <span><?php echo $this->__('Home'); ?></span>
+                </a>
+            </div>
+        </div>
+        <?php endif ?>
+        <?php foreach ($_categories as $_category): ?>
+            <?php echo $this->drawVendMenuItem($_category) ?>
+        <?php endforeach ?>
+        <div class="clearBoth"></div>
+    </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+var VENDMENU_POPUP_WIDTH = <?php echo (int)Mage::getStoreConfig('vend_menu/popup/width')?>;
+var VENDMENU_POPUP_TOP_OFFSET = <?php echo (int)Mage::getStoreConfig('vend_menu/popup/top_offset')?>;
+var VENDMENU_POPUP_RIGHT_OFFSET_MIN = <?php echo (int)Mage::getStoreConfig('vend_menu/popup/right_offset_min')?>;
+//]]>
+</script>
+<?php endif ?>

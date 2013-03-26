@@ -1,0 +1,67 @@
+<div class="ve-easyslide">
+	<?php if($configs['title']){?><h2><?php echo $configs['title']; ?></h2><?php } ?>
+	<?php if(!defined('ADD_EASYSLIDE')){?>
+		<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'skin/frontend/default/default/ve/easyslide/js/easyslide.js'; ?>"></script>
+		<link rel="stylesheet" type="text/css" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'skin/frontend/default/default/ve/easyslide/css/easyslide.css'; ?>" media="all" />
+		<?php  define('ADD_EASYSLIDE', true); ?>
+		<?php }	 
+	 $wh = 'width:'.$configs[width].'px; height: '.$configs[height].'px;';
+	 $rand = rand(1000,9999); 
+	?>	
+	<div style="<?php echo $wh;?>" id="easyslideslider-<?php echo $rand;?>" class="easyslideslider-id">
+		<div style="<?php echo $wh;?>" class="scroller">
+			<div class="content">
+				<?php for($i=1; $i <= 10; $i++) {
+					$image = 'image'.$i;
+					$link = 'link'.$i;
+					if($configs[$image] != '') {
+				?>
+					<div id="section<?php echo $i ?>" class="section">
+						<a href="<?php echo $configs[$link]; ?>">
+							<?php if($configs["thumbnailMode"] !="none"){ ?>
+							<img style="<?php echo $wh;?>" alt="" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'media/resized/'.$configs[folder].'/'.$configs[$image]; ?>">
+							<?php }else{ ?>
+							<img style="<?php echo $wh;?>" alt="" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).$configs[folder].'/'.$configs[$image]; ?>">
+							<?php } ?>
+							<p class="easyslidedescription"></p>
+						</a>
+					</div>
+				<?php 
+						}
+					} 
+				?>   
+			</div>
+		</div>
+		<?php if($configs['npbutton']){ ?>
+		<a class="easyslide-prev" href="#">Prev</a>
+		<a class="easyslide-next" href="#">Next</a>	
+		<?php } ?>
+	</div>
+	<div class="easyslidecontrolwr">
+			<div class="easyslidercontrol"><div class="easyslidercontrolnumber">
+		 	   <?php
+			     if($configs['controlnumber']) {
+				   for($i=1; $i <= 10; $i++) {
+					$image = 'image'.$i;					
+					if($configs[$image] != ''){
+				?>
+					<a class="easyslidedirect" title="Slide <?php echo $i ?>" href="#section<?php echo $i ?>"><?php echo $i ?></a>			
+				<?php 
+					}
+				  }
+			      }
+			   ?>
+			    </div>
+			</div>
+		</div>
+	<script charset="utf-8" type="text/javascript">
+	//<![CDATA[
+		var new_glider = new Glider('easyslideslider-<?php echo $rand;?>', {
+			duration: <?php echo $configs[duration];?>,
+			autoGlide: <?php echo $configs[autoplay];?>,
+			frequency: <?php echo $configs[interval];?>,
+			initialSection: 'section1'
+		});
+	//]]>  
+	</script>
+</div>

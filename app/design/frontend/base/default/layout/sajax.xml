@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<layout version="1.0">
+	<sajax_ajax_index>
+			<block type="sajax/sajax" name="root" output="toHtml" template="sajax.phtml"/>
+	</sajax_ajax_index>
+</layout>
