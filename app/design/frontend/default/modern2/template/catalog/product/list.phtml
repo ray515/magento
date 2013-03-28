@@ -172,7 +172,7 @@ $solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 jQuery("#tabs").tabs();
 var fJSON=<?php echo(Mage::helper('gfilter')->getFilterData($prodByCat)); ?>;
 var jsCol=<?php echo($pCol); ?>;
-theOtherJs(<?php echo($solrPg); ?>)
+var fLoc="<?php echo($solrPg); ?>";
 -->
 </script>
 <script type="eric" id="FilterUse">
