@@ -7,6 +7,12 @@ echo('<input type="hidden" id="tt" name="tt" value="'.$_GET['qRec'].'" />');
  <script type="text/javascript">
 
  jQuery(document).ready(function ($){
+
+		// get base url
+		var getPathArr = window.location.pathname.split('/');
+		var getPath='http://'+getPathArr[2];
+		alert("The Path: "+getPath);
+	 
 		if($('#tt').val() && $('#tt').val() != 'sGo' && $('#bodySearch').val()==""){
 			var bsState=$('#tt').val();
 			$.removeCookie('KTS_CC1');

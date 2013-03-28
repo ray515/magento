@@ -70,7 +70,7 @@ $('.tabDia ol>li>div').click( function(){
 		if(!$.cookie('KTS_FS1')){
 			$.cookie('KTS_FS1',fSel.toString());
 		}else{
-			pageInit(jsCol);
+			pageInit(jsCol,fLoc);
 		}
 	
 		$('#narrow-by-list').accordion({
@@ -87,7 +87,7 @@ $('.tabDia ol>li>div').click( function(){
 				$('#'+ff+' #selLi').remove();
 				fOut=$(this).data('code')+':'+$(this).html();
 				killTest=killSel(fOut,fSel,'kill');
-				filterInit(fSel,jsCol);
+				filterInit(fSel,jsCol,fLoc);
 			}else{
 				$(this).siblings().removeClass('liTouch').addClass('liStart');
 				$('#'+ff+' #selPar').remove();
@@ -99,14 +99,13 @@ $('.tabDia ol>li>div').click( function(){
 					$(this).removeClass('liStart').addClass('liTouch');
 					$('#'+ff).append('<div id="selPar"></div>');
 					$(this).append('<div id="selLi"></div>');
-					filterInit(fSel,jsCol);
-				}
-
-			}				
+					filterInit(fSel,jsCol,fLoc);
+				};
+			};				
 		});
 	}else{ }
 
-	function pageInit(jsCol){
+	function pageInit(jsCol,fLoc){
 		
 		var cTemp = $.cookie('KTS_FS1');
 		if(cTemp.charAt(0)==','){
@@ -121,10 +120,10 @@ $('.tabDia ol>li>div').click( function(){
 			$('#narrow-by-list #'+t1[0]).find("[data-val='"+t1[1]+"']").append('<div id="selLi"></div>').addClass('liTouch');
 			$('#narrow-by-list .'+t1[0] ).append('<div id="selPar"></div>');
 		}
-		filterInit(fSel,jsCol);
+		filterInit(fSel,jsCol,fLoc);
 	}
 	
-	function filterInit(fSel,jsCol){
+	function filterInit(fSel,jsCol,fLoc){
 		var cTemp = fSel.toString();
 		if(cTemp.charAt(0)==','){
 			cTemp=cTemp.substring(1,cTemp.length);
@@ -139,7 +138,8 @@ $('.tabDia ol>li>div').click( function(){
 		}
 		filterJSON = filterJSON+'}';
 
-		var getit = $.post('http://65.60.97.68/gfilter/index/index',{JSONin:filterJSON,pCol:jsCol});
+		// get base url		
+		var getit = $.post(fLoc+'gfilter/index/index',{JSONin:filterJSON,pCol:jsCol});
 		getit.done(function(data){
 			$('#fRes').html(data);
 		});		
