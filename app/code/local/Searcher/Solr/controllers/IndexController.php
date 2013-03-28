@@ -63,7 +63,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 	}
 
 // constants
-	const SURL='http://65.60.97.68:8983/solr/KTS_DEV';
+	const SURL='http://65.60.97.68:8983/solr/KTS';
 
 	public function nsAction(){
 		echo "Searcher_Solr";
@@ -182,6 +182,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		
 		$resStr=urlencode($term);
 		$url=self::SURL.'/select?wt=json&q='.$resStr;
+		$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 		// using curl method
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -206,7 +207,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		echo '<div id="sugReplace">'.Mage::helper('solr')->searchMage($resStr).'</div>';
 		
 		echo '<hr/>';
-		$url=urlencode('127.0.0.1/catalogsearch/result?qRec='.$resStr);
+		$url=urlencode($solrPg.'catalogsearch/result?qRec='.$resStr);
 		Mage::getSingleton('checkout/session')->setData('continue_shopping_url', $url);
 		foreach($collection as $cid1){
 			$cata1=$cid1->getCategoryIds();
@@ -293,6 +294,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 	print_r('<hr/>');
 	print_r('<div id="holder"></div>');
 //	echo($this->sFilter($collection));
+	$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 ?>
 		<script type="text/javascript">
 <!--
@@ -520,7 +522,7 @@ function sGo(){
 			if(cd1[2] != undefined && cd1[2] != ""){outDone=outDone+' AND manu:'+cd1[2];}else{}
 
 		// and... make it so, number one.
-			var getit = $.post('http://127.0.0.1/solr/index/index/',{qRec:outDone});
+			var getit = $.post(<?php echo($solrPg); ?>+'solr/index/index/',{qRec:outDone});
 				getit.done(function(data){
 					$('.ui-dialog').remove();
 					$('#tt').val('sGo');
