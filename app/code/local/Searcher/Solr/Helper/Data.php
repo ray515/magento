@@ -1,8 +1,12 @@
 <?php
 class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 {
-	// constants
-	const SURL='http://65.60.97.68:8983/solr/KTS';
+	public function sURL(){
+			return 'http://65.60.97.68:8983/solr/KTS1/';
+	}
+	public function bURL(){
+			return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+	}
 	
 	public function getResultUrl($query = null)
 	{
@@ -116,7 +120,7 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 	public function searchMage($sRec){
 		$sugStr=urlencode($sRec);
 		echo('search str: '.$sRec);
-		$url=self::SURL.'/suggest?wt=json&q='.$sugStr;
+		$url=Mage::helper('solr')->sURL().'suggest?wt=json&q='.$sugStr;
 		// using curl method
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -135,73 +139,4 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		var_dump($out);
 		return $out;
 	}
-	
-	public function toolBar($tCol,$dispCount){
-		$colCt=count($tCol);
-		$perPage=$dispCount;
-		$lastPg=number_format($colCt/$perPage,0);
-		if($lastPg % 3){
-			$lastpg++;
-		}
-		$firstPg=1;
-		$setLimit=array(5,10,50);
-		echo "first :".$firstPg."<br/> last: ".$lastPg."<br/> total: ".$colCt."<br/> per pg: ".$perPage."<br/>";
-		//if($this->getCollection()->getSize()){
-		if($colCt){
-			echo '<div class="toolbar"><div class="pager"><p class="amount">';
-			//if($this->getLastPageNum()>1){
-			if($lastPg>1){
-				//echo  $this->__('Items %s to %s of %s total', $this->getFirstNum(), $this->getLastNum(), $this->getTotalNum());
-				echo  $this->__('Items %s to %s of %s total', $firstPg, $lastPg, $colCt);
-		    }else{
-		    	//echo  '<strong>'.$this->__("%s Item(s)", $this->getTotalNum()).'</strong>';
-		    	echo  '<strong>'.$this->__("%s Item(s)", $colCt).'</strong>';
-		    }
-	   		echo  '</p>';
-		
-	   		echo  '<div class="limiter"><label>'.$this->__("Show").'</label><select onchange="setLocation(this.value)">';
-		    //foreach ($this->getAvailableLimit() as  $_key=>$_limit){
-		    foreach(setLimit as $_key=>$_limit){
-		    	echo '<option value="'.$this->getLimitUrl($_key).'"'; if($this->isLimitCurrent($_key)){echo 'selected="selected"';} echo '>';
-		        echo $_limit.'</option>';
-		 	}
-		        echo '</select>'.$this->__('per page').'</div>';
-		        echo $this->getPagerHtml().'</div>';
-		
-		    if( $this->isExpanded() ){
-		    	echo '<div class="sorter">';
-		        if( $this->isEnabledViewSwitcher() ){
-		        	echo '<p class="view-mode">';
-		            	$_modes = $this->getModes();
-		            if($_modes && count($_modes)>1){
-		            	echo '<label>'.$this->__('View as').':</label>';
-		            foreach ($this->getModes() as $_code=>$_label){
-		                if($this->isModeActive($_code)){
-		                    echo '<strong title="'.$_label.'" class="'.strtolower($_code).'">'.$_label.'</strong>&nbsp;';
-		                }else{
-		                    echo '<a href="'.$this->getModeUrl($_code).'" title="'.$_label.'" class="'.strtolower($_code).'">'.$_label.'</a>&nbsp;';
-		                } //end if
-		            } //end foreach
-		            } //end if
-		        echo '</p>';
-		        } //end if
-		    
-		        echo '<div class="sort-by"><label>'.$this->__("Sort By").'</label><select onchange="setLocation(this.value)">';
-		            foreach($this->getAvailableOrders() as $_key=>$_order){
-		                echo '<option value="'.$this->getOrderUrl($_key, 'asc').'"'; if($this->isOrderCurrent($_key)){echo 'selected="selected"';} echo '>';
-		                    echo $this->__($_order);
-		                echo '</option>';
-		            } // end foreach
-		            echo '</select>';
-		            if($this->getCurrentDirection() == 'desc'){
-		                echo '<a href="'.$this->getOrderUrl(null, 'asc').'" title="'.$this->__('Set Ascending Direction').'"><img src="'.$this->getSkinUrl('images/i_desc_arrow.gif').'" alt="'.$this->__('Set Ascending Direction').'" class="v-middle" /></a>';
-		            }else{
-		                echo '<a href="'.$this->getOrderUrl(null, 'desc').'" title="'.$this->__('Set Descending Direction').'"><img src="'.$this->getSkinUrl('images/i_asc_arrow.gif').'" alt="'.$this->__('Set Descending Direction').'" class="v-middle" /></a>';
-		            } //end if
-		        echo '</div>';
-		    echo '</div>';
-		    } //end if
-		echo '</div>';
-		} // end if
-	}	
 }

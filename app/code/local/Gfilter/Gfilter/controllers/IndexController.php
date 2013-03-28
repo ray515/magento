@@ -42,9 +42,6 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 				$reflect = new ReflectionMethod($this,$cm);
 				if($reflect->isPublic()){echo $cm.'<br/>';}}}}
 
-// constants
-	const SURL='http://65.60.97.68:8983/solr/KTS';
-
 	public function nsAction(){echo "Gfilter_Gfilter";}
 	
 	public function filterRes($JSONin,$pCol="n/a"){
@@ -57,15 +54,6 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 			}else{
 				$ji1 = $ji;
 			}
-//			echo "JI: ".var_dump($ji)." : JI1".$ji1."<br/>";
-/* testing table 
- 			print_r('<table width=100%><tr><th>Attri Code</th><th>Attri Value</th></tr>');
-			foreach($ji as $ji1=>$ji2){
-				echo('<tr><td>'.$ji1.'</td><td>'.$ji2.'</td></tr>');
-			}
-			print_r('<tr><td colspan=2>'.var_dump($pCol).'</td></tr>');
-			print_r('</table>');
-*/
 						
 			//build filter result output	
 			$pgCol=$pCol; //cata prod id's
