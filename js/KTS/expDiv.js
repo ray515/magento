@@ -2,10 +2,10 @@ jQuery(document).ready(function($){
 	$("#expanderHead").click(function(){
 		$("#expanderContent").slideToggle();
 		if ($("#expanderSign").text() == "+"){
-			$("#expanderSign").html("−")
+			$("#expanderSign").html("−");
 		}
 		else {
-			$("#expanderSign").text("+")
+			$("#expanderSign").text("+");
 		}
 	});
 });

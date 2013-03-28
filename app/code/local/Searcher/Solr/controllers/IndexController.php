@@ -1,12 +1,40 @@
 <?php
+/**
+ * Magento
+ * 
+ * @category    Mage
+ * @package     Mage_Page
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * Searcher Solr IndexController
+ *
+ * @category   Searcher
+ * @package    Searcher_Solr
+ * @author     KTS Web Team <eric.gould@etoolsrus.com>
+ */
+
+/**
+ * 
+ * @author EricG
+ *
+ */
 class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
+	/**
+	 * @name indexAction
+	 * @param qRec='search term'
+	 * @return array collection of results from solr search
+	 * @param sku=sku 
+	 * @param nova=nova 
+	 */
 	public function indexAction(){
 		if($_REQUEST['test']||$_POST['test']){print_r("<h1>TRU Solr Tools.</h1>");}
 		//$this->loadLayout();
 		//$this->renderLayout();
 		if($_REQUEST['qRec'] || $_POST['qRec']){
 			$this->searchRes($_REQUEST['qRec']);
-			//echo "test";
 		}
 		if($_REQUEST['sug']){
 			$this->searchMage1($_REQUEST['sDir'],$_REQUEST['sug']);
@@ -36,7 +64,6 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 
 // constants
 	const SURL='http://65.60.97.68:8983/solr/KTS';
-	const lBase='http://65.60.97.68';
 
 	public function nsAction(){
 		echo "Searcher_Solr";
@@ -152,8 +179,10 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 	}
 	
 	public function searchRes($term){
+		
 		$resStr=urlencode($term);
 		$url=self::SURL.'/select?wt=json&q='.$resStr;
+		$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 		// using curl method
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -171,15 +200,14 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		$collection->addFieldToFilter($filters);  
 		$collection->addAttributeToSelect('*');
 		$this->collection=$collection;
-		//echo Mage::helper('solr')->toolBar($this->collection,5);
-		print_r('<div id="fList">');		
+		print_r('<div id="fList">');	
 		echo '<div id="priceReplace">'.Mage::helper('solr')->searchPrice($collection).'</div>';
 		echo '<div id="cataReplace">'.Mage::helper('solr')->searchCata($collection).'</div>';
 		echo '<div id="manuReplace">'.Mage::helper('solr')->searchManu($collection).'</div>';
-		echo '<div id="sugReplace">'.Mage::helper('solr')->searchMage($_POST['qRec']).'</div>';
+		echo '<div id="sugReplace">'.Mage::helper('solr')->searchMage($resStr).'</div>';
 		
 		echo '<hr/>';
-		$url=urlencode(self::lBase.'/catalogsearch/result?qRec=cobra');
+		$url=urlencode($solrPg.'catalogsearch/result?qRec='.$resStr);
 		Mage::getSingleton('checkout/session')->setData('continue_shopping_url', $url);
 		foreach($collection as $cid1){
 			$cata1=$cid1->getCategoryIds();
@@ -264,7 +292,9 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 	print_r('</ol></div>'); //close prodList
 	print_r('</div>'); //close fList
 	print_r('<hr/>');
-
+	print_r('<div id="holder"></div>');
+//	echo($this->sFilter($collection));
+	$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 ?>
 		<script type="text/javascript">
 <!--
@@ -310,20 +340,24 @@ jQuery(document).ready(function($){
 	});
 	
 //prod info dialog
-	$('#prodList ol>li #dialog').dialog({
+
+$('#prodList ol>li #dialog').dialog({
 			autoOpen: false,
-			width: 665,
-			height: 300,
-			show:{
-				effect: "blind",
-				duration: 1000
-			},
-			hide: {
-				effect: "explode",
-				duration: 1000
-			}});
+			width:    665,
+			height:   300,
+			modal:    true,
+			show:	  {
+					    effect: 	"blind",
+					    duration: 	1000
+					  },
+			hide: 	  {
+					    effect: 	"explode",
+				  	    duration: 	1000
+					  }
+	});
 
 var stopDia = false;
+
 	$('#prodList ol>li>div #listLink').click( function(){
 		return stopDia = true;
 	});
@@ -339,7 +373,7 @@ var stopDia = false;
 			$(myid).dialog('option','title',myTitle);
 			$('.dataTabs').tabs();
 		}}});
-		
+	
 //hide helper divs
 	$('#cataReplace').hide();
 	$('#priceReplace').hide();
@@ -356,12 +390,14 @@ var stopDia = false;
 		$('#bodySearch').val('"'+$(this).html()+'"');
 		$('#search').val('"'+$(this).html()+'"');sps();
 		$.cookie('KTS_CC1',',,');
-		$.removeCookie('KTS_ALD');
+		$.cookie('KTS_ALD',0);
 		sGo();
 	});
 	
 //on load check cookie for selections
-	fSelOnLoad();
+	if($.cookie('KTS_ALD')==0){
+		fSelOnLoad();
+	}
 	
 // clear previous selection, get new selection, clean data, save data to cookie, update selection style for all filters. 	
 	$('#idCategory ol > li').click( function(){
@@ -372,6 +408,7 @@ var stopDia = false;
 		fSel[0]=escape(ClCoTxt);
 		$.cookie('KTS_CC1',fSel.toString());			
 		$(this).removeClass('liStart').addClass('liTouch');
+		$.cookie('KTS_ALD',1);
 		sGo();	
 	});
 
@@ -383,6 +420,7 @@ var stopDia = false;
 		fSel[1]=escape(ClCoTxt);
 		$.cookie('KTS_CC1',fSel.toString());		
 		$(this).removeClass('liStart').addClass('liTouch');
+		$.cookie('KTS_ALD',1);
 		sGo();
 	});
 
@@ -394,6 +432,7 @@ var stopDia = false;
 		fSel[2]=escape(ClCoTxt);
 		$.cookie('KTS_CC1',fSel.toString());			
 		$(this).removeClass('liStart').addClass('liTouch');
+		$.cookie('KTS_ALD',1);
 		sGo();
 	});
 
@@ -401,24 +440,28 @@ var stopDia = false;
 	$('#idCategory #fClrCata').click( function(){
 		fSel=$.cookie('KTS_CC1').split(',');fSel[0]='';$.cookie('KTS_CC1',fSel.toString());
 		$('#idCategory ol > li').siblings().andSelf().removeClass('liTouch').addClass('liStart');
+		$.cookie('KTS_ALD',1);
 		sGo();
 	});
 	
 	$('#idPrice #fClrPrice').click( function(){
 		fSel=$.cookie('KTS_CC1').split(',');fSel[1]='';$.cookie('KTS_CC1',fSel.toString());
 		$('#idPrice ol > li').siblings().andSelf().removeClass('liTouch').addClass('liStart');
+		$.cookie('KTS_ALD',1);
 		sGo();
 	});
 
 	$('#idManufacturer #fClrManu').click( function(){
 		fSel=$.cookie('KTS_CC1').split(',');fSel[2]='';$.cookie('KTS_CC1',fSel.toString());
 		$('#idManufacturer ol > li').siblings().andSelf().removeClass('liTouch').addClass('liStart');
+		$.cookie('KTS_ALD',1);
 		sGo();
 	});
 
 	$('.block-subtitle span').click( function(){
 		$.cookie('KTS_CC1',',,');
 		$('* li').removeClass('liTouch').addClass('liStart');
+		$.cookie('KTS_ALD',1);
 		sGo();
 	});
 
@@ -427,7 +470,7 @@ var stopDia = false;
 		$('#bodySearch').val('"'+$(this).html()+'"');
 		$('#search').val('"'+$(this).html()+'"');
 		$.cookie('KTS_CC1',',,');
-		$.removeCookie('KTS_ALD');
+		$.cookie('KTS_ALD',1);
 		sGo();
 	});
 	
@@ -478,18 +521,17 @@ function sGo(){
 				}else{}
 			if(cd1[2] != undefined && cd1[2] != ""){outDone=outDone+' AND manu:'+cd1[2];}else{}
 
-		// set ajax load cookie to control filter data reloading
-		if($.cookie('KTS_ALD')){$.cookie('KTS_ALD','1');}
-			
 		// and... make it so, number one.
-			var getit1 = $.post('http://65.60.97.68/solr/index/index/',{qRec:outDone});
-				getit1.done(function(data){
+			var getit = $.post('<?php echo($solrPg); ?>solr/index/index/',{qRec:outDone});
+				getit.done(function(data){
+					$('.ui-dialog').remove();
 					$('#tt').val('sGo');
-					$('#solrBurn').html(data);					
+					$('#solrBurn').html(data);
 				});
-				getit1.fail(function(data){
+				getit.fail(function(data){
 					alert("FAIL: "+data);
 				});	
+				
 }
 
 	function sps(tar){
@@ -534,6 +576,12 @@ function sGo(){
 <?php 
 	}
 
+	public function sFilter($tCol){
+		$sfOut='collection count: '.count($tCol);
+		
+		return $sfOut;
+	}
+	
 	public function getKtsAttribute($attIn="all"){
 		$attributeSetCollection = Mage::getResourceModel('eav/entity_attribute_set_collection') ->load();
 		

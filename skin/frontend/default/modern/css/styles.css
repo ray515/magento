@@ -45,6 +45,7 @@ body a:hover {color:#585858;}
 /********* Item Page Modifications **********/
 .product-name h1, .product-name a {color:#424242;}
 .product-shop, .price-box .price {font-size:20px;}
+.product-shop .price-box span.price {font-size:35px;color:#424242;}
 .std ul li, .data ul li {background-color:#EFEFEF;padding:2px 2px 2px 7px;margin:0 0 3px;} 
 
 /**********Category menu drop down images start***********/
@@ -806,11 +807,11 @@ margin:0 0 0 -6px;height:35px;width:150px;background:url(http://etoolsrus.net/ne
 /* Product View ========================================================================== */
 /* Rating */
 .no-rating a:link {color:#626262;}
-.no-rating {margin:7px 0 0 5px;margin:0;width:180px;padding:0 0 0 6px;background:#ECECEC;text-indent:0;border:0 solid #7E0000;-moz-border-radius:3px;border-radius:3px;-webkit-border-radius:3px;-khtml-border-radius:3px;}
+.no-rating {font-size:11px;}
 .ratings a:link {color:#626262;}
 .ratings {}
 .ratings strong {float:left;margin:0 3px 0 0;}
-.ratings .rating-links {margin:0;}
+.ratings .rating-links {margin:0; font-size:11px;}
 .ratings .rating-links .separator {margin:0 2px;}
 .ratings dt {}
 .ratings dd {}
@@ -843,9 +844,9 @@ margin:0 0 0 -6px;height:35px;width:150px;background:url(http://etoolsrus.net/ne
 .product-view .product-shop .availability span {font-weight:normal;}
 
 /* Email to a Friend */
-.fb-like {height:22px;}
-.email-friend a:link {color:#3b5998;}
-.email-friend {padding:0px;width:90px;margin:-22px 10px 7px 132px;background:#eceef5;text-indent:6px;border:1px solid #cad4e7;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;-khtml-border-radius:3px;}
+
+.email-friend a:link {color:#3b5998; font-size:11px;}
+.email-friend {height:10px;}
 
 /* Alerts */
 .alert-price {margin:0;font-size:11px;}
@@ -967,9 +968,10 @@ ul li {list-style-type:none;}
 .product-collateral .box-collateral {}
 
 /* Product Images */
+.product-view h1 {}
 .product-view .product-img-box {float:left;width:302px;}
 .col3-layout .product-view .product-img-box {float:none;margin:0 auto;}
-.product-view .product-img-box .product-image {margin:0 0 10px;border:1px solid #cacaca;}
+.product-view .product-img-box .product-image {margin:0 0 10px;border:0px solid #cacaca;}
 .product-view .product-img-box .product-image-zoom {position:relative;width:300px;height:300px;overflow:hidden;z-index:9;}
 .product-view .product-img-box .product-image-zoom img {position:absolute;left:0;top:0;cursor:move;}
 .product-view .product-img-box .zoom-notice {margin:0 0 0;text-align:center;}
@@ -992,13 +994,13 @@ ul li {list-style-type:none;}
 .product-image-popup .image-label {font:12px arial, helvetica, sans-serif;color:#444;margin:5px 0 -9px 0;color:#333;-moz-border-radius:4px 4px 4px 4px;border-radius:4px 4px 4px 4px;-webkit-border-radius:4px 4px 4px 4px;-khtml-border-radius:4px 4px 4px 4px;background:#E4E4E4;padding:10px;}
 
 /* Product Shop */
-.product-view .product-shop {float:right;width:363px;}
+.product-view .product-shop {float:right;width:385px;}
 .col1-layout .product-view .product-shop {float:right;width:576px;}
 .col3-layout .product-view .product-shop {float:none;width:auto;}
 .product-view .product-shop .product-name {margin:0 0 5px;}
 .product-view .product-shop .product-name h1 {font:bold 17px/1.25 Arial, Helvetica, sans-serif;}
 .product-view .product-shop .availability {margin:10px 0;}
-.product-view .product-shop .short-description {margin:10px 0;}
+.product-view .product-shop .short-description {margin:10px 0; font-size:11px;}
 .product-view .product-shop .price-box {margin:10px 0;}
 .product-view .product-shop .add-to-links {margin:0;}
 .product-view .product-shop .add-to-links {}

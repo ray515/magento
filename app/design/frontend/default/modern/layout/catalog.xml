@@ -40,9 +40,11 @@ Default layout, loads most of the pages
 			    <block type="catalog/product_compare_sidebar" before="cart_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
 			    
         </reference>
-        <!--reference name="gFilter">
+        <!-- not needed at this time
+        <reference name="gFilter">
          	<block type="catalog/product_compare_KtsCtFilter" before="cart_sidebar" name="catalog.compare.KtsCtFilter" template="catalog/product/compare/KtsCtFilter.phtml"/>
-         </reference-->
+         </reference>
+         -->
          
         <reference name="footer_links">
             <action method="addLink" translate="label title" module="catalog" ifconfig="catalog/seo/site_map"><label>Site Map</label><url helper="catalog/map/getCategoryUrl" /><title>Site Map</title></action>
@@ -203,9 +205,10 @@ Product view
                 <action method="setTierPriceTemplate"><template>catalog/product/view/tierprices.phtml</template></action>
 
                 <block type="catalog/product_view_tabs" name="product.info.tabs" as="info_tabs" template="catalog/product/view/tabs.phtml" >
-                    <action method="addTab" translate="title" module="catalog"><alias>description</alias><title>Product Description</title><block>catalog/product_view_description</block><template>catalog/product/view/description.phtml</template></action>
+                    <action method="addTab" translate="title" module="catalog"><alias>description</alias><title>Features &amp; Benefits</title><block>catalog/product_view_description</block><template>catalog/product/view/description.phtml</template></action>
+					<action method="addTab" translate="title" module="catalog"><alias>additional</alias><title>Specifications</title><block>catalog/product_view_attributes</block><template>catalog/product/view/attributes.phtml</template></action>
                     <action method="addTab" translate="title" module="catalog"><alias>upsell_products</alias><title>We Also Recommend</title><block>catalog/product_list_upsell</block><template>catalog/product/list/upsell.phtml</template></action>
-                    <action method="addTab" translate="title" module="catalog"><alias>additional</alias><title>Additional Information</title><block>catalog/product_view_attributes</block><template>catalog/product/view/attributes.phtml</template></action>
+                    
                 </block>
 
                 <block type="catalog/product_view_additional" name="product.info.additional" as="product_additional_data" />
