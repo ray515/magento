@@ -1,15 +1,17 @@
 
 <?php
-if($_GET['qRec'] || $_REQUEST['cat']): ?>
-<input type="hidden" id="tt" name="tt" value="<?php echo$_GET['qRec']?>" />
+if($_GET['qRec']): 
+$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+echo('<input type="hidden" id="tt" name="tt" value="'.$_GET['qRec'].'" />');
+?>
  <script type="text/javascript">
 
  jQuery(document).ready(function ($){
 		if($('#tt').val() && $('#tt').val() != 'sGo' && $('#bodySearch').val()==""){
 			var bsState=$('#tt').val();
 			$.removeCookie('KTS_CC1');
-			$.re
-			$.post('http://65.60.97.68/solr/index/index/',{qRec:$('#tt').val()}, function(data){ $('#solrBurn').html(data); },'html'); //qRec
+			$.removeCookie('KTS_ALD');
+			$.post('<?php echo($solrPg); ?>solr/index/index/',{qRec:$('#tt').val()}, function(data){ $('#solrBurn').html(data); },'html'); //qRec
 			$('#search').val($('#tt').val());
 			$('#bodySearch').val($('#tt').val());
 			$('#search').focus(function(){ $('#search').val(""); });
@@ -18,7 +20,6 @@ if($_GET['qRec'] || $_REQUEST['cat']): ?>
 		}
 		$('#bodySearch').focus(function(){ $('#bodySearch').val("");});
 		$('#body_mini_form').submit(function(event){
-			//event.preventDefault();
 			$.removeCookie('KTS_CC1');
 			$.removeCookie('KTS_ALD');
 			bsState=$('#bodySearch').val();
@@ -31,11 +32,11 @@ if($_GET['qRec'] || $_REQUEST['cat']): ?>
 			$('#pSearch').html(psOut);
 			$.cookie('KTS_PS',psOut);
 			}
-			$.post('http://65.60.97.68/solr/index/index/',{qRec:$('#bodySearch').val(),ff:'bmf'}, function(data){ $('#solrBurn').html(data); },'html'); //qRec
+			$.post('<?php echo($solrPg); ?>solr/index/index/',{qRec:$('#bodySearch').val(),ff:'bmf'}, function(data){ $('#solrBurn').html(data); },'html'); //qRec
 			$('#bodySearch').val(bsState);
 		});		
 		$('#bodySearch').autocomplete({ //autocomplete for on page search
-			source: function(request,response){ $.getJSON('http://65.60.97.68/solr/index/index',{sug:request.term,sDir:'KTS_DEV'},response); }
+			source: function(request,response){ $.getJSON('<?php echo($solrPg); ?>solr/index/index',{sug:request.term},response); }
 		});
 
 //make the "go button say go but not really this gets overridden by something in the css so whatevers.//
@@ -50,7 +51,8 @@ if($_GET['qRec'] || $_REQUEST['cat']): ?>
 	</form>
 	<div id="pSearch"></div>
 	<div id="solrBurn"></div>
-</div>	<?php echo $this->getProductListHtml() ?>
+
+</div>	<?php //echo $this->getProductListHtml() ?>
 <?php else:; ?>
 <div>This page is only useful from a site search.<br/>If you feel funky, fake it [wink].</div>
 <?php endif; ?>
