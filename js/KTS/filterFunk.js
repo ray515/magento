@@ -4,7 +4,7 @@
 *  Dependancies - jquery, jquery.cookie, gfilter module
 */
 jQuery(document).ready(function($){
-function theOtherJs(fLoc){
+
 // dialog home start
 //$('.tabDia ol>li #dialog').append('this is a test');
 
@@ -104,7 +104,7 @@ $('.tabDia ol>li>div').click( function(){
 			};				
 		});
 	}else{ }
-}
+
 	function pageInit(jsCol,fLoc){
 		
 		var cTemp = $.cookie('KTS_FS1');
