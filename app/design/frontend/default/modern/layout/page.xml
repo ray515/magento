@@ -19,13 +19,13 @@
 					<action method="addJs"><script>varien/menu.js</script></action>
 					<action method="addJs"><script>mage/translate.js</script></action>
 					<action method="addJs"><script>mage/cookies.js</script></action>
-					<!--
+				<!--
 					adding jQuery and addOutItem method (see Mage/core/Page/Block/Html/Head.php (I know... poor form, hence the long explaination. :)))
 					method users <outLink> for the outbound link, additional js can be added via <params>. patern: <params> => <script>*params*</script>
-					-->
+				-->
 					<action method="addOutItem"><outLink>//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js</outLink></action>
 					<action method="addOutItem"><outLink>//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js</outLink><params>$.noConflict();</params></action>
-					<!-- KTS local JS & jQuery cookie plugin -->
+				<!-- KTS local JS & jQuery cookie plugin -->
 					<action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action>
 					<action method="addJs"><script>KTS/filterFunk.js</script></action>
 					<action method="addJs"><script>plugin/jquery.cookie.js</script></action>
@@ -46,13 +46,14 @@
 				<block type="cms/block" name="header_block">
 					<action method="setBlockId"><block_id>header_block</block_id></action>
 				</block>
-				<block type="core/text_list" name="top.menu" as="topMenu" translate="label">					<label>Navigation Bar</label>		</block>
+				<block type="core/text_list" name="top.menu" as="topMenu" translate="label"><label>Navigation Bar</label></block>
+		<!-- prob dont need language switch
 				<block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
+		-->
 				<block type="page/template_links" name="top.links" as="topLinks"/>
 				<block type="page/html_wrapper" name="top.bar" as="topBar" translate="label">
-					<label>Breadcrumbs</label>
-					<action method="setElementClass"><value>top-bar</value></action>
-					<block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
+					<label>Breadcrumbs</label><action method="setElementClass"><value>top-bar</value></action>
+							<block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
 				</block>
 				<block type="page/html_wrapper" name="top.container" as="topContainer" translate="label">
 					<label>Page Header</label>
