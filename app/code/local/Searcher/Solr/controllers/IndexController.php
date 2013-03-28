@@ -522,7 +522,7 @@ function sGo(){
 			if(cd1[2] != undefined && cd1[2] != ""){outDone=outDone+' AND manu:'+cd1[2];}else{}
 
 		// and... make it so, number one.
-			var getit = $.post(<?php echo($solrPg); ?>+'solr/index/index/',{qRec:outDone});
+			var getit = $.post('<?php echo($solrPg); ?>solr/index/index/',{qRec:outDone});
 				getit.done(function(data){
 					$('.ui-dialog').remove();
 					$('#tt').val('sGo');

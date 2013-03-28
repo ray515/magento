@@ -12,7 +12,7 @@ $solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
         //<![CDATA[
         jQuery(document).ready(function ($){ 
             if($('#search')==null){$('#search').val('Search KensToolSupply.com');}
-            $('#search').autocomplete({  source: function(request,response){$.getJSON(<?php echo($solrPg); ?>+'solr/index/index',{sug:request.term},response);}	});
+            $('#search').autocomplete({  source: function(request,response){$.getJSON('<?php echo($solrPg); ?>solr/index/index',{sug:request.term},response);}	});
 			var srchTxt="Search KensToolSupply.com";
 			$('#search').val("Search KensToolSupply.com");
 			$('#search').focus(  function(){  if($('#search').val(srchTxt)){  $('#search').val("");  }  });
