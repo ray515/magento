@@ -143,7 +143,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 	}
 	
 	public function searchMage1($sugStr){
-		echo("found");
+		//echo("found");
 		$sugStr=urlencode($sugStr);
 		$url=Mage::helper('solr')->sURL().'suggest?wt=json&q='.$sugStr;
 		// using curl method
@@ -201,12 +201,13 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		$collection->addFieldToFilter($filters);  
 		$collection->addAttributeToSelect('*');
 		$this->collection=$collection;
-		print_r('<div id="fList">');	
+		print_r('<div id="fList">');
+		
 		echo '<div id="priceReplace">'.Mage::helper('solr')->searchPrice($collection).'</div>';
 		echo '<div id="cataReplace">'.Mage::helper('solr')->searchCata($collection).'</div>';
 		echo '<div id="manuReplace">'.Mage::helper('solr')->searchManu($collection).'</div>';
 		echo '<div id="sugReplace">'.Mage::helper('solr')->searchMage($resStr).'</div>';
-		
+		echo '<div id="temp">TEST!</div>';	
 		echo '<hr/>';
 		$url=urlencode($solrPg.'catalogsearch/result?qRec='.$resStr);
 		Mage::getSingleton('checkout/session')->setData('continue_shopping_url', $url);
