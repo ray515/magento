@@ -73,7 +73,7 @@ Object.extend(Object.extend(Glider.prototype, Abstract.prototype), {
     
     numClick: function(event){
         var element = Event.findElement(event, 'a'); /*clicked link*/
-        
+   
         if (this.scrolling) {
             this.scrolling.cancel();
         }
