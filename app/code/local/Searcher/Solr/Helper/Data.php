@@ -119,7 +119,7 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 	
 	public function searchMage($sRec){
 		$sugStr=urlencode($sRec);
-		echo('search str: '.$sRec);
+		//echo('search str: '.$sRec);
 		$url=Mage::helper('solr')->sURL().'suggest?wt=json&q='.$sugStr;
 		// using curl method
 		$ch = curl_init();
@@ -127,7 +127,7 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$output=curl_exec($ch);
 		$result=json_decode($output, TRUE);
-		var_dump($result);
+		//var_dump($result);
 		
 		$res=$result['spellcheck']['suggestions'][1]['suggestion'];
 		
@@ -136,7 +136,7 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 			$out=$out.'<li>'.$res1.'</li>';
 		}
 		$out=$out.'</ol>';
-		var_dump($out);
+		//var_dump($out);
 		return $out;
 	}
 }
