@@ -93,7 +93,7 @@ body a:hover {color:#585858;}
 #newsletterSignup .button {margin:0 0 0 10px;}
 #newsletterBody {text-align:center;background:#3a3a3a;width:938px;padding:30px 0 30px 20px;margin:0 0 0 -30px;}
 #newsletterBody img {padding:20px 15px 20px 0;}
-#newsletterSignup input.input-text.required-entry.validate-email {height:23px;border:0px;-moz-border-radius:10px 10px 10px 10px;-webkit-border-radius:10px 10px 10px 10px;border-radius:10px 10px 10px 10px;background:#EAEAEA;}
+#newsletterSignup input.input-text.required-entry.validate-email {height:23px;border:0px;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;background:#EAEAEA;}
 
 .page-title.category-title h1 {font-size:12px;font-family:Helvetica, Arial, sans-serif;color:#858585;}
 #home_top_right_1 {float:left;width:202px;height:41px;margin:0 0 0 7px;padding:0;border:1px solid #E6E6E6;text-align:center;background-color:#F0F0F0;}
