@@ -2,7 +2,7 @@
 class Gfilter_Gfilter_Helper_Data extends Mage_Core_Helper_Abstract
 {
 	// constants
-	const SURL='http://65.60.97.68:8983/solr/KTS';
+//	const SURL='http://65.60.97.68:8983/solr/KTS';
 	
 	public function getFilterData($tCol){
 		$prodCol=$tCol;
@@ -151,7 +151,7 @@ class Gfilter_Gfilter_Helper_Data extends Mage_Core_Helper_Abstract
 	
 	public function searchMage($sRec){
 		$sugStr=urlencode($sRec);
-		$url=self::SURL.'/suggest?wt=json&q='.$sugStr;
+		$url=Mage::helper('solr')->sURL().'suggest?wt=json&q='.$sugStr;
 		// using curl method
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -167,5 +167,4 @@ class Gfilter_Gfilter_Helper_Data extends Mage_Core_Helper_Abstract
 		$out=$out.'</ol>';
 		return $out;
 	}
-	
 }

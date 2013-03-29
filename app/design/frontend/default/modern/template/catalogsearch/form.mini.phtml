@@ -1,4 +1,8 @@
-<?php  /* Modified search from ==Eric==*/  ?>
+<?php  
+/* Modified search from ==Eric==*/  
+$solrPg=Mage::helper('solr')->bUrl();
+$solrSvr=Mage::helper('solr')->sUrl();
+?>
 
 <form id="search_mini_form" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
     <div class="form-search">
@@ -9,12 +13,13 @@
         //<![CDATA[
         jQuery(document).ready(function ($){ 
             if($('#search')==null){$('#search').val('Search KensToolSupply.com');}
-			var baseUrl='<?php echo $this->getBaseUrl(); ?>';
-            $('#search').autocomplete({  source: function(request,response){$.getJSON(baseUrl+'solr/index/index',{sug:request.term},response);}	});
+            $('#search').autocomplete({  source: function(request,response){$.getJSON('<?php echo($solrPg); ?>solr/index/index',{sug:request.term},response);}	});
 			var srchTxt="Search KensToolSupply.com";
 			$('#search').val("Search KensToolSupply.com");
 			$('#search').focus(  function(){  if($('#search').val(srchTxt)){  $('#search').val("");  }  });
 			$('#search').blur(  function(){  if(!$('#search').val()){  $('#search').val(srchTxt);  }  });
+			$.cookie('KTS-SOLR','<?php echo($solrSvr); ?>');
+			$.cookie('KTS-SOLR-b','<?php echo($solrPg); ?>');
         });
         //]]>
         </script>
