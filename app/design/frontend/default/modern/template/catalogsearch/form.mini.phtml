@@ -1,6 +1,7 @@
 <?php  
 /* Modified search from ==Eric==*/  
-$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+$solrPg=Mage::helper('solr')->bUrl();
+$solrSvr=Mage::helper('solr')->sUrl();
 ?>
 
 <form id="search_mini_form" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
@@ -17,6 +18,8 @@ $solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 			$('#search').val("Search KensToolSupply.com");
 			$('#search').focus(  function(){  if($('#search').val(srchTxt)){  $('#search').val("");  }  });
 			$('#search').blur(  function(){  if(!$('#search').val()){  $('#search').val(srchTxt);  }  });
+			$.cookie('KTS-SOLR','<?php echo($solrSvr); ?>');
+			$.cookie('KTS-SOLR-b','<?php echo($solrPg); ?>');
         });
         //]]>
         </script>

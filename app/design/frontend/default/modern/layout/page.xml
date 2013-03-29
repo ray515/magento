@@ -29,7 +29,7 @@
 					<action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action>
 					<action method="addJs"><script>KTS/filterFunk.js</script></action>
 					<action method="addJs"><script>plugin/jquery.cookie.js</script></action>
-					<action method="addJs"><script>KTS/expDiv.js</script></action>
+				    <action method="addJs"><script>KTS/expDiv.js</script></action>
 					<action method="addCss"><stylesheet>css/styles.css</stylesheet></action>
 					<action method="addItem"><type>skin_css</type><name>css/styles-ie.css</name><params/><if>lt IE 8</if></action>
 					<action method="addCss"><stylesheet>css/widgets.css</stylesheet></action>
