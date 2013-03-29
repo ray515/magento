@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Searcher_Solr>
+			<version>0.1.0</version>
+		</Searcher_Solr>
+	</modules>
+	  
+    <frontend>
+    	<routers>
+    		<solr>
+    			<use>standard</use>
+    			<args>
+    				<module>Searcher_Solr</module>
+    				<frontName>solr</frontName>
+    			</args>
+    		</solr>
+    	</routers>
+    </frontend>
+    
+    <global>
+    	<helpers>
+            <solr>
+                <class>Searcher_Solr_Helper</class>
+            </solr>
+        </helpers>
+        <blocks>
+            <solr>
+                <class>Searcher_Solr_Block</class>
+            </solr>
+        </blocks>
+    </global>
+    
+</config>

@@ -5,31 +5,68 @@
  * @see Mage_Catalog_Block_Layer_View
  */
 ?>
-<?php
-    if($this->canShowBlock()){
-		print_r('<div id="leftFilter" class="block block-layered-nav"><div class="block-title"><strong><span>Shop By:</span></strong></div><div class="block-content">');
-					if ($this->canShowOptions()){
-						print_r('<p id="filterTitle" class="block-subtitle">'.$this->__('Shopping Options').'</p><dl id="narrow-by-list">');
-							$_filters = $this->getFilters();
-								foreach ($_filters as $_filter){
-								if($_filter->getName() == 'Category' || $_filter->getName() == 'Price' || $_filter->getName() == 'Manufacturer'){
-									if($_filter->getItemsCount()){
-										print_r('<dt>'.$this->__($_filter->getName()).'</dt><dd id=id'.$this->__($_filter->getName()).'>'.$_filter->getHtml().'</dd>');
-									}}print_r('</dl><script type="text/javascript">decorateDataList("narrow-by-list")</script>');
-					}print_r('</div>');
-				if($_GET['qRec']){
-					print_r('<div id="deepSearch" class="block-content"><p id="deepSearchTitle" class="block-subtitle"></p><dl id="deepList"><dt id="deepTitle">Popular Search Terms</dt><dd id="deepRes" class="dr1" style="display:block;"><ol class="ol1"><li></li></ol></dd></dl></div>');
-				}print_r('</div>');
-		}print_r('</div>');
-    }print_r('</div>');
-if($_GET['qRec']){
+<?php 
+	if($_GET['qRec']){
+		$_filters=array('Category','Price','Manufacturer');
+		$html1 = '	<div id="leftFilter" class="block block-layered-nav">
+						<div class="block-title">
+							<strong><span>Shop By</span></strong>
+						</div>
+						<div class="block-content">
+						<p id="filterTitle" class="block-subtitle">Shopping Options</p>
+						<dl id="narrow-by-list">';
+		echo($html1);
+		foreach($_filters as $filter){
+			echo('		<dt>'.$filter.'</dt><dd id="id'.$filter.'">No Filter Information Found</dd>');
+		}
+		echo('	</dl></div>');
+		$html2 = '	<div id="deepSearch" class="block-content">
+						<p id="deepSearchTitle" class="block-subtitle"></p>
+						<dl id="deepList">
+							<dt id="deepTitle">Popular Search Terms</dt>
+							<dd id="deepRes" class="dr1" style="display:block;">
+								<ol class="ol1">
+									<li></li>
+								</ol>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<script type="text/javascript">
+				<!--
+					jQuery("#idCatechor").hide();
+					jQuery("#idCatechor").hide();
+					jQuery("#idCatechor").hide();
+				//-->
+				</script>
+		';
+	echo($html2);
+	}else{
+		// orig file info
+		if($this->canShowBlock()){
+			echo('<div id="leftFilter" class="block block-layered-nav">');
+			echo('	<div class="block-title">');
+			echo('		<strong><span>Shop By</span></strong>');
+			echo('	</div>');
+			echo('	<div class="block-content">');
+			echo('		'.$this->getStateHtml());
+        	if($this->getLayer()->getState()->getFilters()){
+				echo('<div class="actions"><a href="'.$this->getClearUrl().'">'.$this->__('Clear All').'</a></div>');
+			}
+        	if($this->canShowOptions()){
+				echo('<p id="filterTitle" class="block-subtitle">Shopping Options</p>');
+				echo('<dl id="narrow-by-list">');
+            	$_filters = $this->getFilters();
+				foreach ($_filters as $_filter){
+					if($_filter->getItemsCount()){
+						echo('<dt>'.$this->__($_filter->getName()).'</dt>');
+						echo('<dd id="id'.$this->__($_filter->getName()).'">'.$_filter->getHtml().'</dd>');
+					}
+                }
+            	echo('</dl>');
+            	echo('<script type="text/javascript">decorateDataList("narrow-by-list")</script>');
+        	}
+			echo('</div>');
+		}
+	}
 ?>
-<script type="text/javascript">
-<!--
-	//hide data for search lol
-	jQuery('#idCategory').hide();
-	jQuery('#idPrice').hide();
-	jQuery('#idManufacturer').hide();
-//-->
-</script>
-<?php }?>
