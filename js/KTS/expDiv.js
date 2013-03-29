@@ -3,8 +3,7 @@ jQuery(document).ready(function($){
 		$("#expanderContent").slideToggle();
 		if ($("#expanderSign").text() == "+"){
 			$("#expanderSign").html("−");
-		}
-		else {
+		}else{
 			$("#expanderSign").text("+");
 		}
 	});

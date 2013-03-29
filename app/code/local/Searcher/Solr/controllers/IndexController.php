@@ -37,7 +37,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 			$this->searchRes($_REQUEST['qRec']);
 		}
 		if($_REQUEST['sug']){
-			$this->searchMage1($_REQUEST['sDir'],$_REQUEST['sug']);
+			$this->searchMage1($_REQUEST['sug']);
 		}
 		if($_REQUEST['sku']){
 			$this->getCataIds($_REQUEST['sDir']);
@@ -63,7 +63,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 	}
 
 // constants
-	const SURL='http://65.60.97.68:8983/solr/KTS';
+	const SURL='http://65.60.97.68:8983/solr/KTS1';
 
 	public function nsAction(){
 		echo "Searcher_Solr";
@@ -102,7 +102,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		//echo $jOut;
 		echo '<br/><br/>';
 		echo "<hr/>";
-		$url					= self::SURL.'/update/json?commit=true';
+		$url					= Mage::helper('solr')->sURL().'update/json?commit=true';
 		$Client 				= new Zend_Http_Client($url);
 		$Client					->resetParameters()
 								->setMethod(Zend_Http_Client::POST)
@@ -115,7 +115,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 	
 	public function superNova($sDir){
 		$xml					= "<delete><query>*:*</query></delete>";
-		$Client					= new Zend_Http_Client(self::SURL.'/update');
+		$Client					= new Zend_Http_Client(Mage::helper('solr')->sURL().'update');
 		$Client					->resetParameters()
 								->setMethod(Zend_Http_Client::POST)
 								->setHeaders('Content-type','text/xml')
@@ -126,7 +126,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 
 	public function searchMage($sRec){
 		$sugStr					= urlencode($sRec);
-		$url					= self::SURL.'/suggest?wt=json&q='.$sugStr;
+		$url					= Mage::helper('solr')->sURL().'suggest?wt=json&q='.$sugStr;
 		// using curl method
 		$ch						= curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -142,9 +142,10 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		echo $out;		
 	}
 	
-	public function searchMage1($sDir,$sugStr){
+	public function searchMage1($sugStr){
+		//echo("found");
 		$sugStr=urlencode($sugStr);
-		$url=self::SURL.'/suggest?wt=json&q='.$sugStr;
+		$url=Mage::helper('solr')->sURL().'suggest?wt=json&q='.$sugStr;
 		// using curl method
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -163,7 +164,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 	
 	public function searchRes2($term){
 		$resStr=urlencode($term);
-		$url=self::SURL.'/select?wt=json&q='.$resStr;
+		$url=Mage::helper('solr')->sURL().'select?wt=json&q='.$resStr;
 		// using curl method
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -181,7 +182,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 	public function searchRes($term){
 		
 		$resStr=urlencode($term);
-		$url=self::SURL.'/select?wt=json&q='.$resStr;
+		$url=Mage::helper('solr')->sURL().'select?wt=json&q='.$resStr;
 		$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 		// using curl method
 		$ch = curl_init();
@@ -200,12 +201,13 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		$collection->addFieldToFilter($filters);  
 		$collection->addAttributeToSelect('*');
 		$this->collection=$collection;
-		print_r('<div id="fList">');	
+		print_r('<div id="fList">');
+		
 		echo '<div id="priceReplace">'.Mage::helper('solr')->searchPrice($collection).'</div>';
 		echo '<div id="cataReplace">'.Mage::helper('solr')->searchCata($collection).'</div>';
 		echo '<div id="manuReplace">'.Mage::helper('solr')->searchManu($collection).'</div>';
 		echo '<div id="sugReplace">'.Mage::helper('solr')->searchMage($resStr).'</div>';
-		
+		echo '<div id="temp">TEST!</div>';	
 		echo '<hr/>';
 		$url=urlencode($solrPg.'catalogsearch/result?qRec='.$resStr);
 		Mage::getSingleton('checkout/session')->setData('continue_shopping_url', $url);
