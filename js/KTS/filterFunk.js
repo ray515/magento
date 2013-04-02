@@ -10,7 +10,7 @@ jQuery(document).ready(function($){
 
 
 //prod info dialog
-$('.tabDia ol>li #dialog1').dialog({
+ $('.tabDia ol>li #dialog1').dialog({
 	autoOpen: false,
 	width: 665,
 	height: 300,
@@ -24,20 +24,20 @@ $('.tabDia ol>li #dialog1').dialog({
 		}
 });
 
-var stopDia1 = false;
+var stopDia = false;
 $('.tabDia ol>li>div #listLink').click( function(){
-	return stopDia1 = true;
+	return stopDia = true;
 });
 
 $('.tabDia ol>li>div').click( function(){
-	if(stopDia1 == true){
+	if(stopDia == true){
 		return;
 	}else{
-		var myid1='.'+$(this).attr('id');
-		var myTitle1=$(this).attr('class');
-		if($(myid1).dialog('isOpen')==false){
-			$(myid1).dialog('open');
-			$(myid1).dialog('option','title',myTitle1);
+		var myid = '.'+$(this).attr('id');
+		var myTitle = $(this).attr('class');
+		if($(myid).dialog('isOpen')==false){
+			$(myid).dialog('open');
+			$(myid).dialog('option','title',myTitle);
 			$('.dataTabs').tabs();
 		}
 	}
@@ -100,9 +100,8 @@ $('.tabDia ol>li>div').click( function(){
 					$('#'+ff).append('<div id="selPar"></div>');
 					$(this).append('<div id="selLi"></div>');
 					filterInit(fSel,jsCol);
-				}
-
-			}				
+				};
+			};				
 		});
 	}else{ }
 
@@ -139,7 +138,9 @@ $('.tabDia ol>li>div').click( function(){
 		}
 		filterJSON = filterJSON+'}';
 
-		var getit = $.post('http://65.60.97.68/gfilter/index/index',{JSONin:filterJSON,pCol:jsCol});
+		// get base url		
+		var baseURL = $.cookie('KTS-SOLR-b')+'gfilter/index/index/';
+		var getit = $.post(baseURL,{JSONin:filterJSON,pCol:jsCol});
 		getit.done(function(data){
 			$('#fRes').html(data);
 		});		
