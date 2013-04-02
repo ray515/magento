@@ -12,9 +12,6 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 	{
 		return $this->_getUrl('solr/result');
 	}
-	public function ajaxRes(){
-		return 'this is a test';
-	}
 	
 	public function searchFilterBase($sCol){
 		return count($sCol);
@@ -24,6 +21,7 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		foreach ($sCol as $prod){
 			//Cata Information//
 			$_cid=$prod->getCategoryIds();
+			var_dump($_cid);
 			foreach($_cid as $_catID){
 				$_cat=Mage::getModel('catalog/category')->load($_catID);
 				$_catName=$_cat->getName();
@@ -37,9 +35,9 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		$cataOut='<ol>'; 
 		foreach($cataInfo as $ci=>$ciCt){
-			if($ci != 'Root Catalog'){
+			//if($ci != 'Root Catalog'){
 				$cataOut=$cataOut.'<li>'.$ci.' ('.$ciCt.')</li>';
-			}
+			//}
 		}
 		$cataOut=$cataOut.'</ol><div id="fClrCata" class="fClr">Reset</div>';
 		return $cataOut;
