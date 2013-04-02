@@ -377,7 +377,7 @@ var stopDia = false;
 		}}});
 	
 //hide helper divs
-	$('#cataReplace').hide();
+	//$('#cataReplace').hide();
 	$('#priceReplace').hide();
 	$('#manuReplace').hide();
 	$('#sugReplace').hide();
@@ -516,12 +516,12 @@ function sGo(){
 			var cd1 = cData.split(',');
 
 			if(cd1[1].indexOf(' or more')!=false){  cd1[1]=cd1[1].replace('or more','TO 1000000.00');	 }
-			outDone ='text:'+unescape($('#bodySearch').val());
+			outDone = unescape($('#bodySearch').val());
 			if(cd1[0] != undefined && cd1[0] != ""){outDone=outDone+' AND cat:"'+cd1[0]+'"';}else{}
 			if(cd1[1] != undefined && cd1[1] != ""){
 				outDone=outDone+' AND price:['+cd1[1].toUpperCase()+']';
 				}else{}
-			if(cd1[2] != undefined && cd1[2] != ""){outDone=outDone+' AND manu:'+cd1[2];}else{}
+			if(cd1[2] != undefined && cd1[2] != ""){outDone=outDone+' AND '+cd1[2]; }else{}
 
 		// and... make it so, number one.
 			var getit = $.post('<?php echo($solrPg); ?>solr/index/index/',{qRec:outDone});
