@@ -139,7 +139,8 @@ $('.tabDia ol>li>div').click( function(){
 		filterJSON = filterJSON+'}';
 
 		// get base url		
-		var getit = $.post('$.cookie("KTS-SOLR-b")gfilter/index/index',{JSONin:filterJSON,pCol:jsCol});
+		var baseURL = $.cookie('KTS-SOLR-b')+'gfilter/index/index/';
+		var getit = $.post(baseURL,{JSONin:filterJSON,pCol:jsCol});
 		getit.done(function(data){
 			$('#fRes').html(data);
 		});		
