@@ -684,7 +684,7 @@ tr.summary-details-excluded {font-style:italic;}
 /* Block:Cart */
 .block-cart .block-title {background:#8a8a8a;}
 .block-cart .block-title strong {color:#FFF;}
-.block-cart .summary {background:#e5eed6;padding:8px;margin:-12px -10px 8px;text-align:center;position:relative;z-index:1;}
+.block-cart .summary {background:#e7e7e7;padding:8px;margin:0px 0px 10px 0px;text-align:center;position:relative;z-index:1;}
 .block-cart .amount {margin:0;}
 .block-cart .amount a {font-weight:bold;}
 .block-cart .subtotal {background:url(../images/bkg_subtotal.gif) no-repeat 50% 0;margin:5px 0 0;line-height:23px;}
