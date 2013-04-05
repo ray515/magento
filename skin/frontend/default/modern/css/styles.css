@@ -1226,8 +1226,8 @@ div.discount h2 {text-indent:6px;font-size: 15px; color: #333333;}
 .cart .shipping .buttons-set button.button span span {padding:0 19px 0 10px;}
 .cart .shipping p {margin:0 0 3px;}
 .cart .shipping .sp-methods {margin:10px 0 0;padding:6px 0 0;border-top:1px solid #ccc;}
-.cart .shipping .form-list .input-box {width:70px;}
-.cart .shipping .form-list input.input-text {width:150px;}
+.cart .shipping .form-list .input-box {width:90px;}
+.cart .shipping .form-list input.input-text {width:190px;}
 .cart .shipping .form-list select {width:270px; margin:-3px;
   -moz-border-radius:5px 0px 0px 5px;
   -webkit-border-radius:5px 0px 0px 5px;
@@ -1644,8 +1644,8 @@ div.shipping h2 {text-indent:6px;font-size: 15px; color: #333333;}
 .footer-container {}
 .footer {margin:15px 0 40px;}
 .footer a {color:#444;}
-footer .f-left {width:720px;}
-.footer .f-right {width:960px;background-position:center;height:80px;margin:0 10px 0;background:url(http://etoolsrus.net/new_site/images/footer_comp.png) 0 0 no-repeat;}
+.footer .f-left {width:720px;}
+.footer .f-right {width:960px;background-position:center;height:80px;margin:0px;background:url(http://etoolsrus.net/new_site/images/footer_comp.png) 0 0 no-repeat;}
 .footer ul {display:inline;}
 .footer li {display:inline;background:url(../images/bkg_pipe1.gif) 100% 50% no-repeat;padding:0 5px 0 0;margin:0 3px 0 0;}
 .footer .links li.last {background:none !important;padding-right:0 !important;}
