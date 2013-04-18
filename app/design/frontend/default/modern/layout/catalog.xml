@@ -208,6 +208,7 @@ Product view
                     <action method="addTab" translate="title" module="catalog"><alias>description</alias><title>Features &amp; Benefits</title><block>catalog/product_view_description</block><template>catalog/product/view/description.phtml</template></action>
 					<action method="addTab" translate="title" module="catalog"><alias>additional</alias><title>Specifications</title><block>catalog/product_view_attributes</block><template>catalog/product/view/attributes.phtml</template></action>
                     <action method="addTab" translate="title" module="catalog"><alias>upsell_products</alias><title>We Also Recommend</title><block>catalog/product_list_upsell</block><template>catalog/product/list/upsell.phtml</template></action>
+					<action method="addTab" translate="title" module="catalog"><alias>support</alias><title>Customer Support</title><block>catalog/product_list_upsell</block><template>catalog/product/view/support.phtml</template></action>
                     
                 </block>
 

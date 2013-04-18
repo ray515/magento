@@ -62,7 +62,7 @@ div.wp-custom-menu-popup {
 	_width: 0px; /*IE6*/
 	margin-top: -3px;
 /* round edges */	
-	border-radius: 3px;
+	border-radius: 0px 0px 3px 3px;
 	-moz-border-radius: 0px 0px 3px 3px;
 	-webkit-border-radius: 0px 0px 3px 3px;
 	-khtml-border-radius: 0px 0px 3px 3px;
