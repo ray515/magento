@@ -43,10 +43,7 @@ $('.tabDia ol>li>div').click( function(){
 	}
 });
 /**/
-// dialog home end
-
-	
-	
+// dialog home end	
 	if($('#fStat').html()=='ct'){
 		$("#tabs").tabs('option','active',1);
 		$("#fResTab").hide();
@@ -211,6 +208,12 @@ $('.tabDia ol>li>div').click( function(){
 	 $('#goBut').click(function(){
 			$('#ctFilter').submit();
 	});
+
+	 
+
+	 
+
+
 	
 });
 
