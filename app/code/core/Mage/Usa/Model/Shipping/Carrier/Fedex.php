@@ -517,7 +517,7 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
      * @param stdClass $rate
      * @return null|float
      */
-    protected function _getRateAmountOriginBased($rate)
+    protected function _getRateAmountOriginBased($rate)                                                                
     {
         $amount = null;
         $rateTypeAmounts = array();

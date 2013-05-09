@@ -179,6 +179,10 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		//var_dump($sID);
 	}
 	
+	public function searchColl($term){
+		
+	}
+	
 	public function searchRes($term){
 		
 		$resStr=urlencode($term);
@@ -203,9 +207,9 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		$this->collection=$collection;
 		print_r('<div id="fList">');
 		
-		echo '<div id="priceReplace">'.Mage::helper('solr')->searchPrice($collection).'</div>';
-		echo '<div id="cataReplace">'.Mage::helper('solr')->searchCata($collection).'</div>';
-		echo '<div id="manuReplace">'.Mage::helper('solr')->searchManu($collection).'</div>';
+//		echo '<div id="priceReplace">'.Mage::helper('solr')->searchPrice($collection).'</div>';
+//		echo '<div id="cataReplace">'.Mage::helper('solr')->searchCata($collection).'</div>';
+//		echo '<div id="manuReplace">'.Mage::helper('solr')->searchManu($collection).'</div>';
 		echo '<div id="sugReplace">'.Mage::helper('solr')->searchMage($resStr).'</div>';
 
 		echo '<hr/>';
@@ -302,12 +306,12 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 <!--
 jQuery(document).ready(function($){
 //init fSel
-	if(!fSel){
+/*	if(!fSel){
 		var fSel = new Array();
 		fSel[0]="";fSel[1]="";fSel[2]="";
-	}
+	}*/
 //init cookies
-	if(!$.cookie('KTS_ALD')){
+/*	if(!$.cookie('KTS_ALD')){
 		$.cookie('KTS_ALD','0');
 	}
 	if($.cookie('KTS_PS')){
@@ -319,7 +323,7 @@ jQuery(document).ready(function($){
 	}
 	if(!$.cookie('KTS_CC1')){
 		$.cookie('KTS_CC1',fSel.toString());
-	}
+	}*/
 
 //add to cart action
 	$('.addToCart').click(function(){
@@ -331,8 +335,7 @@ jQuery(document).ready(function($){
 	});
 		
 
-//compare action
-	
+//compare action	
 	$('.addToComp').click(function(){
 		var compUrl = $(this).data('link');
 		var compIt = $.post(compUrl);
@@ -342,8 +345,7 @@ jQuery(document).ready(function($){
 	});
 	
 //prod info dialog
-
-$('#prodList ol>li #dialog').dialog({
+	$('#prodList ol>li #dialog').dialog({
 			autoOpen: false,
 			width:    665,
 			height:   300,
@@ -358,8 +360,7 @@ $('#prodList ol>li #dialog').dialog({
 					  }
 	});
 
-var stopDia = false;
-
+	var stopDia = false;
 	$('#prodList ol>li>div #listLink').click( function(){
 		return stopDia = true;
 	});
@@ -368,18 +369,20 @@ var stopDia = false;
 		if(stopDia == true){
 			return;
 		}else{
-		var myid='.'+$(this).attr('id');
-		var myTitle=$(this).attr('class');
-		if($(myid).dialog('isOpen')==false){
-			$(myid).dialog('open');
-			$(myid).dialog('option','title',myTitle);
-			$('.dataTabs').tabs();
-		}}});
+			var myid='.'+$(this).attr('id');
+			var myTitle=$(this).attr('class');
+			if($(myid).dialog('isOpen')==false){
+				$(myid).dialog('open');
+				$(myid).dialog('option','title',myTitle);
+				$('.dataTabs').tabs();
+			};
+		};
+	});
 	
 //hide helper divs
-	$('#cataReplace').hide();
-	$('#priceReplace').hide();
-	$('#manuReplace').hide();
+//	$('#cataReplace').hide();
+//	$('#priceReplace').hide();
+//	$('#manuReplace').hide();
 	$('#sugReplace').hide();
 	$('#pSearch').hide();
 	$('#filterTitle').html('Shopping Options<span class="fClr"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Reset All</span>');
@@ -397,12 +400,12 @@ var stopDia = false;
 	});
 	
 //on load check cookie for selections
-	if($.cookie('KTS_ALD')==0){
-		fSelOnLoad();
-	}
+//	if($.cookie('KTS_ALD')==0){
+//		fSelOnLoad();
+//	}
 	
 // clear previous selection, get new selection, clean data, save data to cookie, update selection style for all filters. 	
-	$('#idCategory ol > li').click( function(){
+/*	$('#idCategory ol > li').click( function(){
 		$(this).siblings().removeClass('liTouch').addClass('liStart');
 		var cataTxt = $(this).html();
 		var ClCoTxt = cleanTxt(cataTxt);
@@ -412,7 +415,7 @@ var stopDia = false;
 		$(this).removeClass('liStart').addClass('liTouch');
 		$.cookie('KTS_ALD',1);
 		sGo();	
-	});
+	});  
 
 	$('#idPrice ol > li').click( function(){
 		$(this).siblings().removeClass('liTouch').addClass('liStart');
@@ -436,10 +439,10 @@ var stopDia = false;
 		$(this).removeClass('liStart').addClass('liTouch');
 		$.cookie('KTS_ALD',1);
 		sGo();
-	});
+	});*/
 
 //reset functionality - replace cookie data, reset style setting and go.
-	$('#idCategory #fClrCata').click( function(){
+/*	$('#idCategory #fClrCata').click( function(){
 		fSel=$.cookie('KTS_CC1').split(',');fSel[0]='';$.cookie('KTS_CC1',fSel.toString());
 		$('#idCategory ol > li').siblings().andSelf().removeClass('liTouch').addClass('liStart');
 		$.cookie('KTS_ALD',1);
@@ -466,43 +469,41 @@ var stopDia = false;
 		$.cookie('KTS_ALD',1);
 		sGo();
 	});
-
+*/
 //Previous Search Term Action
-	$('#deepPrev>ol>li').click( function(){
-		$('#bodySearch').val('"'+$(this).html()+'"');
-		$('#search').val('"'+$(this).html()+'"');
-		$.cookie('KTS_CC1',',,');
-		$.cookie('KTS_ALD',1);
-		sGo();
-	});
+//	$('#deepPrev>ol>li').click( function(){
+//		$('#bodySearch').val('"'+$(this).html()+'"');
+//		$('#search').val('"'+$(this).html()+'"');
+//		$.cookie('KTS_CC1',',,');
+//		$.cookie('KTS_ALD',1);
+//		sGo();
+//	});
 	
-function fSelOnLoad(){
+//function fSelOnLoad(){
 //read cookies
-	var ald = $.cookie('KTS_ALD');
-	var fSel1 = $.cookie('KTS_CC1');
-	fSel1 = fSel1.split(',');
-	fsTemp1 = fSel1[1].split('.');
-	fSel1[1]='$'+fsTemp1[0]+'.00'; //cover the money stuffs
+//	var ald = $.cookie('KTS_ALD');
+//	var fSel1 = $.cookie('KTS_CC1');
+//	fSel1 = fSel1.split(',');
+//	fsTemp1 = fSel1[1].split('.');
+//	fSel1[1]='$'+fsTemp1[0]+'.00'; //cover the money stuffs
 	
 //replace filter data on search start only
-	if(ald == '0'){
-//		$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'price'}, function(data){ $('#idPrice').html(data); },'html');
-//		$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'manu'}, function(data){ $('#idManufacturer').html(data); },'html');
-//		$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'cata'}, function(data){ $('#idCategory').html(data); },'html');
-		$('#idCategory').html($('#cataReplace').html()).show();
-		$('#idPrice').html($('#priceReplace').html()).show();
-		$('#idManufacturer').html($('#manuReplace').html()).show();
-	}
+//	if(ald == '0'){
+//		$('#idCategory').html($('#cataReplace').html()).show();
+//		$('#idPrice').html($('#priceReplace').html()).show();
+//		$('#idManufacturer').html($('#manuReplace').html()).show();
+//	}
 	
 //select-ness - clear all selections, select items that match cookie data with selection class.
-	$('*').removeClass('liTouch');
-	$('#narrow-by-list li:contains("'+unescape(fSel1[0])+'")').addClass('liTouch');
-	$('#narrow-by-list li:contains("'+unescape(fSel1[1])+'")').addClass('liTouch');
-	$('#narrow-by-list li:contains("'+unescape(fSel1[2])+'")').addClass('liTouch');
-	sp();
-}
+//	$('*').removeClass('liTouch');
+//	$('#narrow-by-list li:contains("'+unescape(fSel1[0])+'")').addClass('liTouch');
+//	$('#narrow-by-list li:contains("'+unescape(fSel1[1])+'")').addClass('liTouch');
+//	$('#narrow-by-list li:contains("'+unescape(fSel1[2])+'")').addClass('liTouch');
+//	sp();
+//}
 
 //Clean up text by removing $ an (x) from selection - smooth regex action ;)
+/*
 function cleanTxt(ttc){
 	tIn=ttc.replace(/(?:\$| *\([^)]*\) *)/g, "");
 	return tIn;
@@ -511,7 +512,8 @@ function cleanTxt(ttc){
 function deDup(arr) {
 	  var i,len=arr.length,out=[],obj={};for (i=0;i<len;i++) {  obj[arr[i]]=0;  } for (i in obj) { out.push(i);  } return out;
 }
-	
+*/
+/*
 function sGo(){
 			var outDone = "";
 		// read cookie
@@ -540,6 +542,7 @@ function sGo(){
 				});	
 				
 }
+
 
 	function sps(tar){
 		var tar1 = $('#bodySearch').val();
@@ -576,6 +579,7 @@ function sGo(){
 			$.cookie('KTS_PS',$('#pSearch').html());	
 		}else{}
 	}
+	*/
 });
 	
 //-->
