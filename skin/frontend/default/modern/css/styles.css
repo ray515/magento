@@ -93,7 +93,7 @@ body a:hover {color:#585858;}
 #newsletterSignup .button {margin:0 0 0 10px;}
 #newsletterBody {text-align:center;background:#3a3a3a;width:938px;padding:30px 0 30px 20px;margin:0 0 0 -30px;}
 #newsletterBody img {padding:20px 15px 20px 0;}
-#newsletterSignup input.input-text.required-entry.validate-email {height:23px;border:0px;-moz-border-radius:10px 10px 10px 10px;-webkit-border-radius:10px 10px 10px 10px;border-radius:10px 10px 10px 10px;background:#EAEAEA;}
+#newsletterSignup input.input-text.required-entry.validate-email {height:23px;border:0px;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;background:#EAEAEA;}
 
 .page-title.category-title h1 {font-size:12px;font-family:Helvetica, Arial, sans-serif;color:#858585;}
 #home_top_right_1 {float:left;width:202px;height:41px;margin:0 0 0 7px;padding:0;border:1px solid #E6E6E6;text-align:center;background-color:#F0F0F0;}
@@ -379,6 +379,7 @@ p.control input.checkbox, p.control input.radio {margin-right:6px;}
 
 /* Form Validation */
 .validation-advice {clear:both;min-height:13px;margin:3px 0 0;padding-left:13px;font-size:11px;line-height:13px;background:url(../images/validation_advice_bg.gif) 2px 3px no-repeat;color:#eb340a;}
+.shipping .validation-advice {clear:both;min-height:1px;margin:0px 0px 0px 151px;padding:2px 0px 0px 0px;font-size:11px;line-height:13px;width:125px;background: url(../images/validation_advice_bg.gif) 2px 3px no-repeat;color:#eb340a;text-indent:10px;}
 .validation-failed {border:1px solid #eb340a !important;background:#faebe7 !important;}
 .validation-passed {}
 p.required {font-size:11px;text-align:right;color:#EB340A;}
@@ -519,7 +520,7 @@ tr.summary-details-excluded {font-style:italic;}
 .link-print {/*background:url(../images/i_print.gif) 0 2px no-repeat;padding:3px 0 3px 25px;*/ }
 .link-rss {background:url(../images/i_rss.gif) 0 1px no-repeat;padding-left:18px;line-height:14px;white-space:nowrap;}
 .btn-remove {display:block;width:12px;height:12px;font-size:0;line-height:0;background:url(../images/btn_remove.gif) 0 0 no-repeat;text-indent:-999em;overflow:hidden;}
-.btn-remove2 {display:block;width:16px;height:16px;font-size:0;line-height:0;background:url(../images/btn_trash.gif) 0 0 no-repeat;text-indent:-999em;overflow:hidden;}
+.btn-remove2 {display:block;width:16px;height:16px;font-size:0;line-height:0;background:url(http://etoolsrus.net/new_site/images/btn_x_trash.png) 0 0 no-repeat;text-indent:-999em;overflow:hidden;}
 .btn-edit    {display:block;width:12px;height:12px;font-size:0;line-height:0;background:url(../images/btn_edit.gif) 0 0 no-repeat;text-indent:-999em;overflow:hidden;}
 .cards-list dt {margin:5px 0 0;}
 .cards-list .offset {padding:2px 0 2px 20px;}
@@ -683,7 +684,7 @@ tr.summary-details-excluded {font-style:italic;}
 /* Block:Cart */
 .block-cart .block-title {background:#8a8a8a;}
 .block-cart .block-title strong {color:#FFF;}
-.block-cart .summary {background:#e5eed6;padding:8px;margin:-12px -10px 8px;text-align:center;position:relative;z-index:1;}
+.block-cart .summary {background:#e7e7e7;padding:8px;margin:0px 0px 10px 0px;text-align:center;position:relative;z-index:1;}
 .block-cart .amount {margin:0;}
 .block-cart .amount a {font-weight:bold;}
 .block-cart .subtotal {background:url(../images/bkg_subtotal.gif) no-repeat 50% 0;margin:5px 0 0;line-height:23px;}
@@ -936,7 +937,7 @@ margin:0 0 0 -6px;height:35px;width:150px;background:url(http://etoolsrus.net/ne
 .add-to-links .separator {display:none;}
 
 /* Add to Cart */
-.add-to-cart label {float:left;margin-right:5px;font-weight:bold;line-height:20px;color:#555;}
+.add-to-cart label {float:left;margin-right:5px;line-height:20px;color:#555;font-size:12px;}
 .add-to-cart .qty {float:left;margin-right:5px;}
 .add-to-cart button.button {float:left;margin:-3px 0 0;}
 .add-to-cart .paypal-logo {clear:left;margin:0;text-align:right;}
@@ -1061,7 +1062,7 @@ ul li {list-style-type:none;}
 /* Mini Products Grid */
 .mini-products-grid {width:100%;}
 .mini-products-grid td {width:20%;padding:0 8px 8px 0;}
-.mini-products-grid .product-image {display:block;border:1px solid #cacaca;margin:0 0 10px;}
+.mini-products-grid .product-image {display:block;border-right:1px solid #e7e7e7;margin:0 0 10px;}
 .mini-products-grid .product-name {width:115px;margin:0 0 6px;overflow:hidden;}
 .mini-products-grid .product-name a {color:#444;text-decoration:underline;}
 .mini-products-grid .product-name a:hover {text-decoration:none;}
@@ -1077,7 +1078,7 @@ ul li {list-style-type:none;}
 .product-view .box-additional .data-table td {line-height:1.25;}
 
 /* Block:Upsell */
-.product-view .box-up-sell h2 {margin:0 0 8px;}
+.product-view .box-up-sell h2 {margin:0 0 8px;color:#333;border-bottom:1px solid #e7e7e7;padding: 0 0 6px 0;font-size:12px;text-indent:10px;}
 #product_tabs_upsell_products_contents h2 {display:block;}
 
 /* Block:Tags */
@@ -1159,6 +1160,7 @@ ul li {list-style-type:none;}
 
 /* Shopping Cart ========================================================================= */
 .cart .page-title {}
+.cart .product-name a {font-size:12px; font-weight:normal; color:#333;}
 
 /* Checkout Types */
 .cart .page-title .checkout-types {display:none !important;}
@@ -1171,7 +1173,8 @@ ul li {list-style-type:none;}
 .cart-table .product-name {font-weight:bold;margin:0 0 5px;color:#444;}
 .cart-table .item-msg {margin:5px 0;font-size:11px;font-weight:bold;color:#df280a;}
 .cart-table tfoot td {padding:5px 10px;}
-.cart-table .btn-continue {float:left;}
+.cart-table .btn-continue {float:left; height:35px;padding:4px;}
+.cart-table .btn-update {float:right; height:35px;padding:4px;}
 .cart-table .btn-continue span span {padding:0;margin:0;height:35px;width:170px;background:url(http://etoolsrus.net/new_site/images/cont_shopping1.png)  no-repeat;text-indent:-9999px;}
 .cart-table .btn-continue span {padding:0;margin:0;height:35px;width:170px;background:url(http://etoolsrus.net/new_site/images/cont_shopping1.png)  no-repeat;text-indent:-9999px;}
 .cart-table .btn-continue:hover span {text-decoration:none;}
@@ -1179,9 +1182,11 @@ ul li {list-style-type:none;}
 .cart-table .btn-update span {padding:0;margin:0;height:35px;width:190px;background:url(http://etoolsrus.net/new_site/images/update_cart.png)  no-repeat;text-indent:-9999px;}
 
 /* Shopping Cart Collateral boxes */
+
 .cart .cart-collaterals {padding:25px 0 0;}
 .cart .cart-collaterals .col2-set .col-1 {width:222px;}
-.cart .cart-collaterals .col2-set .col-2 {width:655px;background:#e9e9e9;}
+.cart .cart-collaterals .col2-set .col-2 {width:665px;}
+#shopping-cart-totals-table {width:320px;margin:5px;}
 .cart .crosssell {border:1px solid #ddd;background:#f7f7f7;padding:10px;}
 .cart .crosssell h2 {font-size:12px;font-weight:bold;}
 .cart .crosssell .product-image {float:left;width:75px;height:75px;}
@@ -1193,27 +1198,52 @@ ul li {list-style-type:none;}
 .cart .no-crosssell {width:100%;overflow:hidden;}
 .cart .no-crosssell img {display:block;margin:0 0 10px;}
 
-/* Discount Codes & Estimate Shipping and Tax Boxes */
-.cart .discount, .cart .shipping {background:#e9e9e9;padding:10px 0;margin:0 12px;}
-.cart .discount h2, .cart .shipping h2 {float:left;width:225px;font:normal 12px/16px Arial, Helvetica, sans-serif;color:#484848;}
-.cart .discount .discount-form, .cart .shipping .shipping-form {margin-left:240px;}
-.cart .discount .buttons-set, .cart .shipping .buttons-set {margin:10px 0 0;border:0;padding:0;text-align:left;}
-.cart .discount .buttons-set button.button, .cart .shipping .buttons-set button.button {float:none;margin:0;}
-.cart .discount .buttons-set button.button span, .cart .shipping .buttons-set button.button span {height:19px;background-image:url(../images/bkg_btn-gray.gif);padding:0 0 0 9px;font-size:10px;line-height:18px;color:#FFF;}
-.cart .discount .buttons-set button.button span span, .cart .shipping .buttons-set button.button span span {padding:0 19px 0 10px;}
-.cart .discount {border-bottom:1px solid #c0d2af;}
+/* Discount Codes  */
+.cart .discount {float:left;background:#ffeaac;padding:10px;margin:0px; width:300px; 
+-moz-border-radius:5px 5px 5px 5px;
+  -webkit-border-radius:5px 5px 5px 5px;
+  border-radius:5px 5px 5px 5px;}
+.cart .discount .discount-form {margin-left:7px;}
+.cart .discount .buttons-set {margin:27px 0 0;border:0;padding:0;text-align:left;}
+.cart .discount .buttons-set button.button {float:none;margin:0;}
+.cart .discount .buttons-set button.button span {height:19px;background-image:url(../images/bkg_btn-gray.gif);padding:0 0 0 9px;font-size:10px;line-height:18px;color:#FFF;}
+.cart .discount .buttons-set button.button span span {padding:0 19px 0 10px;}
+.cart .discount { }
 .cart .discount label {font-weight:bold;color:#555;}
-.cart .discount .input-box {width:270px;}
-.cart .discount input.input-text {width:264px;}
+.cart .discount .input-box {width:170px;}
+.cart .discount input.input-text {width:270px; background:#fff; border:1px solid #ccc;}
+div.discount h2 {text-indent:6px;font-size: 15px; color: #333333;}
+
+/* Estimate Shipping and Tax Boxes */
+.cart .shipping {background:#f3f3f3;padding:10px;margin:0px 0px 0px 10px; width:310px;float:left;
+-moz-border-radius:5px 5px 0px 0px;
+  -webkit-border-radius:5px 5px 0px 0px;
+  border-radius:5px 5px 0px 0px;}
+.cart .shipping .shipping-form {margin-left:7px;}
+.cart .shipping .buttons-set {margin:10px 0 0;border:0;padding:0;text-align:left;}
+.cart .shipping .buttons-set button.button {float:none;margin:0;}
+.cart .shipping .buttons-set button.button span {height:19px;background-image:url(../images/bkg_btn-gray.gif);padding:0 0 0 9px;font-size:10px;line-height:18px;color:#FFF;}
+.cart .shipping .buttons-set button.button span span {padding:0 19px 0 10px;}
 .cart .shipping p {margin:0 0 3px;}
-.cart .shipping .sp-methods {margin:10px 0 0;padding:6px 0 0;border-top:1px solid #c0d2af;}
-.cart .shipping .form-list .input-box {width:270px;}
-.cart .shipping .form-list input.input-text {width:264px;}
-.cart .shipping .form-list select {width:270px;}
+.cart .shipping .sp-methods {margin:10px 0 0;padding:6px 0 0;border-top:1px solid #ccc;}
+.cart .shipping .form-list .input-box {width:90px;}
+.cart .shipping .form-list input.input-text {width:190px;}
+.cart .shipping .form-list select {width:270px; margin:-3px;
+  -moz-border-radius:5px 0px 0px 5px;
+  -webkit-border-radius:5px 0px 0px 5px;
+  border-radius:5px 0px 0px 5px;}
+div.shipping h2 {text-indent:6px;font-size: 15px; color: #333333;}
 
 /* Shopping Cart Totals */
-.cart .totals {background:#FFF;padding:12px 0;}
-.cart .totals table {float:right;width:400px;margin:0 0 8px;}
+.cart .totals {float:right; border-top: solid 1px #ccc; 
+  background:#f3f3f3;
+  padding:12px; width:306px; 
+  margin:0px 5px 0px 0px;
+  -moz-border-radius:0px 0px 5px 5px;
+  -webkit-border-radius:0px 0px 5px 5px;
+  border-radius:0px 0px 5px 5px;
+}
+.cart .totals table {float:right;width:334px;margin:0 0 8px;}
 .cart .totals td {padding:0 0 0 15px;}
 .cart .totals tr.last td {}
 .cart .totals tfoot td {}
@@ -1614,8 +1644,8 @@ ul li {list-style-type:none;}
 .footer-container {}
 .footer {margin:15px 0 40px;}
 .footer a {color:#444;}
-footer .f-left {width:720px;}
-.footer .f-right {width:960px;background-position:center;height:80px;margin:0 10px 0;background:url(http://etoolsrus.net/new_site/images/footer_comp.png) 0 0 no-repeat;}
+.footer .f-left {width:720px;}
+.footer .f-right {width:960px;background-position:center;height:80px;margin:0px;background:url(http://etoolsrus.net/new_site/images/footer_comp.png) 0 0 no-repeat;}
 .footer ul {display:inline;}
 .footer li {display:inline;background:url(../images/bkg_pipe1.gif) 100% 50% no-repeat;padding:0 5px 0 0;margin:0 3px 0 0;}
 .footer .links li.last {background:none !important;padding-right:0 !important;}
