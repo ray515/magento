@@ -43,10 +43,7 @@ $('.tabDia ol>li>div').click( function(){
 	}
 });
 /**/
-// dialog home end
-
-	
-	
+// dialog home end	
 	if($('#fStat').html()=='ct'){
 		$("#tabs").tabs('option','active',1);
 		$("#fResTab").hide();
@@ -139,7 +136,8 @@ $('.tabDia ol>li>div').click( function(){
 		filterJSON = filterJSON+'}';
 
 		// get base url		
-		var getit = $.post('$.cookie("KTS-SOLR-b")gfilter/index/index',{JSONin:filterJSON,pCol:jsCol});
+		var baseURL = $.cookie('KTS-SOLR-b')+'gfilter/index/index/';
+		var getit = $.post(baseURL,{JSONin:filterJSON,pCol:jsCol});
 		getit.done(function(data){
 			$('#fRes').html(data);
 		});		
@@ -210,6 +208,12 @@ $('.tabDia ol>li>div').click( function(){
 	 $('#goBut').click(function(){
 			$('#ctFilter').submit();
 	});
+
+	 
+
+	 
+
+
 	
 });
 

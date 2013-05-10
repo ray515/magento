@@ -5,7 +5,6 @@ $solrPg=Mage::helper('solr')->bURL();
 echo('<input type="hidden" id="tt" name="tt" value="'.$_GET['qRec'].'" />');
 ?>
  <script type="text/javascript">
-
  jQuery(document).ready(function ($){
 	 
 		if($('#tt').val() && $('#tt').val() != 'sGo' && $('#bodySearch').val()==""){
@@ -40,20 +39,67 @@ echo('<input type="hidden" id="tt" name="tt" value="'.$_GET['qRec'].'" />');
 			source: function(request,response){ $.getJSON('<?php echo($solrPg); ?>solr/index/index',{sug:request.term},response); }
 		});
 
-//make the "go button say go but not really this gets overridden by something in the css so whatevers.//
-		$('#goBut').html("Go");
-	});
+//Moved from controller --------------------------------------------------------------------------------------------------->>		
+	//init fSel
+	if(!fSel){
+		var fSel = new Array();
+		fSel[0]="";fSel[1]="";fSel[2]="";
+	}
+	
+	//init cookies
+	if(!$.cookie('KTS_ALD')){
+		$.cookie('KTS_ALD','0');
+	}
+	if($.cookie('KTS_PS')){
+		//replace
+		$('#pSearch').html($.cookie('KTS_PS'));
+	}else{
+		//init
+		$.cookie('KTS_PS','0');
+	}
+	if(!$.cookie('KTS_CC1')){
+		$.cookie('KTS_CC1',fSel.toString());
+	}
+
+
+  	//on load check cookie for selections
+		if($.cookie('KTS_ALD')){
+			fSelOnLoad();
+		}
+		    
+		function fSelOnLoad(){
+			//read cookies
+				var ald = $.cookie('KTS_ALD');
+				var fSel1 = $.cookie('KTS_CC1');
+				fSel1 = fSel1.split(',');
+				fsTemp1 = fSel1[1].split('.');
+				fSel1[1]='$'+fsTemp1[0]+'.00'; //cover the money stuffs
+				
+			//replace filter data on search start only
+				if(ald == '0'){
+					//get filter data based on main search.
+				$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'price'}, function(data){ $('#idPrice').html(data); },'html');
+				$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'manu'}, function(data){ $('#idManufacturer').html(data); },'html');
+				$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'cata'}, function(data){ $('#idCategory').html(data); },'html');
+				}
+		}
+		
+		$('#narrow-by-list>dt>ol>li').click(function(){
+			alert('fire - 1');
+			});
+});
  </script>
 <div id="solrWrap">
-	<form id="body_mini_form" action="#" method="get">
+<input type="hidden" id="bodySearch" name="qRec" value="" />
+<!--	<form id="body_mini_form" action="#" method="get">
 		<div class="body-search">
 			<input id="bodySearch" class="input-text" type="text" name="qRec"><button id="goBut" type="submit" class="body-button" />
 		</div>
-	</form>
+	</form>  -->
 	<div id="pSearch"></div>
 	<div id="solrBurn"></div>
 
 </div>
 <?php else:; ?>
-<div>This page is only useful from a site search.<br/>If you feel funky, fake it [wink].</div>
+<div>Error.</div>
 <?php endif; ?>

@@ -17,11 +17,39 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		return count($sCol);
 	}
 
+	public function searchCol($term){
+		// this should return the product collection from the search.
+		
+		$resStr=urlencode($term);
+		$url=Mage::helper('solr')->sURL().'select?wt=json&q='.$resStr;
+		$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+		// using curl method
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$output=curl_exec($ch);
+		$result=json_decode($output, TRUE);
+		
+		foreach($result['response']['docs'] as $rOut1){
+			$sID[] = $rOut1['sku'];
+		}
+		
+		$collection = Mage::getModel('catalog/product')->getCollection();
+		$i = 0; $filters = array();
+		foreach($sID as $sku){ $filters[$i++] = array('attribute'=>'sku','eq'=>$sku); }
+		$collection->addFieldToFilter($filters);
+		$collection->addAttributeToSelect('*');
+		//$this->collection=$collection;
+		return $collection;
+	}
+	
 	public function searchCata($sCol){
 		foreach ($sCol as $prod){
 			//Cata Information//
 			$_cid=$prod->getCategoryIds();
-			var_dump($_cid);
+		//	echo('<hr/>');
+		//	var_dump($_cid);
+		//	echo('<hr/>');
 			foreach($_cid as $_catID){
 				$_cat=Mage::getModel('catalog/category')->load($_catID);
 				$_catName=$_cat->getName();
@@ -33,10 +61,10 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 				$cataInfo=$catArr;
 			}
 		}
-		$cataOut='<ol>'; 
+		$cataOut='<ol id="cataOL">'; 
 		foreach($cataInfo as $ci=>$ciCt){
 			//if($ci != 'Root Catalog'){
-				$cataOut=$cataOut.'<li>'.$ci.' ('.$ciCt.')</li>';
+				$cataOut=$cataOut.'<li class="cataLI">'.$ci.' ('.$ciCt.')</li>';
 			//}
 		}
 		$cataOut=$cataOut.'</ol><div id="fClrCata" class="fClr">Reset</div>';
@@ -79,10 +107,10 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 				$priceSetArr["$0 to $.99"][]=$n;
 			}
 		}
-		$priceOut='<ol>';
+		$priceOut='<ol id="priceOL">';
 		foreach($priceSetArr as $psa1=>$psa1a){
 			$psa1Fix=str_getcsv($psa1,'(');
-			$priceOut=$priceOut.'<li class="liStart">'.$psa1.' ('.count($psa1a).')</li>';
+			$priceOut=$priceOut.'<li class="priceLI">'.$psa1.' ('.count($psa1a).')</li>';
 		}   $priceOut=$priceOut.'</ol><div id="fClrPrice" class="fClr">Reset</div>';
 		return $priceOut;
 	}
@@ -107,9 +135,9 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 			}else{echo 'ERROR';}
 			$manuInfo=$manuArr;
 		}
-		$manuOut='<ol>';
+		$manuOut='<ol id="manuOL">';
 		foreach($manuInfo as $mi=>$miCt){
-			$manuOut=$manuOut.'<li>'.$mi.' ('.$miCt.')</li>';
+			$manuOut=$manuOut.'<li class="manuLI">'.$mi.' ('.$miCt.')</li>';
 		}
 		$manuOut=$manuOut.'</ol><div id="fClrManu" class="fClr">Reset</div>';
 		return $manuOut;

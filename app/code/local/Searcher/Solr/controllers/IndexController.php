@@ -97,7 +97,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 			$tOut1['doc']		= $tOut;
 			$tOut2['add']		= $tOut1;
 			$jOut				= $jOut.json_encode($tOut2);
-			var_dump($jOut);
+			//var_dump($jOut);
 		}
 		//echo $jOut;
 		echo '<br/><br/>';
@@ -176,7 +176,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 			$sID[] = $rOut1['sku'];
 		}
 		
-		var_dump($sID);
+		//var_dump($sID);
 	}
 	
 	public function searchRes($term){
@@ -207,7 +207,7 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		echo '<div id="cataReplace">'.Mage::helper('solr')->searchCata($collection).'</div>';
 		echo '<div id="manuReplace">'.Mage::helper('solr')->searchManu($collection).'</div>';
 		echo '<div id="sugReplace">'.Mage::helper('solr')->searchMage($resStr).'</div>';
-		echo '<div id="temp">TEST!</div>';	
+
 		echo '<hr/>';
 		$url=urlencode($solrPg.'catalogsearch/result?qRec='.$resStr);
 		Mage::getSingleton('checkout/session')->setData('continue_shopping_url', $url);
@@ -377,7 +377,7 @@ var stopDia = false;
 		}}});
 	
 //hide helper divs
-	//$('#cataReplace').hide();
+	$('#cataReplace').hide();
 	$('#priceReplace').hide();
 	$('#manuReplace').hide();
 	$('#sugReplace').hide();
@@ -486,6 +486,9 @@ function fSelOnLoad(){
 	
 //replace filter data on search start only
 	if(ald == '0'){
+//		$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'price'}, function(data){ $('#idPrice').html(data); },'html');
+//		$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'manu'}, function(data){ $('#idManufacturer').html(data); },'html');
+//		$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'cata'}, function(data){ $('#idCategory').html(data); },'html');
 		$('#idCategory').html($('#cataReplace').html()).show();
 		$('#idPrice').html($('#priceReplace').html()).show();
 		$('#idManufacturer').html($('#manuReplace').html()).show();
@@ -524,13 +527,15 @@ function sGo(){
 			if(cd1[2] != undefined && cd1[2] != ""){outDone=outDone+' AND '+cd1[2]; }else{}
 
 		// and... make it so, number one.
-			var getit = $.post('<?php echo($solrPg); ?>solr/index/index/',{qRec:outDone});
-				getit.done(function(data){
+			//var getit = $.post('<?php echo($solrPg); ?>solr/index/index/',{qRec:outDone});
+			var g1 = '<?php echo($solrPg); ?>';
+			var getit1 = $.post(g1+'solr/index/index/',{qRec:outDone});
+				getit1.done(function(data){
 					$('.ui-dialog').remove();
 					$('#tt').val('sGo');
 					$('#solrBurn').html(data);
 				});
-				getit.fail(function(data){
+				getit1.fail(function(data){
 					alert("FAIL: "+data);
 				});	
 				
@@ -592,7 +597,7 @@ function sGo(){
 			$name = $attributeSet->getAttributeSetName();
 			$attOuts[$name]=$id;
 		}
-		var_dump($attOuts);
+		//var_dump($attOuts);
 		if(array_key_exists($attIn,$attOuts)){
 			$attOut=$attOuts[$attIn];
 		}else{
@@ -633,7 +638,7 @@ function sGo(){
 		$attribute->setSource()->addData(array('label'=>'tester'));
 		$attribute->save();
 			
-		var_dump($attribute->getSource()->getAllOptions(false));
+		//var_dump($attribute->getSource()->getAllOptions(false));
 		
 		
 		return false;
