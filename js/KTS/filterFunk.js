@@ -10,7 +10,7 @@ jQuery(document).ready(function($){
 
 
 //prod info dialog
- $('.tabDia ol>li #dialog1').dialog({
+ /*$('.tabDia ol>li #dialog1').dialog({
 	autoOpen: false,
 	width: 665,
 	height: 300,
@@ -24,25 +24,17 @@ jQuery(document).ready(function($){
 		}
 });
 
-var stopDia = false;
-$('.tabDia ol>li>div #listLink').click( function(){
-	return stopDia = true;
-});
-
-$('.tabDia ol>li>div').click( function(){
-	if(stopDia == true){
-		return;
-	}else{
-		var myid = '.'+$(this).attr('id');
-		var myTitle = $(this).attr('class');
+ $('.tabDia').on('click','#slTarget',function(e){
+		//alert('fire');
+		var myid='.'+$(this).data('me');
+		var myTitle=$(this).attr('class');
 		if($(myid).dialog('isOpen')==false){
 			$(myid).dialog('open');
 			$(myid).dialog('option','title',myTitle);
 			$('.dataTabs').tabs();
-		}
-	}
-});
-/**/
+		}							
+	});		
+//*/
 // dialog home end	
 	if($('#fStat').html()=='ct'){
 		$("#tabs").tabs('option','active',1);

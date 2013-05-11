@@ -115,15 +115,18 @@ foreach($ct_tabs as $ct_tab){
 //TODO: test and take out dep items from above.
 			$searchListing='	<div id="'.$prod->getId().'a" class="'.$pClass.'">
 									<div id="searchListing">
-										<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>
-										<div id="slTable">
-											<table id="listTable">
-												<caption>'.$name.'</caption><tr><td class="col1">'.$desc.'<br/></td>
-												<td class="col2 regular-price">
-													<span class="price listingPrice">'.$price.'</span>
-														<p id="cartBut"><button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button></p>
-												</td></tr>
-											</table>
+										<div id="slTarget" data-me="'.$prod->getId().'a" class="'.$pClass.'">
+											<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>					
+											<div id="slTable">
+												<span class="slTitle">'.$name.'11111</span><br/>
+												<span class="slDesc">'.$desc.'</span>
+											</div>
+										</div>
+										<div id="slAction">
+											<span class="price lostingPrice">'.$price.'</span>
+											<p id="cartBut">
+												<button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button>
+											</p>							
 										</div>
 									</div></div>';
 			$dialog='	<div id="dialog1" class="'.$prod->getId().'a">
@@ -150,7 +153,8 @@ foreach($ct_tabs as $ct_tab){
 										<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
 										<div id=diaTableActionPrice><button type="button" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">'.$price.' '.$this->__('Add to Cart').'</span></span></button></div></td></tr>
 							</table>
-						</div>	';
+						</div>';
+												
 					print_r($searchListing.$dialog);
 					print_r('</li>');
 				
@@ -173,6 +177,35 @@ jQuery("#tabs").tabs();
 var fJSON=<?php echo(Mage::helper('gfilter')->getFilterData($prodByCat)); ?>;
 var jsCol=<?php echo($pCol); ?>;
 var fLoc="<?php echo($solrPg); ?>";
+
+jQuery(function($){
+	//prod info dialog
+	$('.tabDia ol>li #dialog1').dialog({
+		autoOpen: false,
+		width: 665,
+		height: 300,
+		show:{
+			effect: "blind",
+			duration: 1000
+			},
+		hide: {
+			effect: "explode",
+			duration: 1000
+			}
+	});
+
+	$('.tabDia').on('click','#slTarget',function(){
+		var myid='.'+$(this).data('me');
+//		alert(myid);
+		var myTitle=$(this).attr('class');
+//alert($(myid).dialog('isOpen'));
+		if($(myid).dialog('isOpen')==false){
+			$(myid).dialog('open');
+			$(myid).dialog('option','title',myTitle);
+			$('.dataTabs').tabs();
+		}
+	});
+});
 -->
 </script>
 <script type="eric" id="FilterUse">
