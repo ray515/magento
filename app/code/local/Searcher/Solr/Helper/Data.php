@@ -45,11 +45,7 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 	
 	public function searchCata($sCol){
 		foreach ($sCol as $prod){
-			//Cata Information//
 			$_cid=$prod->getCategoryIds();
-		//	echo('<hr/>');
-		//	var_dump($_cid);
-		//	echo('<hr/>');
 			foreach($_cid as $_catID){
 				$_cat=Mage::getModel('catalog/category')->load($_catID);
 				$_catName=$_cat->getName();
@@ -114,6 +110,102 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		}   $priceOut=$priceOut.'</ol><div id="fClrPrice" class="fClr">Reset</div>';
 		return $priceOut;
 	}
+	
+	public function prodOut($pCol){
+		$outDat="";
+		$outDat='<div id="prodList"><ol>';
+		foreach($pCol as $prod){
+			$outDat=$outDat.'<li>';
+				$pClass=str_replace('"','',$prod->getName());
+				$name=$prod->getName();
+				$desc=$prod->getDescription();
+				$sDesc=$prod->getShortDescription();
+				//Product detail listing
+				$tst = Mage::getResourceModel('eav/entity_attribute_collection')
+					->setEntityTypeFilter(10)
+					->getData();
+				$attStr="";
+				foreach($tst as $tst1){
+					if($prod->getResource()->getAttribute($tst1['attribute_code'])->getFrontend()->getValue($prod)!=null && $tst1['frontend_label']!=null && $tst1['used_in_product_listing']==1 && $tst1['is_visible_on_front']==1){
+						$attStr =$attStr.'<li>'.$tst1['frontend_label'].':'.$prod->getResource()->getAttribute($tst1['attribute_code'])->getFrontend()->getValue($prod).'</li>';
+					}}
+			$included=$prod->getIncluded();
+			$qParam=array('qRec'=>$_GET['qRec']);
+			$setLocation = Mage::getUrl('*/*',array(_query=>$qParam));
+			$urlKey = $prod->getUrl_key().'.html';
+			$price='$'.number_format($prod->getPrice(),2);
+			$lgPict=Mage::helper('catalog/image')->init($prod,'image');
+			$_helperCart = Mage::helper('checkout/cart')->getAddUrl($prod);
+			$_helperComp = Mage::helper('catalog/product_compare')->getAddUrl($prod);
+			$_manu=$prod->getAttributeText('manufacturer');
+			
+
+			$_cid=$prod->getCategoryIds();
+			foreach($_cid as $_catID){
+				$_cat=Mage::getModel('catalog/category')->load($_catID);
+				$_catName=$_cat->getName();
+				if(array_key_exists($_catName,$catArr)){
+					$catArr[$_catName]++;
+				}else{
+					$catArr[$_catName]=1;
+				}
+				$cataInfo=$catArr;
+			}
+
+			$cataOut='';
+			foreach($cataInfo as $ci=>$ciCt){
+				$cataOut=$cataOut.$ci.',';
+			}
+			$cataOut=rtrim($cataOut,',');
+			$po1=rtrim(ltrim($price,'$'),'.00');
+			$sl1=' 	<div id="'.$prod->getId().'o" class="'.$pClass.'" data-filter="'.$_manu.','.$po1.','.$cataOut.'" data-c="1" data-m="1" data-p="1">
+						<div id="searchListing">
+							<div id="slTarget1" data-me="'.$prod->getId().'o" class="'.$pClass.'">
+									<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>
+									<div id="slTable">
+											<span class="slTitle">'.$name.'</span><br/>
+											<span class="slDesc">'.$desc.'</span>
+									</div>
+							</div>
+							<div id="slAction">
+								<span class="price listingPrice">'.$price.'</span>
+								<p id="cartBut"><button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button></p>
+							</div>			
+						</div>
+					</div>
+					
+					';
+			
+			$dialog='	<div id="dialog" class="'.$prod->getId().'o">
+							<table id="diaTable1">
+								<tr id="diaTableTop"><td id="diaTable1Img"><img src="'.$lgPict->resize(225).'"></td><td id="diaTable1Data">
+										<div class="dataTabs">
+												<ul>
+													<li><a href="#tab-1">Product Information</a></li>
+													<li><a href="#tab-2">Product Details</a></li>
+													<li><a href="#tab-3">In The Box</a></li>
+												</ul>
+													<div id="tab-1"><p>'.$desc.'</p></div>
+													<div id="tab-2"><p>'.$attStr.'</p></div>
+												 	<div id="tab-3"><p><ol>'.$included.'</ol></p></div>
+										</div>
+										</td><tr>
+								<tr id="diaTableBot"><td id="diaTable1Comp"><a href="'.Mage::getUrl('/').$urlKey.'">View Product Page</a></td><td id="diaTable1Action">
+										<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
+										<div id=diaTableActionPrice><button type="button" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">'.$price.' '.$this->__('Add to Cart').'</span></span></button></div></td></tr>
+							</table>
+						</div>			';
+			$outDat=$outDat.$sl1.$dialog;
+			$outDat=$outDat.'</li>';
+			
+			}
+			$outDat=$outDat.'</ol></div>'; //close prodList
+			$outDat=$outDat.'</div>'; //close fList
+			$outDat=$outDat.'<hr/>';
+			$outDat=$outDat.'<div id="holder"></div>';
+			return $outDat;
+		}
+	
 	
 	public function searchManu($sCol){
 		foreach ($sCol as $prod){

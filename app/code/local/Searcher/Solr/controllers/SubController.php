@@ -1,7 +1,7 @@
 <?php
 class Searcher_Solr_SubController extends Mage_Core_Controller_Front_Action{
 	public function indexAction(){
-		if($_POST['action']==sc){$this->searchCol($_POST['type'],$_POST['term']);}
+		if($_REQUEST['action']==sc){$this->searchCol($_REQUEST['type'],$_REQUEST['term']);}
 	}
 	
 	public function searchCol($type,$term){
@@ -31,6 +31,7 @@ class Searcher_Solr_SubController extends Mage_Core_Controller_Front_Action{
 		if($type=='price'){$filterBack=Mage::helper('solr')->searchPrice($collection);}
 		if($type=='manu'){$filterBack=Mage::helper('solr')->searchManu($collection);}
 		if($type=='cata'){$filterBack=Mage::helper('solr')->searchCata($collection);}
+		if($type=='prod'){$filterBack=Mage::helper('solr')->prodOut($collection);}
 		if($filterBack){
 			echo($filterBack);
 		}else{

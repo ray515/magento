@@ -63,12 +63,11 @@ $prodByCat->load();
 //set tab header array
 if($prodByCat) {
 	foreach($prodByCat as $product){
-		if(!in_array($product->getCtMats(),$ct_tabs)){
+		if(!in_array($product->getCtMats(),$ct_tabs) && $product->getCtMats()!=null){
 			$ct_tabs[]=$product->getCtMats();
 		}
 	}	
 }
-
 // start tabs section
 print_r('<div id="tabs"><ul><li id="fResTab"><a href="#fRes"><span>Filter Results1</span></li>');
 $tabCt=1;

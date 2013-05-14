@@ -34,7 +34,8 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		//$this->loadLayout();
 		//$this->renderLayout();
 		if($_REQUEST['qRec'] || $_POST['qRec']){
-			$this->searchRes($_REQUEST['qRec']);
+			//$this->searchRes($_REQUEST['qRec']);
+			$this->sr1($_REQUEST['qRec']);
 		}
 		if($_REQUEST['sug']){
 			$this->searchMage1($_REQUEST['sug']);
@@ -179,6 +180,32 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		//var_dump($sID);
 	}
 	
+	public function sr1($term){
+		$resStr=urlencode($term);
+		$url=Mage::helper('solr')->sURL().'select?wt=json&q='.$resStr;
+		$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+		// using curl method
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$output=curl_exec($ch);
+		
+		$result=json_decode($output, TRUE);
+		
+		foreach($result as $res1){
+				$out1[] = $res1;
+				foreach($out1[1] as $res2){
+					$out2[]=$res2;
+					foreach($out2[2] as $res3){
+						$out3[]=array($res3);
+						$xCt++;
+					}
+				}
+		}
+		$o=json_encode($out3);
+		echo $o;
+	}
+	//==========================-------------------->>> Stopped here
 	public function searchRes($term){
 		
 		$resStr=urlencode($term);
