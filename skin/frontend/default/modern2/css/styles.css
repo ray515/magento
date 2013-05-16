@@ -2294,12 +2294,14 @@ ul li {list-style-type: none;}
 /* search listings */
 #searchListing{width:100%; postiton:relative;float:left; border-bottom:1px solid #555;cursor:hand;cursor:pointer;}
 #slImg{float:left;width:20%;}
-#slTable{width:80%;float:right;}
+#slTable{width:410px;float:left;}
+.slTitle{font-weight:bold;}
 #listTable{width:100%;}
 #listTable caption{font-weight:bold;}
 #listTable .col1{width:80%;}
 #listTable .col2{width:20%;}
 .listingPrice{font-size:10px !important;}
+
 #diaTable1{width:100%;}
 #diaTableImg{width:250px;}
 #diaTableData{width:100% !important;}

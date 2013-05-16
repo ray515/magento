@@ -1706,7 +1706,7 @@ div.shipping h2 {text-indent:6px;font-size: 15px; color: #333333;}
 /* search listings */
 #searchListing{width:100%; postiton:RELATIVE;float:LEFT; border-bottom:1px solid #555;cursor:HAND;cursor:POINTER;}
 #slImg{float:LEFT;width:20%;}
-#slTable{width:80%;float:RIGHT;}
+#slTable{width:410px;float:LEFT;}
 #listTable{width:100%;}
 #listTable caption{font-weight:BOLD;}
 #listTable .col1{width:80%;}
