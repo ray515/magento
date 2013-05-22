@@ -1,19 +1,19 @@
 <?php
 
-class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_action
+class TRU_ProdUp1_Adminhtml_ProdUp1Controller extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('produp1/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));	
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
+		
 		return $this;
 	}   
  
 	public function indexAction() {
 		$this->_initAction()
 		     ->renderLayout();
-		echo('tester');
 	}
 
 	public function editAction() {

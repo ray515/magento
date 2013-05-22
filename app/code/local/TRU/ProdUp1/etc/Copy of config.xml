@@ -99,7 +99,20 @@
                 <setup>
                     <module>TRU_ProdUp1</module>
                 </setup>
+              <!--   <connection>
+                    <use>core_setup</use>
+                </connection> -->
             </produp1_setup>
+<!--             <produp1_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </produp1_write>
+            <produp1_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </produp1_read> -->
         </resources>
         <blocks>
             <produp1>
