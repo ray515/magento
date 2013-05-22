@@ -4,34 +4,73 @@ if($_GET['qRec']):
 $solrPg=Mage::helper('solr')->bURL();
 ?>
  <script type="text/javascript">
+
  jQuery(document).ready(function ($){
 	//
 	$('#search').val('<?php echo($_REQUEST['qRec']) ?>');
 	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'price'}, function(data){ $('#idPrice').html(data); },'html');
 	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'manu'}, function(data){ $('#idManufacturer').html(data); },'html');
 	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'cata'}, function(data){ $('#idCategory').html(data); },'html');
-	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'prod'}, function(data){ $('#solrBurn').html(data); diaRun(); statRun();},'html');
+	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'prod'}, function(data){ $('#solrBurn').html(data); statRun(); diaRun(); },'html');
 	
 	function statRun(){
-		if($.cookie('p') && $.cookie('p')!='0' ){ filterPrep('p',$.cookie('p')); }
-		if($.cookie('m') && $.cookie('p')!='0' ){ filterPrep('m',$.cookie('m')); }
-		if($.cookie('c') && $.cookie('c')!='0' ){ filterPrep('m',$.cookie('c')); }
+		if($.cookie('p') && $.cookie('p')!='0' ){
+			
+		}
 	}	
 
-	// click action price
-	$('#idPrice').on('click','.priceLI',function(e){ filterPrep('p',$(this).html()); });
-	// reset action price
+	$('#idPrice').on('click','.priceLI',function(e){
+		//get the filter base
+		var base = $(this).html();
+		base = base.split(' ');
+		var n1 = new Number(base[0].substring(1));
+		var n2 = new Number(base[2].substring(1));
+		// mark it,clear old choices
+		$(this).siblings().removeClass('liTouch').addClass('liStart');
+		$(this).addClass('liTouch');
+		$.cookie('p',$(this).html());
+	
+		//run the test
+		$('div#prodList ol>li>div').each(function(){
+			var dat=$(this).data('filter');
+			var datArr=dat.split(',');
+			if(datArr[1] < n1){
+				$(this).data('p',0);
+			}else if(datArr[1] > n2){
+				$(this).data('p',0);
+			}else{
+				$(this).data('p',1);
+			}
+		});
+
+		// filter function
+		vCt();
+	});
+	// reset action
 	$('#idPrice').on('click','.fClr',function(e){
 		$('#idPrice li').removeClass('liTouch').addClass('liStart');
 		$.cookie('p','0');
 		$('div#prodList ol>li>div').each(function(){
 			$(this).data('p',1);
 		});
-		// filter function
 		vCt();
 	});
 
-	$('#idManufacturer').on('click','.manuLI',function(e){ filterPrep('m',$(this).html()); });
+	$('#idManufacturer').on('click','.manuLI',function(e){
+		var mBase = $(this).html().substring(0,$(this).html().length-4);
+		$(this).siblings().removeClass('liTouch').addClass('liStart');
+		$(this).addClass('liTouch');
+		$.cookie('m',$(this).html());
+		$('div#prodList ol>li>div').each(function(){
+			var dat=$(this).data('filter').split(',')[0];
+			if(dat==mBase){
+				$(this).data('m',1);
+			}else{
+				$(this).data('m',0);
+			}
+		});	
+		vCt();	
+	});
 	$('#idManufacturer').on('click','.fClr',function(e){
 		$('#idManufacturer li').removeClass('liTouch').addClass('liStart');
 		$.cookie('m','0');
@@ -41,7 +80,25 @@ $solrPg=Mage::helper('solr')->bURL();
 		vCt();
 	});
 
-	$('#idCategory').on('click','.cataLI',function(e){ filterPrep('c',$(this).html()); });
+	$('#idCategory').on('click','.cataLI',function(e){
+		var cBase = $(this).html().substring(0,$(this).html().length-4);
+		$(this).siblings().removeClass('liTouch').addClass('liStart');
+		$(this).addClass('liTouch');
+		$.cookie('c',$(this).html());
+		$('div#prodList ol>li>div').each(function(){
+			var dat=$(this).data('filter').split(',');
+			dat.shift();dat.shift();
+			for(i=0;i<dat.length;i++){
+				if(dat[i]==cBase){
+					$(this).data('c',1);
+					break;
+				}else{
+					$(this).data('c',0);
+				}
+			}
+		});
+		vCt();
+	});
 	$('#idCategory').on('click','.fClr',function(e){
 		$('#idCategory li').removeClass('liTouch').addClass('liStart');
 		$.cookie('c','0');
@@ -50,74 +107,13 @@ $solrPg=Mage::helper('solr')->bURL();
 		});
 		vCt();
 	});
-	
-	// filter prep action	
-	function filterPrep(action,sel){
-		if(action=='p'){
-		  	//get the filter base
-			var t = $("li:contains('"+sel+"')")
-			var base = sel;
-			base = base.split(' ');
-			var n1 = new Number(base[0].substring(1));
-			var n2 = new Number(base[2].substring(1));
-			$(t).siblings().removeClass('liTouch').addClass('liStart');
-			$(t).addClass('liTouch');
-			$.cookie('p',sel);
-			//run the test
-			$('div#prodList ol>li>div').each(function(){
-				var dat=$(this).data('filter');
-				var datArr=dat.split(',');
-				if(datArr[1] < n1){
-					$(this).data('p',0);
-				}else if(datArr[1] > n2){
-					$(this).data('p',0);
-				}else{
-					$(this).data('p',1);
-				}
-			});
-		}else if(action=='c'){
-			var t = $("li:contains('"+sel+"')");
-			var cBase = sel.substring(0,sel.length-4);
-			$(t).siblings().removeClass('liTouch').addClass('liStart');
-			$(t).addClass('liTouch');
-			$.cookie('c',sel);
-			$('div#prodList ol>li>div').each(function(){
-				var dat=$(this).data('filter').split(',');
-				dat.shift();dat.shift();
-				for(i=0;i<dat.length;i++){
-					if(dat[i]==cBase){
-						$(this).data('c',1);
-						break;
-					}else{
-						$(this).data('c',0);
-					}
-				}
-			});
-		}else if(action=='m'){
-			var t = $("li:contains('"+sel+"')");
-			var mBase = sel.substring(0,sel.length-4);
-			alert(mBase);
-			$(t).siblings().removeClass('liTouch').addClass('liStart');
-			$(t).addClass('liTouch');
-			$.cookie('m',sel);
-			$('div#prodList ol>li>div').each(function(){
-				var dat=$(this).data('filter').split(',')[0];
-				if(dat==mBase){
-					$(this).data('m',1);
-				}else{
-					$(this).data('m',0);
-				}
-			});	
-		}else{
-			alert('ERROR');
-		}
-		// to filter function
-		vCt();
-	}
+
 	// filter action function - the business end of the filter stick
 	function vCt(){
 		$.cookie('sTerm',$('#search').val());
 		$('div#prodList ol>li>div').each(function(){
+			//DONE: add search term and current selections to cookie
+			
 			if($(this).data('p')==1 && $(this).data('c')==1 && $(this).data('m')==1){
 				$(this).show();
 			}else{
@@ -128,7 +124,14 @@ $solrPg=Mage::helper('solr')->bURL();
 
 	function diaRun(){
 		//dialog set
-		$('#prodList ol>li #dialog').dialog({ autoOpen:false,width:665,height:300,modal:true,show:{effect:"blind",duration:1000},hide:{effect:"explode",duration:1000} });
+		$('#prodList ol>li #dialog').dialog({
+			autoOpen: false,
+			width:    665,
+			height:   300,
+			modal:    true,
+			show:	  {effect:"blind",duration:1000},
+			hide: 	  {effect:"explode",duration:1000}
+		});
 	}
 
 	//dialog fire
@@ -140,15 +143,6 @@ $solrPg=Mage::helper('solr')->bURL();
 	});
 
 	//add to cart action
-	
-	$('body').on('click','#listLink',function(e){
-		var cartUrl = $(this).data('link');
-		var cartIt = $.post(cartUrl);
-			cartIt.done(function(data){
-				location.reload();
-			});
-	});
-	
 	$('.addToCart').click(function(){
 		var cartUrl = $(this).data('link');
 		var cartIt = $.post(cartUrl);

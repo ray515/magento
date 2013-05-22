@@ -1,5 +1,5 @@
 <?php
-class TRU_ProdUp1_Block_Adminhtml_Produp1 extends Mage_Adminhtml_Block_Widget_Grid_Container
+class TRU_ProdUp1_Block_Adminhtml_ProdUp1 extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
   public function __construct()
   {

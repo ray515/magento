@@ -10,7 +10,7 @@
 <!-- Reg Results -->
     <catalogsearch_result_index translate="label">
         <label>Quick Search Form</label>
-      <!--  <update handle="page_two_columns_left" />  -->
+      <!--  --><update handle="page_two_columns_left" />  
 		<reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
         </reference>       
@@ -22,7 +22,7 @@
         </reference>
     </catalogsearch_result_index>
 
-<!-- Adv Search-->
+<!-- Adv Search
     <catalogsearch_advanced_index translate="label">
         <label>Advanced Search Form</label>
         <!-- Mage_Catalogsearch -->
@@ -40,13 +40,13 @@
             <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
         </reference>
     </catalogsearch_advanced_index>
- 
+ -->
 
-<!-- Adv results-->
+<!-- Adv results
     <catalogsearch_advanced_result translate="label">
         <label>Advanced Search Result</label>
-        <update handle="page_two_columns_left" />
-        <!-- Mage_Catalogsearch -->
+        <update handle="page_two_columns_left" />-->
+        <!-- Mage_Catalogsearch 
         <reference name="root">
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
         </reference>
@@ -85,5 +85,5 @@
             <block type="catalogsearch/term" name="seo.searchterm" template="catalogsearch/term.phtml"/>
         </reference>
     </catalogsearch_term_popular>
-
+-->
 </layout>

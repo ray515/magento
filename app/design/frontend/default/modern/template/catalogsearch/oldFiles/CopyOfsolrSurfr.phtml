@@ -1,0 +1,59 @@
+
+<?php
+if($_GET['qRec']): 
+$solrPg=Mage::helper('solr')->bURL();
+echo('<input type="hidden" id="tt" name="tt" value="'.$_GET['qRec'].'" />');
+?>
+ <script type="text/javascript">
+
+ jQuery(document).ready(function ($){
+	 
+		if($('#tt').val() && $('#tt').val() != 'sGo' && $('#bodySearch').val()==""){
+			var bsState=$('#tt').val();
+			$.removeCookie('KTS_CC1');
+			$.removeCookie('KTS_ALD');
+			$.post('<?php echo($solrPg); ?>solr/index/index/',{qRec:$('#tt').val()}, function(data){ $('#solrBurn').html(data); },'html'); //qRec
+			$('#search').val($('#tt').val());
+			$('#bodySearch').val($('#tt').val());
+			$('#search').focus(function(){ $('#search').val(""); });
+		}else{
+			$('#search').val("Search KensToolSupply.com");
+		}
+		$('#bodySearch').focus(function(){ $('#bodySearch').val("");});
+		$('#body_mini_form').submit(function(event){
+			$.removeCookie('KTS_CC1');
+			$.removeCookie('KTS_ALD');
+			bsState=$('#bodySearch').val();
+			bsClean=bsState.replace('"','').replace('"','');
+			if($('#pSearch').html()==""){
+				$('#pSearch').html(bsClean);
+				$.cookie('KTS_PS',bsClean);
+			}else{
+			var psOut= $('#pSearch').html()+','+bsClean
+			$('#pSearch').html(psOut);
+			$.cookie('KTS_PS',psOut);
+			}
+			$.post('<?php echo($solrPg); ?>solr/index/index/',{qRec:$('#bodySearch').val(),ff:'bmf'}, function(data){ $('#solrBurn').html(data); },'html'); //qRec
+			$('#bodySearch').val(bsState);
+		});		
+		$('#bodySearch').autocomplete({ //autocomplete for on page search
+			source: function(request,response){ $.getJSON('<?php echo($solrPg); ?>solr/index/index',{sug:request.term},response); }
+		});
+
+//make the "go button say go but not really this gets overridden by something in the css so whatevers.//
+		$('#goBut').html("Go");
+	});
+ </script>
+<div id="solrWrap">
+	<form id="body_mini_form" action="#" method="get">
+		<div class="body-search">
+			<input id="bodySearch" class="input-text" type="text" name="qRec"><button id="goBut" type="submit" class="body-button" />
+		</div>
+	</form>
+	<div id="pSearch"></div>
+	<div id="solrBurn"></div>
+
+</div>
+<?php else:; ?>
+<div>Error.</div>
+<?php endif; ?>
