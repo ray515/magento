@@ -31,6 +31,7 @@ class Searcher_Solr_SubController extends Mage_Core_Controller_Front_Action{
 		if($type=='price'){$filterBack=Mage::helper('solr')->searchPrice($collection);}
 		if($type=='manu'){$filterBack=Mage::helper('solr')->searchManu($collection);}
 		if($type=='cata'){$filterBack=Mage::helper('solr')->searchCata($collection);}
+		if($type=='sug'){$filterBack=Mage::helper('solr')->searchSug($term);}
 		if($type=='prod'){$filterBack=Mage::helper('solr')->prodOut($collection);}
 		if($filterBack){
 			echo($filterBack);

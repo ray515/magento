@@ -191,8 +191,8 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 										</div>
 										</td><tr>
 								<tr id="diaTableBot"><td id="diaTable1Comp"><a href="'.Mage::getUrl('/').$urlKey.'">View Product Page</a></td><td id="diaTable1Action">
-										<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
-										<div id=diaTableActionPrice><button type="button" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">'.$price.' '.$this->__('Add to Cart').'</span></span></button></div></td></tr>
+										<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" id="compIt" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
+										<div id=diaTableActionPrice><button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">'.$price.' '.$this->__('Add to Cart').'</span></span></button></div></td></tr>
 							</table>
 						</div>			';
 			$outDat=$outDat.$sl1.$dialog;
@@ -257,4 +257,27 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		//var_dump($out);
 		return $out;
 	}
+	
+	public function searchSug($term){
+		$sugStr=urlencode($term);
+		$url=Mage::helper('solr')->sURL().'suggest?wt=json&q='.$sugStr;
+		// using curl method
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$output=curl_exec($ch);
+		$result=json_decode($output, TRUE);
+		
+		$res=$result['spellcheck']['suggestions'][1]['suggestion'];
+		$jCt=0;
+		$d1="";
+		foreach($res as $res1){
+			$d1=$d1.'<li><a href="?qRec='.$res1.'">'.$res1.'</li>';
+			//$data[]=array("label"=>$res1);
+			$jCt++;
+		}
+		//echo json_encode($d1);
+		echo $d1;
+	}
+	
 }

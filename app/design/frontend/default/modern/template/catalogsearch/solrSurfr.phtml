@@ -7,9 +7,11 @@ $solrPg=Mage::helper('solr')->bURL();
  jQuery(document).ready(function ($){
 	//
 	$('#search').val('<?php echo($_REQUEST['qRec']) ?>');
+	//TODO: Combine filter request into single request
 	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'price'}, function(data){ $('#idPrice').html(data); },'html');
 	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'manu'}, function(data){ $('#idManufacturer').html(data); },'html');
 	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'cata'}, function(data){ $('#idCategory').html(data); },'html');
+	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'sug'}, function(data){ $('#deepRes ol').html(data); },'html');
 	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'prod'}, function(data){ $('#solrBurn').html(data); diaRun(); statRun();},'html');
 	
 	function statRun(){
@@ -149,24 +151,33 @@ $solrPg=Mage::helper('solr')->bURL();
 			});
 	});
 	
-	$('.addToCart').click(function(){
+/*	$('.addToCart').click(function(){
 		var cartUrl = $(this).data('link');
 		var cartIt = $.post(cartUrl);
 			cartIt.done(function(data){
 				location.reload();
 			});
 	});
-		
+*/		
 
 //compare action
-	
-	$('.addToComp').click(function(){
+
+	$('body').on('click','#compIt',function(e){
 		var compUrl = $(this).data('link');
 		var compIt = $.post(compUrl);
 			compIt.done(function(data){
 				location.reload();
 			});
 	});
+
+/*	$('.addToComp').click(function(){
+		var compUrl = $(this).data('link');
+		var compIt = $.post(compUrl);
+			compIt.done(function(data){
+				location.reload();
+			});
+	});
+*/
 });
  </script>
 <div id="solrWrap">
