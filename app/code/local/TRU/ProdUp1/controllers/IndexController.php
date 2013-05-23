@@ -1,5 +1,5 @@
 <?php
-class TRU_ProdUp1_IndexController extends Mage_Core_Controller_Front_Action
+class TRU_Produp1_IndexController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()
     {
