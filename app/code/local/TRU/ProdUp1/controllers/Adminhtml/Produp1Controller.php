@@ -486,7 +486,7 @@ class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
                                                 	//dev
                                                 	//$img="C:\\xampp\\htdocs\\magento\\media\\catalog\\test\\".$data[$i]['image'];
 	                                           		//stg
-                                                	$img="/var/www/kts/media/catalog/import/".$data[$i]['image'];
+                                                	$img="/var/www/kts/magento/media/catalog/import/".$data[$i]['image'];
                                                 	$newproduct->addImageToMediaGallery($img,array('thumbnail','small_image','image'),false,false);	
                                            			$gal = $newproduct->getData('media_gallery');
                                            			$lImage = array_pop($gal['images']);
@@ -661,7 +661,7 @@ class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
                                                 	//dev
                                                 	//$img="C:\\xampp\\htdocs\\magento\\media\\catalog\\test\\".$data[$i]['image'];
 	                                           		//stg
-	                                           		$img="/var/www/kts/media/catalog/import/".$data[$i]['image'];
+	                                           		$img="/var/www/kts/magento/media/catalog/import/".$data[$i]['image'];
                                                 	$newproduct->addImageToMediaGallery($img,array('thumbnail','small_image','image'),false,false);	
                                            			$gal = $newproduct->getData('media_gallery');
                                            			$lImage = array_pop($gal['images']);
