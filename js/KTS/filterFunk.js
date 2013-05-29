@@ -127,9 +127,11 @@ jQuery(document).ready(function($){
 		}
 		filterJSON = filterJSON+'}';
 
-		// get base url		
-		var baseURL = $.cookie('KTS-SOLR-b')+'gfilter/index/index/';
-		var getit = $.post(baseURL,{JSONin:filterJSON,pCol:jsCol});
+		// get base url	
+		alert('looking for base url...');
+		//var baseURL = $.cookie('KTS-SOLR-b')+'gfilter/index/index/';
+		var bURL = 'http://127.0.0.1/gfilter/index/index/';
+		var getit = $.post(bURL,{JSONin:filterJSON,pCol:jsCol});
 		getit.done(function(data){
 			$('#fRes').html(data);
 		});		
@@ -200,12 +202,5 @@ jQuery(document).ready(function($){
 	 $('#goBut').click(function(){
 			$('#ctFilter').submit();
 	});
-
-	 
-
-	 
-
-
-	
 });
 
