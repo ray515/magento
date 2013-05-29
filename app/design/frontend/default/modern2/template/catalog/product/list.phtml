@@ -196,8 +196,8 @@ jQuery(function($){
 // add to cart action
 $('.addToCart').click(function(){
 	var p = $(this).data('p');
-	var cartUrl = 'http://127.0.0.1/gfilter/index/index/'
-	var cartIt = $.post(cartUrl,{'cartinator':'add','pId':p});
+	var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
+	var cartIt = $.post(nURL,{'cartinator':'add','pId':p});
 	cartIt.done(function(data){
 		location.reload();
 	});
