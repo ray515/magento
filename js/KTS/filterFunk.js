@@ -127,10 +127,10 @@ jQuery(document).ready(function($){
 		}
 		filterJSON = filterJSON+'}';
 
-		// get base url	
-		alert('looking for base url...');
+		var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
 		//var baseURL = $.cookie('KTS-SOLR-b')+'gfilter/index/index/';
-		var bURL = 'http://127.0.0.1/gfilter/index/index/';
+		//var bURL = 'http://127.0.0.1/gfilter/index/index/';
+		var bURL = nURL;
 		var getit = $.post(bURL,{JSONin:filterJSON,pCol:jsCol});
 		getit.done(function(data){
 			$('#fRes').html(data);

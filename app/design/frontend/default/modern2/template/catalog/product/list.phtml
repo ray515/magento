@@ -105,11 +105,10 @@ $prodCt=0;
 					$attStr =$attStr.'<li>'.$attCol['frontend_label'].':'.$prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod).'</li>';
 				}}
 			$included		= $prod->getIncluded();											// get what is included with product                                               
-			$setLocation 	= $this->getRequest()->getOriginalPathInfo(); 					// parent page location, depricatated, test then take out or add actual location of parent.					
+//			$setLocation 	= $this->getRequest()->getOriginalPathInfo(); 					// parent page location, depricatated, test then take out or add actual location of parent.					
 			$urlKey 		= $prod->getUrl_key().'.html';									// get URL Key from attributes
 			$price			= '$'.number_format($prod->getPrice(),2);						// get and format price
 			$lgPict			= Mage::helper('catalog/image')->init($prod,'image');			// get pict, just get large image and resize as needed via resize() function
-			$_helperCart 	= Mage::helper('checkout/cart')->getAddUrl($prod);				// cart helper, depricated, test then take out. functionality replaced with ajax method.
 			$_helperComp 	= Mage::helper('catalog/product_compare')->getAddUrl($prod);	// compare helper, depricated, test then take out. functionality replaced with ajax method.
 //TODO: test and take out dep items from above.
 			$searchListing='	<div id="'.$prod->getId().'a" class="'.$pClass.'">
@@ -117,14 +116,14 @@ $prodCt=0;
 										<div id="slTarget" data-me="'.$prod->getId().'a" class="'.$pClass.'">
 											<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>					
 											<div id="slTable">
-												<span class="slTitle">'.$name.'11111</span><br/>
+												<span class="slTitle">'.$name.'</span><br/>
 												<span class="slDesc">'.$desc.'</span>
 											</div>
 										</div>
 										<div id="slAction">
 											<span class="price lostingPrice">'.$price.'</span>
 											<p id="cartBut">
-												<button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button>
+												<button type="button" id="listLink" data-p="'.$prod->getId().'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button>													
 											</p>							
 										</div>
 									</div></div>';
@@ -150,7 +149,7 @@ $prodCt=0;
 										</td><tr>
 								<tr id="diaTableBot"><td id="diaTable1Comp"><a href="'.Mage::getUrl('/').$urlKey.'">View Product Page</a></td><td id="diaTable1Action">
 										<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
-										<div id=diaTableActionPrice><button type="button" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">'.$price.' '.$this->__('Add to Cart').'</span></span></button></div></td></tr>
+										<div id=diaTableActionPrice><button type="button" data-p="'.$prod->getId().'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">'.$price.' '.$this->__('Add to Cart').'</span></span></button></div></td></tr>
 							</table>
 						</div>';
 												
@@ -193,6 +192,16 @@ jQuery(function($){
 			duration: 1000
 			}
 	});
+
+// add to cart action
+$('.addToCart').click(function(){
+	var p = $(this).data('p');
+	var cartUrl = 'http://127.0.0.1/gfilter/index/index/'
+	var cartIt = $.post(cartUrl,{'cartinator':'add','pId':p});
+	cartIt.done(function(data){
+		location.reload();
+	});
+});
 
 	$('.tabDia').on('click','#slTarget',function(){
 		var myid='.'+$(this).data('me');
