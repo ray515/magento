@@ -88,7 +88,7 @@ foreach($ct_tabs as $ct_tab){
 			->addIdFilter($pgCol)
 			->addAttributeToSelect('*')
 			->load();
-
+$prodCt=0;
 		foreach($prodCol as $prod){
 			print_r('<li>');
 			$pClass			= str_replace('"','',$prod->getName());							// clean product name to be used as class for selector in dialog functionallity.
@@ -156,7 +156,8 @@ foreach($ct_tabs as $ct_tab){
 												
 					print_r($searchListing.$dialog);
 					print_r('</li>');
-				
+	$prodCt++;
+	if($prodCt==10){break;}			
 				}
 				print_r('</ol></div>'); //close prodList
 //				print_r('</div>'); //close fList
