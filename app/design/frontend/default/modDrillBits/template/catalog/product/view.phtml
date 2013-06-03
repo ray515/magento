@@ -1,0 +1,287 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="product-view">
+    <div class="product-essential">
+    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+        </div>
+
+        <div class="product-shop">
+            <div class="product-name">
+                <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+            </div>
+
+            <?php if ($this->canEmailToFriend()): ?>
+                <p class="email-friend"><a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('Email to a Friend') ?></a></p>
+            <?php endif; ?>
+
+            <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+            <?php echo $this->getChildHtml('alert_urls') ?>
+            <?php echo $this->getChildHtml('product_type_data') ?>
+            <?php echo $this->getTierPriceHtml() ?>
+            <?php echo $this->getChildHtml('extrahint') ?>
+
+            <?php if (!$this->hasOptions()):?>
+                <div class="add-to-box">
+                    <?php if($_product->isSaleable()): ?>
+                        <?php echo $this->getChildHtml('addtocart') ?>
+                        <?php if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
+                            <span class="or"><?php echo $this->__('OR') ?></span>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <?php echo $this->getChildHtml('addto') ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($_product->getShortDescription()):?>
+                <div class="short-description">
+                    <h2><?php echo $this->__('Work Material') ?></h2>
+                    <div><?php echo $this->getChildHtml('chart') ?></div>
+                    <!-- <div class="std"><?php //echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div> -->
+                    
+                </div>
+            <?php endif;?>
+
+            <?php echo $this->getChildHtml('other');?>
+            <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+                <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+            <?php endif;?>
+
+        </div>
+
+        <div class="product-img-box">
+            <?php echo $this->getChildHtml('media') ?>
+            <div><?php echo $this->getChildHtml('ctIco') ?></div> 
+            <div>
+            <?php 
+// flute logit
+$fNo=$_product->getCt_flute_no();
+switch($fNo){
+	case '2':
+		$fNo1 = "ct_fl_2";
+		break;
+	case '3':
+		$fNo1 = "ct_fl_3";
+		break;
+	case '4':
+		$fNo1 = "ct_fl_4";
+		break;
+	case '5':
+		$fNo1 = "ct_fl_5";
+		break;
+	case '6':
+		$fNo1 = "ct_fl_6";
+		break;
+	case 'm':
+		$fNo1 = "ct_fl_m";
+		break;
+}            
+// radius logic
+$cRad=$_product->getCt_corner_rad();
+switch($cRad){
+	case 'square':
+		$cRad1 = "ct_end_sq";
+		break;
+	case 'ball':
+		$cRad1 = "ct_end_ball";
+		break;
+	case '90':
+		$cRad1 = "ct_end_90";
+		break;
+	case 'rough':
+		$cRad1 = "ct_end_rough";
+		break;
+	default:
+		$cRad1 = "ct_end_rad";
+		break;	
+}
+//helix logic
+$hDeg=$_product->getCt_heli_deg();
+switch($hDeg){
+	case '20';
+		$hDeg1 = "ct_heli_20";
+		break;
+	case '30';
+		$hDeg1 = "ct_heli_30";
+		break;
+	case '32-38';
+		$hDeg1 = "ct_heli_3238";
+		break;
+	case '35';
+		$hDeg1 = "ct_heli_35";
+		break;
+	case '40';
+		$hDeg1 = "ct_heli_40";
+		break;
+	case '45';
+		$hDeg1 = "ct_heli_45";
+		break;
+	case '60';
+		$hDeg1 = "ct_heli_60";
+		break;
+}
+// hrc logic
+$hrc=$_product->getCt_hrc();
+switch($hrc){
+	case 'up to 35';
+	$hrc1 = "ct_hrc_to35";
+	break;
+	case '30-40';
+	$hrc1 = "ct_hrc_3040";
+	break;
+	case 'up to 50';
+	$hrc1 = "ct_hrc_to50";
+	break;
+	case 'up to 40';
+	$hrc1 = "ct_hrc_to40";
+	break;
+	case '<40';
+	$hrc1 = "ct_hrc_lt40";
+	break;
+	case '60';
+	$hrc1 = "ct_hrc_60";
+	break;
+}
+
+$matAL=$_product->getAttributeText('use_alum');
+if($matAL=='Good'){$matAL1='goodDot';}elseif ($matAL=='Best'){$matAL1='bestDot';}else{$matAL1='noDot';}
+$matCS=$_product->getAttributeText('use_csteel');
+if($matCS=='Good'){$matCS1='goodDot';}elseif ($matCS=='Best'){$matCS1='bestDot';}else{$matCS1='noDot';}
+$matAS=$_product->getAttributeText('use_asteel');
+if($matAS=='Good'){$matAS1='goodDot';}elseif ($matAS=='Best'){$matAS1='bestDot';}else{$matAS1='noDot';}
+$matHS=$_product->getAttributeText('use_hsteel');
+if($matHS=='Good'){$matHS1='goodDot';}elseif ($matHS=='Best'){$matHS1='bestDot';}else{$matHS1='noDot';}
+$matSS=$_product->getAttributeText('use_ssteel');
+if($matSS=='Good'){$matSS1='goodDot';}elseif ($matSS=='Best'){$matSS1='bestDot';}else{$matSS1='noDot';}
+$matNI=$_product->getAttributeText('use_nickel');
+if($matNI=='Good'){$matNI1='goodDot';}elseif ($matNI=='Best'){$matNI1='bestDot';}else{$matNI1='noDot';}
+$matCI=$_product->getAttributeText('use_ciron');
+if($matCI=='Good'){$matCI1='goodDot';}elseif ($matCI=='Best'){$matCI1='bestDot';}else{$matCI1='noDot';}
+$matTI=$_product->getAttributeText('use_tit');
+if($matTI=='Good'){$matTI1='goodDot';}elseif ($matTI=='Best'){$matTI1='bestDot';}else{$matTI1='noDot';}
+
+//work material temp out
+
+
+            //print_r('AL: '.$matAL1.'<br/> CS: '.$matCS1.'<br/> AS: '.$matAS1.'<br/> HS: '.$matHS1.'<br/> SS:'.$matSS1.'<br/> NI:'.$matNI1.'<br/> CI: '.$matCI1.'<br/> TI: '.$matTI1.'<br/>');
+            ?>
+            </div>           
+        </div>
+
+        <div class="clearer"></div>
+        <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+            <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+        <?php endif;?>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var productAddToCartForm = new VarienForm('product_addtocart_form');
+        productAddToCartForm.submit = function(button, url) {
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                   form.action = url;
+                }
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productAddToCartForm);
+
+        productAddToCartForm.submitLight = function(button, url){
+            if(this.validator) {
+                var nv = Validation.methods;
+                delete Validation.methods['required-entry'];
+                delete Validation.methods['validate-one-required'];
+                delete Validation.methods['validate-one-required-by-name'];
+                if (this.validator.validate()) {
+                    if (url) {
+                        this.form.action = url;
+                    }
+                    this.form.submit();
+                }
+                Object.extend(Validation.methods, nv);
+            }
+        }.bind(productAddToCartForm);
+    //]]>
+    </script>
+    </div>
+
+    <div class="product-collateral">
+        <?php echo $this->getChildHtml('info_tabs') ?>
+        <?php echo $this->getChildHtml('product_additional_data') ?>
+        <div>test 123</div>
+    </div>
+</div>
+<script  type="text/javascript">
+document.observe('dom:loaded',function(){
+	// BLUE ICONS
+	$('icoChoke').update('<div id="ico1" class="ico"></div><div id="ico2" class="ico"></div><div id="ico3" class="ico"></div><div id="ico4" class="ico"></div>');
+
+	$('ico1').addClassName('<?php echo $fNo1 ?>');
+	$('ico2').addClassName('<?php echo $cRad1 ?>');
+	$('ico3').addClassName('<?php echo $hDeg1 ?>');
+	$('ico4').addClassName('<?php echo $hrc1 ?>');
+	
+	$('matAL').addClassName('<?php echo $matAL1 ?>');
+	$('matCS').addClassName('<?php echo $matCS1 ?>');
+	$('matAS').addClassName('<?php echo $matAS1 ?>');
+	$('matHS').addClassName('<?php echo $matHS1 ?>');
+	$('matSS').addClassName('<?php echo $matSS1 ?>');
+	$('matNI').addClassName('<?php echo $matNI1 ?>');
+	$('matCI').addClassName('<?php echo $matCI1 ?>');
+	$('matTI').addClassName('<?php echo $matTI1 ?>');
+
+});
+</script>

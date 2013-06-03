@@ -1,0 +1,192 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<?php
+    $_productCollection=$this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+?>
+<?php if(!$_productCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+<div class="category-products">
+
+		//looking for categories
+			<?php
+					print_r('<hr/>');
+					print_r('<div id="catTabs"><div><ul>');
+					
+					$subKid = Mage::getModel('catalog/category')->load(178);
+					$what1 = str_getcsv($subKid->getChildren());
+					$i=1;
+					foreach($what1 as $kids){
+						$bobby = Mage::getModel('catalog/category')->load($kids);
+						if($i==1){
+						print_r('<li style="margin-left: 1px" id="catTabHeaderActive"><a href="javascript:void(0)" onClick="toggleTab('.$i.','.count($what1).')"><span>'.$bobby->getName().'</span></a></li>');
+						}else{
+						print_r('<li id="catTabHeader'.$i.'"><a href="javascript:void(0)" onClick="toggleTab('.$i.','.count($what1).')"><span>'.$bobby->getName().'</span></a></li>');
+						}
+						$i++;
+					}
+					
+					print_r('</ul></div>');
+					print_r('<div id="catTabsContent">');
+					
+					$i=1;
+					foreach($what1 as $kids1){
+						$jane = Mage::getModel('catalog/category')->load($kids1);
+						$tc1 = $jane->getProductCollection();
+						if($i==1){$styl="style='display:yes;'";}else{$styl="style='display:none;'";}
+						print_r('<div id="catTabContent'.$i.'" class="catTabContent" '.$styl.'><br/><div>');
+						$itr=0;
+						print_r('<ol>');
+						foreach($tc1 as $prod1){
+							$pn = Mage::getModel('catalog/product')->load($prod1->getID())->getData();
+							print_r("Test Code: ".$pn['entity_id']);
+							$route = "checkout/cart/add";
+							$param = "product=".$prod1->getID()."&qty=1";
+							//catTabs content here...
+							?>
+							<li>
+							<span><?php echo $pn["sku"]; ?></span>
+							<input type=button title="Add To Cart" class="button btn-cart" value="Add To Cart" onClick="setLocation('<?php echo Mage::getUrl($route).'?'.$param; ?>')" /><br/>
+							</li>
+							<?php
+							$itr++;
+						}
+						print_r('</ol></div></div>');
+						$i++;
+					}
+					print_r('</div></div>');
+			?>
+
+    <?php echo $this->getToolbarHtml() ?>
+    <?php $_iterator = 0; ?>
+    <ol class="products-list" id="products-list">
+    <?php foreach ($_productCollection as $_product): ?>
+        <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+            <?php // Product Image ?>
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(170); ?>" width="170" height="170" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+            <?php // Product description ?>
+            <div class="product-shop">
+                <div class="f-fix">
+                    <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
+                    <?php if($_product->getRatingSummary()): ?>
+                    <?php echo $this->getReviewsSummaryHtml($_product) ?>
+                    <?php endif; ?>
+                    <?php echo $this->getPriceHtml($_product, true) ?>
+                    <?php if($_product->isSaleable()): ?>
+                        <p><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
+                    <?php else: ?>
+                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                    <?php endif; ?>
+                    <div class="desc std">
+                        <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
+                    </div>
+                    <ul class="add-to-links">
+                        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                            <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                        <?php endif; ?>
+                        <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                            <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    <?php endforeach; ?>
+    </ol>
+    <script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
+<script type="text/javascript">
+/*-----------------------------------------------------------
+    Toggles element's display value
+    Input: any number of element id's
+    Output: none 
+    ---------------------------------------------------------*/
+function toggleDisp() {
+    for (var i=0;i<arguments.length;i++){
+        var d = $(arguments[i]);
+        if (d.style.display == 'none')
+            d.style.display = 'block';
+        else
+            d.style.display = 'none';
+    }
+}
+/*-----------------------------------------------------------
+    Toggles tabs - Closes any open tabs, and then opens current tab
+    Input:     1.The number of the current tab
+                    2.The number of tabs
+                    3.(optional)The number of the tab to leave open
+                    4.(optional)Pass in true or false whether or not to animate the open/close of the tabs
+    Output: none 
+    ---------------------------------------------------------*/
+function toggleTab(num,numelems,opennum,animate) {
+    if ($('catTabContent'+num).style.display == 'none'){
+        for (var i=1;i<=numelems;i++){
+            if ((opennum == null) || (opennum != i)){
+                var temph = 'catTabHeader'+i;
+                var h = $(temph);
+                if (!h){
+                    var h = $('catTabHeaderActive');
+                    h.id = temph;
+                }
+                var tempc = 'catTabContent'+i;
+                var c = $(tempc);
+                if(c.style.display != 'none'){
+                    if (animate || typeof animate == 'undefined')
+                        Effect.toggle(tempc,'blind',{duration:0.5, queue:{scope:'menus', limit: 3}});
+                    else
+                        toggleDisp(tempc);
+                }
+            }
+        }
+        var h = $('catTabHeader'+num);
+        if (h)
+            h.id = 'catTabHeaderActive';
+        h.blur();
+        var c = $('catTabContent'+num);
+        c.style.marginTop = '2px';
+        if (animate || typeof animate == 'undefined'){
+            Effect.toggle('catTabContent'+num,'blind',{duration:0.5, queue:{scope:'menus', position:'end', limit: 3}});
+        }else{
+            toggleDisp('catTabContent'+num);
+        }
+    }
+}
+</script>
+    <div class="toolbar-bottom">
+        <?php echo $this->getToolbarHtml() ?>
+    </div>
+</div>
+<?php endif; ?>

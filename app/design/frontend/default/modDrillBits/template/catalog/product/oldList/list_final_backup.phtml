@@ -1,0 +1,216 @@
+<?php
+/**
+ * Magento destroyed by Eric <<<;-)
+ *
+ *
+ * @category    design
+ * @package     default_modern_2
+ * @copyright   Copyright (c) 2013 Kens Tool Supply
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<!-- Localized jQuery calls to google apis and local jQuery css -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/skin/frontend/default/modern2/css/jquery-ui.css" />
+<?php
+/**
+ * Product list template
+ * @see Mage_Catalog_Block_Product_List
+ */
+    
+$_productCollection=$this->getLoadedProductCollection();
+$_helper = $this->helper('catalog/output');
+$_productCollection->load();
+$ericMode='list';
+//echo"<hr/>";
+//check for email in post
+if(array_search($_POST,'email')!==false){array_pop($_POST);}
+$filAt1=array_keys($_POST);	
+foreach($_POST as $p2=>$p3){
+	foreach($p3 as $p4){$atList[]=$p4;}
+}
+ //	echo"<hr/>";	
+//building array for tabs, in this case using ct_mats for tabs.
+$matsChar=array();
+if($_productCollection) {
+	foreach($_productCollection as $product){
+		array_push($matsChar,$product->getCt_mats());	
+}}
+// display Filter Results if there is a filter string and rf is not true
+if($atList && $_POST['rf']!=true){
+	$filtAtts='Filter Results';
+	array_push($matsChar,$filtAtts);
+}
+// start tabs section
+print_r('<div id="tabs"><ul>');
+for($i=0;$i<count($matsChar);$i++){
+		print_r('<li><a href="#'.urlencode($matsChar[$i]).'"><span>'.$matsChar[$i].'</span></a></li>');			
+}
+print_r("</ul>");
+//end build tab
+
+//TODO: Rebuild product display (not using tables... lol).
+//start tab content
+for($i=0;$i<count($matsChar);$i++){
+	if($i==0){
+		echo '<div id="'.urlencode($matsChar[$i]).'">';
+		$prodCol= Mage::getResourceModel('catalog/product_collection')
+			->addAttributetoFilter('ct_mats','High Speed Steel')
+			->addAttributeToSelect('*')
+			->load();
+
+		foreach($prodCol as $hssCol){
+			$productNameStripped = strip_tags($hssCol->getName());
+			echo "<table width='100%'>";
+			echo '  <tr>';
+			echo '    <td width="70px"><a href="'.$hssCol->getProductUrl() .'" title="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true) .'" class="product-image"><img src="'.$this->helper('catalog/image')->init($hssCol, 'small_image')->resize(70).'" width="70" height="70" alt="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true).'" /></a></td>';
+			echo '    <td><table><tr><td><h2>'.$hssCol->getSku().'</h2></td></tr><tr><td><h2 class="product-name"><a href="'.$hssCol->getProductUrl().'" title="'.$productNameStripped.'">'.$hssCol->getName().'</a></h2><p>'.$_helper->productAttribute($hssCol, $hssCol->getShortDescription(), 'short_description').'</p></td></tr></table></td>';
+			echo '    <td>'.$this->getPriceHtml($hssCol, true).'<p><button type="button" title="'.$this->__('Add to Cart') .'" class="button btn-cart" onclick=setLocation("'.$this->getAddToCartUrl($hssCol) .'")><span><span>'.$this->__('Add to Cart').'</span></span></button></p></td>';
+			echo '   </tr>';
+			echo '</table>';
+		}
+		echo '</div>';
+	}else if($matsChar[$i]==$filtAtts){
+		echo '<div id="'.urlencode($matsChar[$i]).'">';
+		$prodCol= Mage::getResourceModel('catalog/product_collection');
+		foreach($filAt1 as $atCode){
+			$prodCol->addAttributetoFilter($atCode,array('in'=>$atList));	
+		}
+		$prodCol->addAttributeToSelect('*');
+		$prodCol->load();
+		
+		foreach($prodCol as $hssCol){
+			$productNameStripped = strip_tags($hssCol->getName());
+			echo "<table width='100%'>";
+			echo '  <tr>';
+			echo '    <td width="70px"><a href="'.$hssCol->getProductUrl() .'" title="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true) .'" class="product-image"><img src="'.$this->helper('catalog/image')->init($hssCol, 'small_image')->resize(70).'" width="70" height="70" alt="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true).'" /></a></td>';
+			echo '    <td><table><tr><td><h2>'.$hssCol->getSku().'</h2></td></tr><tr><td><h2 class="product-name"><a href="'.$hssCol->getProductUrl().'" title="'.$productNameStripped.'">'.$hssCol->getName().'</a></h2><p>'.$_helper->productAttribute($hssCol, $hssCol->getShortDescription(), 'short_description').'</p></td></tr></table></td>';
+			echo '    <td>'.$this->getPriceHtml($hssCol, true).'<p><button type="button" title="'.$this->__('Add to Cart') .'" class="button btn-cart" onclick=setLocation("'.$this->getAddToCartUrl($hssCol) .'")><span><span>'.$this->__('Add to Cart').'</span></span></button></p></td>';
+			echo '   </tr>';
+			echo '</table>';
+		}
+		echo '</div>';
+	}else{
+		echo '<div id="'.urlencode($matsChar[$i]).'">';
+		$prodCol= Mage::getResourceModel('catalog/product_collection')
+			->addAttributetoFilter('ct_mats',$matsChar[$i])
+			->addAttributeToSelect('*')
+			->load();
+
+		foreach($prodCol as $hssCol){
+			$productNameStripped = strip_tags($hssCol->getName());
+			echo "<table width='100%'>";
+			echo '  <tr>';
+			echo '    <td width="70px"><a href="'.$hssCol->getProductUrl() .'" title="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true) .'" class="product-image"><img src="'.$this->helper('catalog/image')->init($hssCol, 'small_image')->resize(70).'" width="70" height="70" alt="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true).'" /></a></td>';
+			echo '    <td><table><tr><td><h2>'.$hssCol->getSku().'</h2></td></tr><tr><td><h2 class="product-name"><a href="'.$hssCol->getProductUrl().'" title="'.$productNameStripped.'">'.$hssCol->getName().'</a></h2><p>'.$_helper->productAttribute($hssCol, $hssCol->getShortDescription(), 'short_description').'</p></td></tr></table></td>';
+			echo '    <td>'.$this->getPriceHtml($hssCol, true).'<p><button type="button" title="'.$this->__('Add to Cart') .'" class="button btn-cart" onclick=setLocation("'.$this->getAddToCartUrl($hssCol) .'")><span><span>'.$this->__('Add to Cart').'</span></span></button></p></td>';
+			echo '   </tr>';
+			echo '</table>';
+		}
+		echo '</div>';
+	}}
+echo '</div>';
+// end tab content
+?>
+
+<script>
+$(document).ready(function(){
+	 $("#tabs").tabs();
+	}); 
+</script>
+
+<?php //TODO: look through old stuff and get rid of it ?>
+<?php if(!$_productCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+<div class="category-products">
+    <?php //echo $this->getToolbarHtml() ?>
+    <?php // List mode ?>
+    <?php //if($this->getMode()!='grid'): echo "Eric was here!"; ?>
+    <?php //eric mode ?>
+    <?php if($ericMode=='list2'): //hint:for testing only.?>
+    <?php $_iterator = 0; ?>
+    <ol class="products-list" id="products-list">
+    <?php foreach ($_productCollection as $_product): ?>
+        <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+            <?php // Product Image ?>
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(170); ?>" width="170" height="170" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+            <?php // Product description ?>
+            <div class="product-shop">
+                <div class="f-fix">
+                    <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
+                    <?php if($_product->getRatingSummary()): ?>
+                    <?php echo $this->getReviewsSummaryHtml($_product) ?>
+                    <?php endif; ?>
+                    <?php echo $this->getPriceHtml($_product, true) ?>
+                    <?php if($_product->isSaleable()): ?>
+                        <p><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
+                    <?php else: ?>
+                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                    <?php endif; ?>
+                    <div class="desc std">
+                        <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
+                    </div>
+                    <ul class="add-to-links">
+                        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                            <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                        <?php endif; ?>
+                        <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                            <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    <?php endforeach; ?>
+    </ol>
+    <script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
+
+    <?php elseif($ericMode=="grid"): ?>
+
+    <?php // Grid Mode ?>
+
+    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php $_columnCount = $this->getColumnCount(); ?>
+    <?php $i=0; foreach ($_productCollection as $_product): ?>
+        <?php if ($i++%$_columnCount==0): ?>
+        <ul class="products-grid">
+        <?php endif ?>
+            <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(170); ?>" width="170" height="170" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+                <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                <?php if($_product->getRatingSummary()): ?>
+                <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                <?php endif; ?>
+                <?php echo $this->getPriceHtml($_product, true) ?>
+                <div class="actions">
+                    <?php if($_product->isSaleable()): ?>
+                        <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                    <?php else: ?>
+                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                    <?php endif; ?>
+                    <ul class="add-to-links">
+                        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                            <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                        <?php endif; ?>
+                        <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                            <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </li>
+        <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
+        </ul>
+        <?php endif ?>
+        <?php endforeach ?>
+        <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+    <?php endif; ?>
+
+    <div class="toolbar-bottom">
+        <?php //echo $this->getToolbarHtml() ?>
+    </div>
+</div>
+<?php endif; ?>
