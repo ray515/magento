@@ -85,10 +85,17 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 				foreach($ji as $ji1=>$ji2){
 				$prodByCat->addAttributeToFilter($ji1,$ji2);
 				}
-			$prodByCat->load();			
+			//$prodByCat->load();
+			//$this->setProductCollection($prodByCat);		
 			$resCount=count($prodByCat);
 			if($resCount > 0){
 				print_r('<div id="prodList"><ol>');
+				//pager init
+				//$this->getMode('list');
+		//		echo $this->getToolbarHtml();
+				$_iterator = 0;
+				
+				echo ($pager);
 				foreach($prodByCat as $prod){
 					print_r('<li>');
 					$pClass			= str_replace('"','',$prod->getName());							// clean product name to be used as class for selector in dialog functionallity.
