@@ -1,0 +1,158 @@
+<?php
+/**
+ * Magento destroyed by Eric <<<;-)
+ *
+ *
+ * @category    design
+ * @package     default_modern_2
+ * @copyright   Copyright (c) 2013 Kens Tool Supply
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<!-- Localized jQuery calls to google apis and local jQuery css -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/skin/frontend/default/modern2/css/jquery-ui.css" />
+<?php
+/**
+ * Product list template
+ * @see Mage_Catalog_Block_Product_List
+ */
+$showAtFilter=true;   
+$thisPage=$this->getRequest()->getParams()['id'];
+$cataCol=Mage::getModel('catalog/category')
+	->load($thisPage);
+foreach($cataCol->getProductCollection() as $prod){
+	$prod=Mage::getModel('catalog/product')->load($prod->getId());
+	echo '<h3>'.$prod->getName().'</h3>';
+}
+
+
+$prodColTest = Mage::getResourceModel('catalog/product_collection')
+->setStoreId($this->getStoreId())
+->addCategoryFilter($cataCol)
+->load();
+
+foreach($prodColTest as $p1){
+	$x=$p1->getId();
+//	print_r('Name: '.$x.'<br/>');
+//	var_dump($p1);
+//	print_r('<hr/>');
+}
+//var_dump($cataCol);
+//print_r($this->getProduct()->getCategory().'<br/>');
+
+$_productCollection=$this->getLoadedProductCollection();
+$_helper = $this->helper('catalog/output');
+$_productCollection->load();
+//echo"<hr/>";
+
+
+//var_dump($_POST);
+ 	//	echo"<hr/>";	
+	//building array for tabs, in this case using ct_mats for tabs.
+$matsChar=array();
+if($_productCollection) {
+	foreach($_productCollection as $product){
+		array_push($matsChar,$product->getCt_mats());	
+}}
+// display Filter Results if there is a filter string and rf is not true
+$filAt1=array_keys($_POST);
+foreach($_POST as $p2=>$p3){
+	foreach($p3 as $p4){$atList[]=$p4;}
+}
+if($atList && $_POST['rf']!=true){
+	$filtAtts='Filter Results';
+	array_push($matsChar,$filtAtts);
+}
+// start tabs section
+print_r('<div id="tabs"><ul>');
+for($i=0;$i<count($matsChar);$i++){
+		print_r('<li><a href="#'.urlencode($matsChar[$i]).'"><span>'.$matsChar[$i].'</span></a></li>');			
+}
+print_r("</ul>");
+//end build tab
+
+//TODO: Rebuild product display (not using tables... lol).
+//start tab content
+for($i=0;$i<count($matsChar);$i++){
+	if($i==0){
+		echo '<div id="'.urlencode($matsChar[$i]).'">';
+		$prodCol= Mage::getResourceModel('catalog/product_collection')
+			->addAttributetoFilter('ct_mats','High Speed Steel')
+			->addAttributeToSelect('*')
+			->load();
+
+		foreach($prodCol as $hssCol){
+			$productNameStripped = strip_tags($hssCol->getName());
+			echo "<table width='100%'>";
+			echo '  <tr>';
+			echo '    <td width="70px"><a href="'.$hssCol->getProductUrl() .'" title="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true) .'" class="product-image"><img src="'.$this->helper('catalog/image')->init($hssCol, 'small_image')->resize(70).'" width="70" height="70" alt="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true).'" /></a></td>';
+			echo '    <td><table><tr><td><h2>'.$hssCol->getSku().'</h2></td></tr><tr><td><h2 class="product-name"><a href="'.$hssCol->getProductUrl().'" title="'.$productNameStripped.'">'.$hssCol->getName().'</a></h2><p>'.$_helper->productAttribute($hssCol, $hssCol->getShortDescription(), 'short_description').'</p></td></tr></table></td>';
+			echo '    <td>'.$this->getPriceHtml($hssCol, true).'<p><button type="button" title="'.$this->__('Add to Cart') .'" class="button btn-cart" onclick=setLocation("'.$this->getAddToCartUrl($hssCol) .'")><span><span>'.$this->__('Add to Cart').'</span></span></button></p></td>';
+			echo '   </tr>';
+			echo '</table>';
+		}
+		echo '</div>';
+	}else if($matsChar[$i]==$filtAtts){
+		echo '<div id="'.urlencode($matsChar[$i]).'">';
+		$prodCol= Mage::getResourceModel('catalog/product_collection');
+		foreach($filAt1 as $atCode){
+			$prodCol->addAttributetoFilter($atCode,array('in'=>$atList));	
+		}
+		$prodCol->addAttributeToSelect('*');
+		$prodCol->load();
+		
+		foreach($prodCol as $hssCol){
+			$productNameStripped = strip_tags($hssCol->getName());
+			echo "<table width='100%'>";
+			echo '  <tr>';
+			echo '    <td width="70px"><a href="'.$hssCol->getProductUrl() .'" title="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true) .'" class="product-image"><img src="'.$this->helper('catalog/image')->init($hssCol, 'small_image')->resize(70).'" width="70" height="70" alt="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true).'" /></a></td>';
+			echo '    <td><table><tr><td><h2>'.$hssCol->getSku().'</h2></td></tr><tr><td><h2 class="product-name"><a href="'.$hssCol->getProductUrl().'" title="'.$productNameStripped.'">'.$hssCol->getName().'</a></h2><p>'.$_helper->productAttribute($hssCol, $hssCol->getShortDescription(), 'short_description').'</p></td></tr></table></td>';
+			echo '    <td>'.$this->getPriceHtml($hssCol, true).'<p><button type="button" title="'.$this->__('Add to Cart') .'" class="button btn-cart" onclick=setLocation("'.$this->getAddToCartUrl($hssCol) .'")><span><span>'.$this->__('Add to Cart').'</span></span></button></p></td>';
+			echo '   </tr>';
+			echo '</table>';
+		}
+		echo '</div>';
+	}else{
+		echo '<div id="'.urlencode($matsChar[$i]).'">';
+		$prodCol= Mage::getResourceModel('catalog/product_collection')
+			->addAttributetoFilter('ct_mats',$matsChar[$i])
+			->addAttributeToSelect('*')
+			->load();
+
+		foreach($prodCol as $hssCol){
+			$productNameStripped = strip_tags($hssCol->getName());
+			echo "<table width='100%'>";
+			echo '  <tr>';
+			echo '    <td width="70px"><a href="'.$hssCol->getProductUrl() .'" title="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true) .'" class="product-image"><img src="'.$this->helper('catalog/image')->init($hssCol, 'small_image')->resize(70).'" width="70" height="70" alt="'.strip_tags($hssCol->getImageLabel($hssCol, 'small_image'), null, true).'" /></a></td>';
+			echo '    <td><table><tr><td><h2>'.$hssCol->getSku().'</h2></td></tr><tr><td><h2 class="product-name"><a href="'.$hssCol->getProductUrl().'" title="'.$productNameStripped.'">'.$hssCol->getName().'</a></h2><p>'.$_helper->productAttribute($hssCol, $hssCol->getShortDescription(), 'short_description').'</p></td></tr></table></td>';
+			echo '    <td>'.$this->getPriceHtml($hssCol, true).'<p><button type="button" title="'.$this->__('Add to Cart') .'" class="button btn-cart" onclick=setLocation("'.$this->getAddToCartUrl($hssCol) .'")><span><span>'.$this->__('Add to Cart').'</span></span></button></p></td>';
+			echo '   </tr>';
+			echo '</table>';
+		}
+		echo '</div>';
+	}}
+echo '</div>';
+// end tab content
+?>
+
+<script type="text/javascript">
+$.noConflict();
+jQuery(document).ready(function($){
+	 $("#tabs").tabs();
+	 $("#accordion").accordion({
+		 	collapsible:true,
+		 	active:false
+		});
+	 jQuery('#clrBut').click(function(){
+			$('#ctFilter').append('<input type="hidden" name="rf" value="true" />');
+			$('#ctFilter').submit();	
+		});
+	jQuery('#goBut').click(function(){
+			alert('click');
+			$('#ctFilter').submit();
+	});
+}); 	
+</script>
+

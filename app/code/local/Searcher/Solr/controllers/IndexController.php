@@ -48,6 +48,9 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		echo "Searcher_Solr";
 	}
 	
+	
+	// search index
+	//TODO: only include active items
 	public function getCataIds($sDir){
 		print_r('<h3>Update Complete</h3>');
 		$prodCol=Mage::getModel('catalog/product')->getCollection();
