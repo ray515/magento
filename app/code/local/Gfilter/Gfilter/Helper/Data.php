@@ -4,8 +4,16 @@ class Gfilter_Gfilter_Helper_Data extends Mage_Core_Helper_Abstract
 	// constants
 //	const SURL='http://65.60.97.68:8983/solr/KTS';
 	
-	public function getFilterData($tCol="x"){
-		$prodCol = $tCol;
+	public function getFilterData($tCol){
+		//$prodCol = $tCol;
+		
+		$prodCol = Mage::getResourceModel('catalog/product_collection')
+		->addIdFilter($tCol)
+//		->addAttributetoSelect(array('entity_id','entity_type_id','attribute_set_id','type_id','sku','created_at','updated_at','has_options','required_options','meta_title','meta_description','name','spec_model','url_key','options_container','url_path','ct_brand','ct_mats','ct_length_name','ct_sz_name','ct_flute_no','ct_tot_length','ct_coat','ct_corner_rad','ct_cut_length','ct_heli_deg','ct_hrc','ct_sub_cat','thumbnail','small_image','image','thumbnail_label','small_image_label','image_label','status','tax_class_id','visibility','enable_googlecheckout','ct_use_hsteel','use_alum','use_asteel','use_ciron','use_csteel','use_hsteel','use_nickel','use_ssteel','use_tit','wheel_size','manufacturer','price','description','short_description','in_depth','is_salable','is_in_stock'))
+		->addAttributetoSelect(array('*'))
+		
+		->load();
+		
 		if($prodCol) {
 			foreach($prodCol as $prod){
 				$atNames=array('atNames1'=>array_keys($prod->getData()));
