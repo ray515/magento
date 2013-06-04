@@ -417,6 +417,52 @@ class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
 												if($data[$i]['spec_wood_selftbit_capct']){$newproduct->setData('spec_wood_selftbit_capct',$data[$i]['spec_wood_selftbit_capct']);}
 												if($data[$i]['spec_wood_spd_bit_capct']){$newproduct->setspec_wood_spd_bit_capct($data[$i]['spec_wood_spd_bit_capct']);}	
 												
+												if($data[$i]['ct_tolerance_cut']){$newproduct->setData(ct_tolerance_cut,$data[$i]['ct_tolerance_cut']);}
+												if($data[$i]['ct_tolerance_shank']){$newproduct->setData(ct_tolerance_shank,$data[$i]['ct_tolerance_shank']);}
+												if($data[$i]['ct_size']){$newproduct->setData(ct_size,$data[$i]['ct_size']);}
+												if($data[$i]['ct_end_num']){$newproduct->setData(ct_end_num,$data[$i]['ct_end_num']);}
+												if($data[$i]['ct_use_hsteel']){$newproduct->setData(ct_use_hsteel,$data[$i]['ct_use_hsteel']);}
+												if($data[$i]['ct_sh_dia']){$newproduct->setData(ct_sh_dia,$data[$i]['ct_sh_dia']);}
+												if($data[$i]['ct_end']){$newproduct->setData(ct_end,$data[$i]['ct_end']);}
+												if($data[$i]['ct_sub1_cat']){$newproduct->setData(ct_sub1_cat,$data[$i]['ct_sub1_cat']);}
+												if($data[$i]['ct_trade_name']){$newproduct->setData(ct_trade_name,$data[$i]['ct_trade_name']);}
+												if($data[$i]['ct_mm_dia']){$newproduct->setData(ct_mm_dia,$data[$i]['ct_mm_dia']);}
+												if($data[$i]['ct_inc_angle']){$newproduct->setData(ct_inc_angle,$data[$i]['ct_inc_angle']);}
+												if($data[$i]['ct_shape']){$newproduct->setData(ct_shape,$data[$i]['ct_shape']);}
+												if($data[$i]['ct_cut_type']){$newproduct->setData(ct_cut_type,$data[$i]['ct_cut_type']);}
+												if($data[$i]['ct_tool_num']){$newproduct->setData(ct_tool_num,$data[$i]['ct_tool_num']);}
+												if($data[$i]['list_price']){$newproduct->setData(list_price,$data[$i]['list_price']);}
+												if($data[$i]['ct_drill_type']){$newproduct->setData(ct_drill_type,$data[$i]['ct_drill_type']);}
+												if($data[$i]['ct_drill_dia']){$newproduct->setData(ct_drill_dia,$data[$i]['ct_drill_dia']);}
+												if($data[$i]['ct_num_lett']){$newproduct->setData(ct_num_lett,$data[$i]['ct_num_lett']);}
+												if($data[$i]['ct_reamer_dia']){$newproduct->setData(ct_reamer_dia,$data[$i]['ct_reamer_dia']);}
+												if($data[$i]['ct_angle']){$newproduct->setData(ct_angle,$data[$i]['ct_angle']);}
+												if($data[$i]['ct_fraction_sz']){$newproduct->setData(ct_fraction_sz,$data[$i]['ct_fraction_sz']);}
+												if($data[$i]['ct_metric_sz']){$newproduct->setData(ct_metric_sz,$data[$i]['ct_metric_sz']);}
+												if($data[$i]['ct_decimal_sz']){$newproduct->setData(ct_decimal_sz,$data[$i]['ct_decimal_sz']);}
+												if($data[$i]['ct_overall_length']){$newproduct->setData(ct_overall_length,$data[$i]['ct_overall_length']);}
+												if($data[$i]['ct_body_dia']){$newproduct->setData(ct_body_dia,$data[$i]['ct_body_dia']);}
+												if($data[$i]['ct_flute_angle']){$newproduct->setData(ct_flute_angle,$data[$i]['ct_flute_angle']);}
+												if($data[$i]['ct_top_profile']){$newproduct->setData(ct_top_profile,$data[$i]['ct_top_profile']);}
+												if($data[$i]['ct_side_profile']){$newproduct->setData(ct_side_profile,$data[$i]['ct_side_profile']);}
+												if($data[$i]['ct_insert_style']){$newproduct->setData(ct_insert_style,$data[$i]['ct_insert_style']);}
+												if($data[$i]['ct_iso']){$newproduct->setData(ct_iso,$data[$i]['ct_iso']);}
+												if($data[$i]['ct_insert_sz']){$newproduct->setData(ct_insert_sz,$data[$i]['ct_insert_sz']);}
+												if($data[$i]['ct_insert_thickness']){$newproduct->setData(ct_insert_thickness,$data[$i]['ct_insert_thickness']);}
+												if($data[$i]['ct_lead_angle']){$newproduct->setData(ct_lead_angle,$data[$i]['ct_lead_angle']);}
+												if($data[$i]['ct_chipbreaker_width']){$newproduct->setData(ct_chipbreaker_width,$data[$i]['ct_chipbreaker_width']);}
+												if($data[$i]['ct_groove_width']){$newproduct->setData(ct_groove_width,$data[$i]['ct_groove_width']);}
+												if($data[$i]['ct_groove_depth']){$newproduct->setData(ct_groove_depth,$data[$i]['ct_groove_depth']);}
+												if($data[$i]['ct_hole_sz']){$newproduct->setData(ct_hole_sz,$data[$i]['ct_hole_sz']);}
+												if($data[$i]['ct_tpi_external']){$newproduct->setData(ct_tpi_external,$data[$i]['ct_tpi_external']);}
+												if($data[$i]['ct_tpi_internal']){$newproduct->setData(ct_tpi_internal,$data[$i]['ct_tpi_internal']);}
+												if($data[$i]['ct_insert_ic']){$newproduct->setData(ct_insert_ic,$data[$i]['ct_insert_ic']);}
+												if($data[$i]['ct_insert_width']){$newproduct->setData(ct_insert_width,$data[$i]['ct_insert_width']);}
+												if($data[$i]['ct_corner_flat']){$newproduct->setData(ct_corner_flat,$data[$i]['ct_corner_flat']);}
+												if($data[$i]['ct_corner_radious']){$newproduct->setData(ct_corner_radious,$data[$i]['ct_corner_radious']);}
+												if($data[$i]['ct_thru_hole']){$newproduct->setData(ct_thru_hole,$data[$i]['ct_thru_hole']);}
+												if($data[$i]['ct_point_angle']){$newproduct->setData(ct_point_angle,$data[$i]['ct_point_angle']);}
+												
 												if($data[$i]['core_url_key']){$newproduct->setData(url_key,$data[$i]['core_url_key']);}
 												if($data[$i]['ct_brand']){$newproduct->setData(ct_brand,$data[$i]['ct_brand']);}
 												if($data[$i]['ct_mats']){$newproduct->setData(ct_mats,$data[$i]['ct_mats']);}
@@ -512,12 +558,10 @@ class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
                                             try {
                                             	//TODO: Require SKU for all processing
 												if($data[$i]['sku']){$newproduct->setData('sku',$data[$i]['sku']);}
-												if($data[$i]['_store']){$newproduct->setStore($data[$i]['_store']);}
-												//if($attributeSetId){$newproduct->setAttributeSetId($attributeSetId);}
-												$newproduct->setAttributeSetId('73');
+                                            if($data[$i]['_store']){$newproduct->setStore($data[$i]['_store']);}
+												if($attOut){$newproduct->setAttributeSetId($attOut);}
 												if($data[$i]['_type']){$newproduct->setTypeId($data[$i]['_type']);}
 												if($data[$i]['_category']){$newproduct->setCategoryIds($data[$i]['_category']);}
-												//if($data[$i]['_product_websites']){$newproduct->setWebSites($data[$i]['_product_websites']);} //check<--
 												$newproduct->setWebsiteIDs(array(1));
 												if($data[$i]['status']){$newproduct->setStatus($data[$i]['status']);}
 												if($data[$i]['tax_class_id']){$newproduct->setTaxClassId($data[$i]['tax_class_id']);}
@@ -526,7 +570,6 @@ class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
 												if($data[$i]['enable_googlecheckout']){$newproduct->setEnable_googlecheckout($data[$i]['enable_googlecheckout']);}
 												if($data[$i]['meta_title']){$newproduct->setMeta_title($data[$i]['meta_title']);}
                                                 if($data[$i]['meta_description']){$newproduct->setMeta_description($data[$i]['meta_description']);}
-
                                                 if($data[$i]['name']){$newproduct->setName($data[$i]['name']);}
 												if($data[$i]['description']){$newproduct->setData('description',$data[$i]['description']);}
                                                 if($data[$i]['short_description']){$newproduct->setShortDescription($data[$i]['short_description']);}
@@ -534,7 +577,6 @@ class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
                                                 if($data[$i]['in_depth']){$newproduct->setIn_depth($data[$i]['in_depth']);}
                                                 if($data[$i]['name']){$newproduct->setData('name',$data[$i]['name']);}
 												if($data[$i]['UPC']){$newproduct->setData('upc',$data[$i]['UPC']);}
-												
 												if($data[$i]['spec_accuracy']){$newproduct->setData('spec_accuracy',$data[$i]['spec_accuracy']);}
 												if($data[$i]['spec_air_temp']){$newproduct->setData('spec_air_temp',$data[$i]['spec_air_temp']);}
 												if($data[$i]['spec_air_volume']){$newproduct->setData('spec_air_volume',$data[$i]['spec_air_volume']);}
@@ -623,6 +665,79 @@ class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
 												if($data[$i]['spec_wood_hol_saw_capct']){$newproduct->setData('spec_wood_hol_saw_capct',$data[$i]['spec_wood_hol_saw_capct']);}
 												if($data[$i]['spec_wood_selftbit_capct']){$newproduct->setData('spec_wood_selftbit_capct',$data[$i]['spec_wood_selftbit_capct']);}
 												if($data[$i]['spec_wood_spd_bit_capct']){$newproduct->setspec_wood_spd_bit_capct($data[$i]['spec_wood_spd_bit_capct']);}	
+																								
+												if($data[$i]['ct_tolerance_cut']){$newproduct->setData(ct_tolerance_cut,$data[$i]['ct_tolerance_cut']);}
+												if($data[$i]['ct_tolerance_shank']){$newproduct->setData(ct_tolerance_shank,$data[$i]['ct_tolerance_shank']);}
+												if($data[$i]['ct_size']){$newproduct->setData(ct_size,$data[$i]['ct_size']);}
+												if($data[$i]['ct_end_num']){$newproduct->setData(ct_end_num,$data[$i]['ct_end_num']);}
+												if($data[$i]['ct_use_hsteel']){$newproduct->setData(ct_use_hsteel,$data[$i]['ct_use_hsteel']);}
+												if($data[$i]['ct_sh_dia']){$newproduct->setData(ct_sh_dia,$data[$i]['ct_sh_dia']);}
+												if($data[$i]['ct_end']){$newproduct->setData(ct_end,$data[$i]['ct_end']);}
+												if($data[$i]['ct_sub1_cat']){$newproduct->setData(ct_sub1_cat,$data[$i]['ct_sub1_cat']);}
+												if($data[$i]['ct_trade_name']){$newproduct->setData(ct_trade_name,$data[$i]['ct_trade_name']);}
+												if($data[$i]['ct_mm_dia']){$newproduct->setData(ct_mm_dia,$data[$i]['ct_mm_dia']);}
+												if($data[$i]['ct_inc_angle']){$newproduct->setData(ct_inc_angle,$data[$i]['ct_inc_angle']);}
+												if($data[$i]['ct_shape']){$newproduct->setData(ct_shape,$data[$i]['ct_shape']);}
+												if($data[$i]['ct_cut_type']){$newproduct->setData(ct_cut_type,$data[$i]['ct_cut_type']);}
+												if($data[$i]['ct_tool_num']){$newproduct->setData(ct_tool_num,$data[$i]['ct_tool_num']);}
+												if($data[$i]['list_price']){$newproduct->setData(list_price,$data[$i]['list_price']);}
+												if($data[$i]['ct_drill_type']){$newproduct->setData(ct_drill_type,$data[$i]['ct_drill_type']);}
+												if($data[$i]['ct_drill_dia']){$newproduct->setData(ct_drill_dia,$data[$i]['ct_drill_dia']);}
+												if($data[$i]['ct_num_lett']){$newproduct->setData(ct_num_lett,$data[$i]['ct_num_lett']);}
+												if($data[$i]['ct_reamer_dia']){$newproduct->setData(ct_reamer_dia,$data[$i]['ct_reamer_dia']);}
+												if($data[$i]['ct_angle']){$newproduct->setData(ct_angle,$data[$i]['ct_angle']);}
+												if($data[$i]['ct_fraction_sz']){$newproduct->setData(ct_fraction_sz,$data[$i]['ct_fraction_sz']);}
+												if($data[$i]['ct_metric_sz']){$newproduct->setData(ct_metric_sz,$data[$i]['ct_metric_sz']);}
+												if($data[$i]['ct_decimal_sz']){$newproduct->setData(ct_decimal_sz,$data[$i]['ct_decimal_sz']);}
+												if($data[$i]['ct_overall_length']){$newproduct->setData(ct_overall_length,$data[$i]['ct_overall_length']);}
+												if($data[$i]['ct_body_dia']){$newproduct->setData(ct_body_dia,$data[$i]['ct_body_dia']);}
+												if($data[$i]['ct_flute_angle']){$newproduct->setData(ct_flute_angle,$data[$i]['ct_flute_angle']);}
+												if($data[$i]['ct_top_profile']){$newproduct->setData(ct_top_profile,$data[$i]['ct_top_profile']);}
+												if($data[$i]['ct_side_profile']){$newproduct->setData(ct_side_profile,$data[$i]['ct_side_profile']);}
+												if($data[$i]['ct_insert_style']){$newproduct->setData(ct_insert_style,$data[$i]['ct_insert_style']);}
+												if($data[$i]['ct_iso']){$newproduct->setData(ct_iso,$data[$i]['ct_iso']);}
+												if($data[$i]['ct_insert_sz']){$newproduct->setData(ct_insert_sz,$data[$i]['ct_insert_sz']);}
+												if($data[$i]['ct_insert_thickness']){$newproduct->setData(ct_insert_thickness,$data[$i]['ct_insert_thickness']);}
+												if($data[$i]['ct_lead_angle']){$newproduct->setData(ct_lead_angle,$data[$i]['ct_lead_angle']);}
+												if($data[$i]['ct_chipbreaker_width']){$newproduct->setData(ct_chipbreaker_width,$data[$i]['ct_chipbreaker_width']);}
+												if($data[$i]['ct_groove_width']){$newproduct->setData(ct_groove_width,$data[$i]['ct_groove_width']);}
+												if($data[$i]['ct_groove_depth']){$newproduct->setData(ct_groove_depth,$data[$i]['ct_groove_depth']);}
+												if($data[$i]['ct_hole_sz']){$newproduct->setData(ct_hole_sz,$data[$i]['ct_hole_sz']);}
+												if($data[$i]['ct_tpi_external']){$newproduct->setData(ct_tpi_external,$data[$i]['ct_tpi_external']);}
+												if($data[$i]['ct_tpi_internal']){$newproduct->setData(ct_tpi_internal,$data[$i]['ct_tpi_internal']);}
+												if($data[$i]['ct_insert_ic']){$newproduct->setData(ct_insert_ic,$data[$i]['ct_insert_ic']);}
+												if($data[$i]['ct_insert_width']){$newproduct->setData(ct_insert_width,$data[$i]['ct_insert_width']);}
+												if($data[$i]['ct_corner_flat']){$newproduct->setData(ct_corner_flat,$data[$i]['ct_corner_flat']);}
+												if($data[$i]['ct_corner_radious']){$newproduct->setData(ct_corner_radious,$data[$i]['ct_corner_radious']);}
+												if($data[$i]['ct_thru_hole']){$newproduct->setData(ct_thru_hole,$data[$i]['ct_thru_hole']);}
+												if($data[$i]['ct_point_angle']){$newproduct->setData(ct_point_angle,$data[$i]['ct_point_angle']);}
+												
+												if($data[$i]['core_url_key']){$newproduct->setData(url_key,$data[$i]['core_url_key']);}
+												if($data[$i]['ct_brand']){$newproduct->setData(ct_brand,$data[$i]['ct_brand']);}
+												if($data[$i]['ct_mats']){$newproduct->setData(ct_mats,$data[$i]['ct_mats']);}
+												if($data[$i]['ct_length_name']){$newproduct->setData(ct_length_name,$data[$i]['ct_length_name']);}
+												if($data[$i]['ct_sz_name']){$newproduct->setData(ct_sz_name,$data[$i]['ct_sz_name']);}
+												if($data[$i]['ct_fl_length']){$newproduct->setData(ct_fl_length,$data[$i]['ct_fl_length']);}
+												if($data[$i]['ct_flute_no']){$newproduct->setData(ct_flute_no,$data[$i]['ct_flute_no']);}
+												if($data[$i]['ct_sh_length']){$newproduct->setData(ct_sh_length,$data[$i]['ct_sh_length']);}
+												if($data[$i]['ct_tot_length']){$newproduct->setData(ct_tot_length,$data[$i]['ct_tot_length']);}
+												if($data[$i]['ct_dia_in']){$newproduct->setData(ct_flute_no,$data[$i]['ct_flute_no']);}
+												if($data[$i]['ct_coat']){$newproduct->setData(ct_coat,$data[$i]['ct_coat']);}
+												if($data[$i]['ct_corner_rad']){$newproduct->setData(ct_corner_rad,$data[$i]['ct_corner_rad']);}
+												if($data[$i]['ct_cut_length']){$newproduct->setData(ct_cut_length,$data[$i]['ct_cut_length']);}
+												if($data[$i]['ct_taper_per_side']){$newproduct->setData(ct_taper_per_side,$data[$i]['ct_taper_per_side']);}
+												if($data[$i]['ct_heli_deg']){$newproduct->setData(ct_heli_deg,$data[$i]['ct_heli_deg']);}
+												if($data[$i]['ct_hrc']){$newproduct->setData(ct_hrc,$data[$i]['ct_hrc']);}
+												if($data[$i]['ct_sub_cat']){$newproduct->setData(ct_sub_cat,$data[$i]['ct_sub_cat']);}
+												if($data[$i]['ct_mm_dia']){$newproduct->setData(ct_mm_dia,$data[$i]['ct_mm_dia']);}
+												if($data[$i]['use_alum']){$newproduct->setData(use_alum,$alumOut);}
+												if($data[$i]['use_csteel']){$newproduct->setData(use_csteel,$csteelOut);}
+												if($data[$i]['use_asteel']){$newproduct->setData(use_asteel,$asteelOut);}
+												if($data[$i]['use_hsteel']){$newproduct->setData(use_hsteel,$hsteelOut);}
+												if($data[$i]['use_ssteel']){$newproduct->setData(use_ssteel,$ssteelOut);}
+												if($data[$i]['use_nickel']){$newproduct->setData(use_nickel,$nickelOut);}
+												if($data[$i]['use_ciron']){$newproduct->setData(use_ciron,$cironOut);}
+												if($data[$i]['use_tit']){$newproduct->setData(use_tit,$titOut);}
 												
                                                 if($data[$i]['manufacturer']){
                                                 	$m = $this->getAtSet('manufacturer');
