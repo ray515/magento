@@ -41,7 +41,7 @@ class Gfilter_Gfilter_Helper_Data extends Mage_Core_Helper_Abstract
 			foreach($ao2 as $ao3){
 				$eCt=count(str_getcsv($ao3));
 				//print_r("a3: ".$ao3."-- count: ".$eCt."<br/>");
-				if(trim($ao3)==',' || strpos(trim($ao3),',')==0 || $eCt<5){	unset($atOut[$ao1]);}	
+				if(trim($ao3)==',' || strpos(trim($ao3),',')==0 || $eCt<1){	unset($atOut[$ao1]);}	
 			}
 		}
 	/*
