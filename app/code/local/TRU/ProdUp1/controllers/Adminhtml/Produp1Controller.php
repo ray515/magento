@@ -221,88 +221,88 @@ class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
                                 		if($data[$i]['use_alum']){
                                 			$alumIn=strtolower($data[$i]['use_alum']);
                                 			if($alumIn=="good"){
-                                				$alumOut=162;//good
+                                				$alumOut=142;//good
                                 			}elseif($alumIn=='best'){
-                                				$alumOut=163;//best
+                                				$alumOut=143;//best
                                 			}else{
-                                				$alumOut=161;//N/A
+                                				$alumOut=144;//N/A
                                 			}
                                 		}
                                 		//csteel
                                 		if($data[$i]['use_csteel']){
                                 			$csteelIn=strtolower($data[$i]['use_csteel']);
                                 			if($csteelIn=="good"){
-                                				$csteelOut=165;//good
+                                				$csteelOut=151;//good
                                 			}elseif($csteelIn=='best'){
-                                				$csteelOut=166;//best
+                                				$csteelOut=152;//best
                                 			}else{
-                                				$csteelOut=164;//N/A
+                                				$csteelOut=153;//N/A
                                 			}
                                 		}
                                 		//asteel
                                 		if($data[$i]['use_asteel']){
                                 			$asteelIn=strtolower($data[$i]['use_asteel']);
                                 			if($asteelIn=="good"){
-                                				$asteelOut=168;//good
+                                				$asteelOut=145;//good
                                 			}elseif($asteelIn=='best'){
-                                				$asteelOut=169;//best
+                                				$asteelOut=146;//best
                                 			}else{
-                                				$asteelOut=167;//N/A
+                                				$asteelOut=147;//N/A
                                 			}
                                 		}
                                 		//hsteel
                                 		if($data[$i]['use_hsteel']){
                                 			$hsteelIn=strtolower($data[$i]['use_hsteel']);
                                 			if($hsteelIn=="good"){
-                                				$hsteelOut=171;//good
+                                				$hsteelOut=157;//good
                                 			}elseif($hsteelIn=='best'){
-                                				$hsteelOut=172;//best
+                                				$hsteelOut=158;//best
                                 			}else{
-                                				$hsteelOut=170;//N/A
+                                				$hsteelOut=159;//N/A
                                 			}
                                 		}
                                 		//ssteel
                                 		if($data[$i]['use_ssteel']){
                                 			$ssteelIn=strtolower($data[$i]['use_ssteel']);
                                 			if($ssteelIn=="good"){
-                                				$ssteelOut=177;//good
+                                				$ssteelOut=163;//good
                                 			}elseif($ssteelIn=='best'){
-                                				$ssteelOut=178;//best
+                                				$ssteelOut=164;//best
                                 			}else{
-                                				$ssteelOut=176;//N/A
+                                				$ssteelOut=165;//N/A
                                 			}
                                 		}
                                 		//nickel
                                 		if($data[$i]['use_nickel']){
                                 			$nickelIn=strtolower($data[$i]['use_nickel']);
                                 			if($nickelIn=="good"){
-                                				$nickelOut=174;//good
+                                				$nickelOut=162;//good
                                 			}elseif($nickelIn=='best'){
-                                				$nickelOut=175;//best
+                                				$nickelOut=160;//best
                                 			}else{
-                                				$nickelOut=173;//N/A
+                                				$nickelOut=161;//N/A
                                 			}
                                 		}
                                 		//ciron
                                 		if($data[$i]['use_ciron']){
                                 			$cironIn=strtolower($data[$i]['use_ciron']);
                                 			if($cironIn=="good"){
-                                				$cironOut=180;//good
+                                				$cironOut=148;//good
                                 			}elseif($cironIn=='best'){
-                                				$cironOut=181;//best
+                                				$cironOut=149;//best
                                 			}else{
-                                				$cironOut=179;//N/A
+                                				$cironOut=150;//N/A
                                 			}
                                 		}
                                 		//tit
                                 		if($data[$i]['use_tit']){
                                 			$titIn=strtolower($data[$i]['use_tit']);
                                 			if($titIn=="good"){
-                                				$titOut=183;//good
+                                				$titOut=166;//good
                                 			}elseif($titIn=='best'){
-                                				$titOut=184;//best
+                                				$titOut=167;//best
                                 			}else{
-                                				$titOut=182;//N/A
+                                				$titOut=168;//N/A
                                 			}
                                 		}
                                 		
