@@ -2,7 +2,7 @@
 <layout version="0.1.0">
 	<default>
         <reference name="header">
-            <block type="core/template" name="top.search" as="topSearch" template="modern/catalogsearch/form.mini.phtml"/>
+            <block type="core/template" name="top.search" as="topSearch" template="catalogsearch/form.mini.phtml"/>
         </reference>       
 	</default>
 	<catalogsearch_result_index translate="label">
@@ -11,10 +11,10 @@
 	   		<action method="setTemplate"><template>page/2columns-left.phtml</template></action>
    		</reference> 
     	<reference name="content">
-   			<block type="catalogsearch/SolrSurfr" name="catalogsearch.solrSurfr" template="modern/catalogsearch/solrSurfr.phtml"/>
+   			<block type="catalogsearch/SolrSurfr" name="catalogsearch.solrSurfr" template="catalogsearch/solrSurfr.phtml"/>
    		</reference>
    		<reference name="left">
-       		<block type="catalog/layer_view" name="catalog.leftnav" after="currency" template="modern/catalog/layer/view.phtml"/>
+       		<block type="catalog/layer_view" name="catalog.leftnav" after="currency" template="catalog/layer/view.phtml"/>
    		</reference>
 	</catalogsearch_result_index>
 </layout>
