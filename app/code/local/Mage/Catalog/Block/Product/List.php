@@ -2,22 +2,6 @@
 /**
  * Magento
  *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
  * @category    Mage
  * @package     Mage_Catalog
  * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
@@ -116,9 +100,9 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
      */
     public function getLoadedProductCollection()
     {
-        //return $this->_getProductCollection();
-        $getColOut = $this->_getProductCollection();
-        return $getColOut;
+        return $this->_getProductCollection();
+        //$getColOut = $this->_getProductCollection();
+        //return $getColOut;
     }
 
     /**
@@ -148,7 +132,13 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
         		$fArr2[]=array($fTmp[0],$fTmp[1]);
         	}
         }
-
+        //TODO: convert KTS_FS1 to session instead of cookie.
+        $session=Mage::getSingleton('core/session', array('name'=>'frontend'));
+        $filterDat1=$session->getData('sID1');
+        if($session->getData('oneArr')!=null){
+        $filterDat2=$session->getData('oneArr');
+        }
+        
         // called prepare sortable parameters
         $collection = $this->_getProductCollection();
         if(count($fArr2)>0){
@@ -156,6 +146,10 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
         		$collection->addAttributeToFilter($fArr[0],$fArr[1]);
         	}
         }
+        //if(count($filterDat1>0)){$collection->addIdFilter(array($filterDat1));}
+        if($filterDat2){$collection->addIdFilter(array($filterDat2));}
+        
+        
 	//	$collection->addAttributeToFilter('ct_length_name','Stub')->addAttributeToFilter('ct_flute_no',2);
         // use sortable parameters
         if ($orders = $this->getAvailableOrders()) {
@@ -171,7 +165,6 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
             $toolbar->setModes($modes);
         }
 
-        ///$xxy="'collection' => ".$this->_getProductCollection().$cTmp;
         // set collection to toolbar and apply sort
         $toolbar->setCollection($collection);
 
