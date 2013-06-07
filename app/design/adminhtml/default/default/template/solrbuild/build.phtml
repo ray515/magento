@@ -53,7 +53,7 @@
 jQuery(document).ready(function($){
 	$('#bigBang').on('click',function(e){
  		var ni = $.post('http://65.60.97.68/index.php/produp1/solrbuild_crawl',{action:'bigBang'});
-		var ni = $.post('http://127.0.0.1/index.php/produp1/solrbuild_crawl',{action:'bigBang'});
+//		var ni = $.post('http://127.0.0.1/index.php/produp1/solrbuild_crawl',{action:'bigBang'});
 		ni.done(function(data){
 				$('#grpBarHolder').hide();
 				$('#barHolder').html(data).show();
@@ -61,7 +61,7 @@ jQuery(document).ready(function($){
 		});
 	$('#superNova').on('click',function(e){
 		var sn = $.post('http://65.60.97.68/index.php/produp1/solrbuild_crawl',{action:'superNova'});
-		var sn = $.post('http://127.0.0.1/index.php/produp1/solrbuild_crawl',{action:'superNova'});
+//		var sn = $.post('http://127.0.0.1/index.php/produp1/solrbuild_crawl',{action:'superNova'});
 		sn.done(function(data){
 				$('#barHolder').hide();
 				$('#grpBarHolder').html(data).show();
