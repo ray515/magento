@@ -1,0 +1,32 @@
+<?php
+/**
+ * Magento
+ *
+ * @category    design
+ * @package     default_modDrillBits
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<div class="header-container">
+    <div class="header">
+        <?php if ($this->getIsHomePage()):?>
+        <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1> 
+        <?php else:?>
+        <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+        <?php endif?>
+        
+        <?php echo $this->getChildHtml('topMenu') ?>
+     <div id="header_block"><?php echo $this->getChildHtml('header_block') ?> </div>   
+    </div>
+    
+    <div class="quick-access">
+        <?php echo $this->getChildHtml('store_language') ?>
+        <p class="welcome-msg"><?php echo $this->getWelcome()?></p>
+        <?php echo $this->getChildHtml('topLinks') ?>
+    </div>
+    <?php echo $this->getChildHtml('topBar') ?>
+    <?php echo $this->getChildHtml('topContainer'); ?>
+    <?php echo $this->getChildHtml('topSearch') ?>
+</div>

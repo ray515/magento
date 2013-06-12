@@ -2,7 +2,8 @@
 class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 {
 	public function sURL(){
-			return 'http://65.60.97.68:8983/solr/KTS1/';
+	//		return 'http://65.60.97.68:8983/solr/KTS1/';
+			return 'http://127.0.01:8983/solr/KTS1/';
 	}
 	public function bURL(){
 			return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
@@ -39,7 +40,6 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		foreach($sID as $sku){ $filters[$i++] = array('attribute'=>'sku','eq'=>$sku); }
 		$collection->addFieldToFilter($filters);
 		$collection->addAttributeToSelect('*');
-		//$this->collection=$collection;
 		return $collection;
 	}
 	
@@ -47,21 +47,14 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		foreach ($sCol as $prod){
 			$_cid=$prod->getCategoryIds();
 			foreach($_cid as $_catID){
-				$_cat=Mage::getModel('catalog/category')->load($_catID);
-				$_catName=$_cat->getName();
-				if(array_key_exists($_catName,$catArr)){
-					$catArr[$_catName]++;
-				}else{
-					$catArr[$_catName]=1;
-				}
-				$cataInfo=$catArr;
+				$_cat = Mage::getSingleton('catalog/category')->load($_catID);
+				$_catInfo=$_catID;
+				$cataInfo[$_catID]=$_cat->getName();
 			}
 		}
 		$cataOut='<ol id="cataOL">'; 
 		foreach($cataInfo as $ci=>$ciCt){
-			//if($ci != 'Root Catalog'){
-				$cataOut=$cataOut.'<li class="cataLI">'.$ci.' ('.$ciCt.')</li>';
-			//}
+				$cataOut=$cataOut.'<li class="cataLI" data-cId="'.$ci.'">'.$ciCt.'</li>';
 		}
 		$cataOut=$cataOut.'</ol><div id="fClrCata" class="fClr">Reset</div>';
 		return $cataOut;
@@ -106,7 +99,7 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		$priceOut='<ol id="priceOL">';
 		foreach($priceSetArr as $psa1=>$psa1a){
 			$psa1Fix=str_getcsv($psa1,'(');
-			$priceOut=$priceOut.'<li class="priceLI">'.$psa1.' ('.count($psa1a).')</li>';
+			$priceOut=$priceOut.'<li class="priceLI">'.$psa1.' </li>';//('.count($psa1a).')
 		}   $priceOut=$priceOut.'</ol><div id="fClrPrice" class="fClr">Reset</div>';
 		return $priceOut;
 	}
@@ -152,6 +145,9 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 				$cataInfo=$catArr;
 			}
 
+			
+// get layer info and html
+			
 			$cataOut='';
 			foreach($cataInfo as $ci=>$ciCt){
 				$cataOut=$cataOut.$ci.',';
@@ -191,8 +187,8 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 										</div>
 										</td><tr>
 								<tr id="diaTableBot"><td id="diaTable1Comp"><a href="'.Mage::getUrl('/').$urlKey.'">View Product Page</a></td><td id="diaTable1Action">
-										<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
-										<div id=diaTableActionPrice><button type="button" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">'.$price.' '.$this->__('Add to Cart').'</span></span></button></div></td></tr>
+										<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" id="compIt" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
+										<div id=diaTableActionPrice><button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">'.$price.' '.$this->__('Add to Cart').'</span></span></button></div></td></tr>
 							</table>
 						</div>			';
 			$outDat=$outDat.$sl1.$dialog;
@@ -229,7 +225,7 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		$manuOut='<ol id="manuOL">';
 		foreach($manuInfo as $mi=>$miCt){
-			$manuOut=$manuOut.'<li class="manuLI">'.$mi.' ('.$miCt.')</li>';
+			$manuOut=$manuOut.'<li class="manuLI">'.$mi.'</li>';
 		}
 		$manuOut=$manuOut.'</ol><div id="fClrManu" class="fClr">Reset</div>';
 		return $manuOut;
@@ -257,4 +253,27 @@ class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 		//var_dump($out);
 		return $out;
 	}
+	
+	public function searchSug($term){
+		$sugStr=urlencode($term);
+		$url=Mage::helper('solr')->sURL().'suggest?wt=json&q='.$sugStr;
+		// using curl method
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$output=curl_exec($ch);
+		$result=json_decode($output, TRUE);
+		
+		$res=$result['spellcheck']['suggestions'][1]['suggestion'];
+		$jCt=0;
+		$d1="";
+		foreach($res as $res1){
+			$d1=$d1.'<li><a href="?qRec='.$res1.'">'.$res1.'</li>';
+			//$data[]=array("label"=>$res1);
+			$jCt++;
+		}
+		//echo json_encode($d1);
+		echo $d1;
+	}
+	
 }
