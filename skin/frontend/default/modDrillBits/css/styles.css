@@ -2326,4 +2326,7 @@ ul li {list-style-type: none;}
 #selPar{float:right;width:17px;height:17px;background:url("../images/ui-icons_222222_256x240.png") -143px -147px transparent;}
 #selLi{float:right;width:17px;height:17px;background:url("../images/ui-icons_888888_256x240.png") repeat scroll 0 -192px transparent;}
 .hideMe{display:none;}
+.waitOver{background:transparent url(images/overlay.png) repeat top left;position:fixed;top:0px;bottom:0px;left:0px;right:0px;z-index:999;}
+.waitMsg{width:150px;height:40px;margin:120px auto; background:url("images/spinner_squares_circle.gif") no-repeat scroll 50% 5px white;border-radius:10px;}
+.noResult{color:red;}
 /* ======================================================================================= */

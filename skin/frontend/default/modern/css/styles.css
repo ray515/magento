@@ -1726,4 +1726,6 @@ div.shipping h2 {text-indent:6px;font-size: 15px; color: #333333;}
 #tab-3{overflow-x:HIDDEN;overflow-y:SCROLL !important;height:130px;margin:5px 0;}
 #tab-3 li{border-bottom:1px solid #555;}
 .hideMe{display:none;}
+.waitOver{background:transparent url(images/overlay.png) repeat top left;position:fixed;top:0px;bottom:0px;left:0px;right:0px;z-index:999;}
+.waitMsg{width:150px;height:40px;margin:120px auto; background:url("images/spinner_squares_circle.gif") no-repeat scroll 50% 5px white;border-radius:10px;}
 /* ======================================================================================= */

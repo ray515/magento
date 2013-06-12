@@ -32,21 +32,14 @@ class Gfilter_Gfilter_Helper_Data extends Mage_Core_Helper_Abstract
 		}else{echo "Error";}
 		// check for singles there must be more than one product to fileter and more than one attribute value to filter.
 		foreach($atOut as $ao1=>$ao2){
-			//print_r('head: '.$ao1."<hr/>");
 			foreach($ao2 as $ao3){
 				$eCt=count(str_getcsv($ao3));
-				//print_r("a3: ".$ao3."-- count: ".$eCt."<br/>");
 				if(trim($ao3)==',' || strpos(trim($ao3),',')==0 || $eCt<1){	unset($atOut[$ao1]);}	
 			}
 		}
-		//echo "Data Check";
 		return json_encode($atOut);
 	}
-	
-	public function ajaxRes(){
-		return 'this is a test';
-	}
-	
+/*
 	public function searchFilterBase($sCol){
 		return count($sCol);
 	}
@@ -166,5 +159,5 @@ class Gfilter_Gfilter_Helper_Data extends Mage_Core_Helper_Abstract
 		$out=$out.'</ol>';
 		return $out;
 	}
-	
+*/	
 }
