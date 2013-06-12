@@ -472,7 +472,7 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
                         if (in_array($serviceName, $allowedMethods)) {
                             $amount = $this->_getRateAmountOriginBased($rate);
                             $costArr[$serviceName]  = $amount;
-                            $priceArr[$serviceName] = $this->getMethodPrice($amount, $serviceName);
+                            $priceArr[$serviceName] = $this->getMethodPrice($amount, $serviceName)-2; //ERIC UPDATE
                         }
                     }
                     asort($priceArr);
@@ -517,7 +517,7 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
      * @param stdClass $rate
      * @return null|float
      */
-    protected function _getRateAmountOriginBased($rate)
+    protected function _getRateAmountOriginBased($rate)                                                                
     {
         $amount = null;
         $rateTypeAmounts = array();
