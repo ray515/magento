@@ -470,9 +470,9 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
                     foreach ($response->RateReplyDetails as $rate) {
                         $serviceName = (string)$rate->ServiceType;
                         if (in_array($serviceName, $allowedMethods)) {
-                            $amount = $this->_getRateAmountOriginBased($rate-2);                                             //e
-                            $costArr[$serviceName]  = $amount-2;                                                             //e
-                            $priceArr[$serviceName] = $this->getMethodPrice($amount-2, $serviceName);                        //e
+                            $amount = $this->_getRateAmountOriginBased($rate);
+                            $costArr[$serviceName]  = $amount;
+                            $priceArr[$serviceName] = $this->getMethodPrice($amount, $serviceName)-2; //ERIC UPDATE
                         }
                     }
                     asort($priceArr);
@@ -480,9 +480,9 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
                     $rate = $response->RateReplyDetails;
                     $serviceName = (string)$rate->ServiceType;
                     if (in_array($serviceName, $allowedMethods)) {
-                        $amount = $this->_getRateAmountOriginBased($rate-2);                                                 //e
-                        $costArr[$serviceName]  = $amount-2;                                                                 //e
-                        $priceArr[$serviceName] = $this->getMethodPrice($amount-2, $serviceName);                            //e
+                        $amount = $this->_getRateAmountOriginBased($rate);
+                        $costArr[$serviceName]  = $amount;
+                        $priceArr[$serviceName] = $this->getMethodPrice($amount, $serviceName);
                     }
                 }
             }
@@ -504,8 +504,8 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
                 $rate->setMethod($method);
                 $rate->setMethodTitle($this->getCode('method', $method));
                 $rate->setCost($costArr[$method]);
-                $rate->setPrice($price-2);                                                                                   //e
-                $result->append($rate-2);                                                                                    //e
+                $rate->setPrice($price);
+                $result->append($rate);
             }
         }
         return $result;
@@ -527,23 +527,23 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
             foreach ($rate->RatedShipmentDetails as $ratedShipmentDetail) {
                 $netAmount = (string)$ratedShipmentDetail->ShipmentRateDetail->TotalNetCharge->Amount;
                 $rateType = (string)$ratedShipmentDetail->ShipmentRateDetail->RateType;
-                $rateTypeAmounts[$rateType] = $netAmount-2;                                                                   //e
+                $rateTypeAmounts[$rateType] = $netAmount;
             }
 
             // Order is important
             foreach (array('RATED_ACCOUNT_SHIPMENT', 'RATED_LIST_SHIPMENT', 'RATED_LIST_PACKAGE') as $rateType) {
                 if (!empty($rateTypeAmounts[$rateType])) {
-                    $amount = $rateTypeAmounts[$rateType]-2;                                                                   //e
+                    $amount = $rateTypeAmounts[$rateType];
                     break;
                 }
             }
 
             if (is_null($amount)) {
-                $amount = (string)$rate->RatedShipmentDetails[0]->ShipmentRateDetail->TotalNetCharge->Amount -2;                 //e
+                $amount = (string)$rate->RatedShipmentDetails[0]->ShipmentRateDetail->TotalNetCharge->Amount;
             }
         }
 
-        return $amount-2;                                                                                                        //e
+        return $amount;
     }
 
     /**
@@ -699,8 +699,8 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
                 $rate->setMethod($method);
                 $rate->setMethodTitle($this->getCode('method', $method));
                 $rate->setCost($costArr[$method]);
-                $rate->setPrice($price-2);                                                                                  //e
-                $result->append($rate-2);                                                                                   //e
+                $rate->setPrice($price);
+                $result->append($rate);
             }
         }
         return $result;

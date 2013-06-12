@@ -36,13 +36,33 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 		if($_POST['JSONin']){
 			$this->filterRes($_POST['JSONin'],$_POST['pCol']);
 		}
+		
+		if($_REQUEST['cartinator']=='add'){
+			$this->cartinator($_REQUEST['pId']);
+		}
+		
 		if(!$_REQUEST && !$_POST && !$_GET){
 			echo "<h3>Public Methods in gfilter</h3>";
 			foreach(get_class_methods($this) as $cm){
 				$reflect = new ReflectionMethod($this,$cm);
 				if($reflect->isPublic()){echo $cm.'<br/>';}}}}
+		
+		
 
 	public function nsAction(){echo "Gfilter_Gfilter";}
+	
+	public function cartinator($pId){
+		$item = $pId;
+		$cart = Mage::getSingleton('checkout/cart');
+		$product = Mage::getModel('catalog/product')
+		->setStoreId(Mage::app()->getStore()->getId())
+		->load($pId);
+		$cart->addProduct($product,1);
+		$cart->save();
+		Mage::getSingleton('checkout/session')->setCartWasUpdated(true);
+		return 'Cart Updated';
+	}
+	
 	
 	public function filterRes($JSONin,$pCol="n/a"){
 		$ji=json_decode($JSONin); 
@@ -65,10 +85,17 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 				foreach($ji as $ji1=>$ji2){
 				$prodByCat->addAttributeToFilter($ji1,$ji2);
 				}
-			$prodByCat->load();			
+			//$prodByCat->load();
+			//$this->setProductCollection($prodByCat);		
 			$resCount=count($prodByCat);
 			if($resCount > 0){
 				print_r('<div id="prodList"><ol>');
+				//pager init
+				//$this->getMode('list');
+		//		echo $this->getToolbarHtml();
+				$_iterator = 0;
+				
+				echo ($pager);
 				foreach($prodByCat as $prod){
 					print_r('<li>');
 					$pClass			= str_replace('"','',$prod->getName());							// clean product name to be used as class for selector in dialog functionallity.
@@ -93,21 +120,25 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 					$_helperComp 	= Mage::helper('catalog/product_compare')->getAddUrl($prod);	// compare helper, depricated, test then take out. functionality replaced with ajax method.
 //TODO: test and take out dep items from above.
 						
-					$searchListing='	<div id="'.$prod->getId().'o" class="'.$pClass.'">
+					$searchListing='	<div id="'.$prod->getId().'b" class="'.$pClass.'">
 									<div id="searchListing">
-										<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>
-										<div id="slTable">
-											<table id="listTable">
-											<caption>'.$name.'</caption><tr><td class="col1">'.$desc.'<br/></td>
-												<td class="col2 regular-price">
-													<span class="price listingPrice">'.$price.'</span>
-															<p id="cartBut">
-															<button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button></p></td></tr>
-											</table>
+										<div id="slTarget1" data-me="'.$prod->getId().'b" class="'.$pClass.'">
+											<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>					
+											<div id="slTable">
+												<span class="slTitle">'.$name.'</span><br/>
+												<span class="slDesc">'.$desc.'</span>
+											</div>
+										</div>
+										<div id="slAction">
+											<span class="price lostingPrice">'.$price.'</span>
+											<p id="cartBut">
+												<button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button>
+											</p>							
 										</div>
 									</div></div>
 			';
-					$dialog='	<div id="dialog" class="'.$prod->getId().'o">
+	
+					$dialog='	<div id="dialog" class="'.$prod->getId().'b">
 							<table id="diaTable1">
 								<tr id="diaTableTop"><td id="diaTable1Img"><img src="'.$lgPict->resize(225).'"></td><td id="diaTable1Data">
 										<div class="dataTabs">
@@ -146,14 +177,14 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 				<!--
 				jQuery(document).ready(function($){
 				//add to cart action
-				$('.addToCart').click(function(){
+				/*$('.addToCart').click(function(){
 					var cartUrl = $(this).data('link');
 					var cartIt = $.post(cartUrl);
 					cartIt.done(function(data){
 						location.reload();
 					});
 				});
-				
+				*/				
 				
 					//compare action
 						
@@ -179,25 +210,29 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 								duration: 1000
 							}
 						});
-				
-							var stopDia = false;
-							$('#prodList ol>li>div #listLink').click( function(){
-								return stopDia = true;
-							});
-									
-								$('#prodList ol>li>div').click( function(){
-									if(stopDia == true){
-										return;
-									}else{
-										var myid='.'+$(this).attr('id');
-										var myTitle=$(this).attr('class');
-										if($(myid).dialog('isOpen')==false){
-											$(myid).dialog('open');
-											$(myid).dialog('option','title',myTitle);
-											$('.dataTabs').tabs();
-										}	}
-								});
-										
+						$('body').delegate('#slTarget1','click',function(){
+							var myid='.'+$(this).data('me');
+							alert(myid);
+							var myTitle=$(this).attr('class');
+							if($(myid).dialog('isOpen')==false){
+								$(myid).dialog('open');
+								$(myid).dialog('option','title',myTitle);
+								$('.dataTabs').tabs();
+							}
+						});
+
+/*	
+$('body').on('click','#slTarget','',function(){
+	//alert('fire');
+	var myid='.'+$(this).data('me');
+	var myTitle=$(this).attr('class');
+	if($(myid).dialog('isOpen')==false){
+		$(myid).dialog('open');
+		$(myid).dialog('option','title',myTitle);
+		$('.dataTabs').tabs();
+	}							
+});						
+*/										
 				});
 								//-->
 								</script>

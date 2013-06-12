@@ -5,44 +5,6 @@
 */
 jQuery(document).ready(function($){
 
-// dialog home start
-//$('.tabDia ol>li #dialog').append('this is a test');
-
-
-//prod info dialog
- $('.tabDia ol>li #dialog1').dialog({
-	autoOpen: false,
-	width: 665,
-	height: 300,
-	show:{
-		effect: "blind",
-		duration: 1000
-		},
-	hide: {
-		effect: "explode",
-		duration: 1000
-		}
-});
-
-var stopDia = false;
-$('.tabDia ol>li>div #listLink').click( function(){
-	return stopDia = true;
-});
-
-$('.tabDia ol>li>div').click( function(){
-	if(stopDia == true){
-		return;
-	}else{
-		var myid = '.'+$(this).attr('id');
-		var myTitle = $(this).attr('class');
-		if($(myid).dialog('isOpen')==false){
-			$(myid).dialog('open');
-			$(myid).dialog('option','title',myTitle);
-			$('.dataTabs').tabs();
-		}
-	}
-});
-/**/
 // dialog home end	
 	if($('#fStat').html()=='ct'){
 		$("#tabs").tabs('option','active',1);
@@ -62,6 +24,8 @@ $('.tabDia ol>li>div').click( function(){
 				});
 			});
 		});
+//		$('#narrow-by-list').append('<dt>Reset Filter</dt><dd><button id="fResetBut">Reset Filter</button></dd>');
+//		$('#narrow-by-list').append('<button id="fResetBut">Reset Filter</button>');
 
 		//init cookies
 		if(!$.cookie('KTS_FS1')){
@@ -84,7 +48,7 @@ $('.tabDia ol>li>div').click( function(){
 				$('#'+ff+' #selLi').remove();
 				fOut=$(this).data('code')+':'+$(this).html();
 				killTest=killSel(fOut,fSel,'kill');
-				filterInit(fSel,jsCol);
+				//filterInit(fSel,jsCol);
 			}else{
 				$(this).siblings().removeClass('liTouch').addClass('liStart');
 				$('#'+ff+' #selPar').remove();
@@ -96,9 +60,23 @@ $('.tabDia ol>li>div').click( function(){
 					$(this).removeClass('liStart').addClass('liTouch');
 					$('#'+ff).append('<div id="selPar"></div>');
 					$(this).append('<div id="selLi"></div>');
-					filterInit(fSel,jsCol);
+					
+					//reload test
+					//reloading test
+					//var nURL = document.URL.split('?');
+					//var nURL1;
+					//if(nURL.length!=0){
+					//	nURL1=nURL[0]+"?"+nURL[1]+"&fSel="+fSel+"&length="+nURL.length;
+					//}else if(nURL.length==0){
+					//	nURL1=nURL[0]+"?fSel="+fSel;
+					//}else{
+					//	nURL1=nURL[0];
+					//}
+					
+					//filterInit(fSel,jsCol);
 				};
-			};				
+			};
+			window.location.replace(document.URL);				
 		});
 	}else{ }
 
@@ -116,8 +94,10 @@ $('.tabDia ol>li>div').click( function(){
 			var t1=fSel[i].split(':');
 			$('#narrow-by-list #'+t1[0]).find("[data-val='"+t1[1]+"']").append('<div id="selLi"></div>').addClass('liTouch');
 			$('#narrow-by-list .'+t1[0] ).append('<div id="selPar"></div>');
+			$('#filterList p').html('Your Current Filter:');
+			$('#filterList ul').append('<li><strong>'+$('#narrow-by-list #'+t1[0]).html()+'</strong>:'+t1[1]+'</li>');
 		}
-		filterInit(fSel,jsCol);
+		//filterInit(fSel,jsCol);
 	}
 	
 	function filterInit(fSel,jsCol){
@@ -135,12 +115,17 @@ $('.tabDia ol>li>div').click( function(){
 		}
 		filterJSON = filterJSON+'}';
 
-		// get base url		
-		var baseURL = $.cookie('KTS-SOLR-b')+'gfilter/index/index/';
-		var getit = $.post(baseURL,{JSONin:filterJSON,pCol:jsCol});
+		
+/*
+ * for ajax (no paging)
+ * 
+		var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
+		var bURL = nURL;
+		var getit = $.post(bURL,{JSONin:filterJSON,pCol:jsCol});
 		getit.done(function(data){
 			$('#fRes').html(data);
-		});		
+		});
+*/		
 		$("#fResTab").show();
 		$('#fRes').show();
 		$("#tabs").tabs('option','active',0);
@@ -150,6 +135,7 @@ $('.tabDia ol>li>div').click( function(){
 			$("#fResTab").hide();
 			//$('#fRes').hide();html("We did not find any results based on your filter options.<br/>Please change the last option you selected to another value.");
 		}
+		
 	}
 	
 	function addSel(newSel){
@@ -208,12 +194,5 @@ $('.tabDia ol>li>div').click( function(){
 	 $('#goBut').click(function(){
 			$('#ctFilter').submit();
 	});
-
-	 
-
-	 
-
-
-	
 });
 
