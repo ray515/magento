@@ -9,21 +9,24 @@ class TRU_ProdUp1_Block_Adminhtml_ProdUp1_Grid extends Mage_Adminhtml_Block_Widg
       $this->setDefaultSort('produp1_id');
       $this->setDefaultDir('ASC');
       $this->setSaveParametersInSession(true);
+      
   }
-
+  
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('produp1/produp1')->getCollection();
       $this->setCollection($collection);
       return parent::_prepareCollection();
+
   }
 
   protected function _prepareColumns()
   {
-      $this->addColumn('produp1_id', array(
+  	$this->addColumn('produp1_id', array(
           'header'    => Mage::helper('produp1')->__('ID'),
           'align'     =>'right',
           'width'     => '50px',
+  			'type'	  => 'text',
           'index'     => 'produp1_id',
       ));
 
@@ -31,13 +34,13 @@ class TRU_ProdUp1_Block_Adminhtml_ProdUp1_Grid extends Mage_Adminhtml_Block_Widg
           'header'    => Mage::helper('produp1')->__('Title'),
           'align'     =>'left',
           'width'     =>'150',
-          'index'     => 'title',
+          'index'     => 'title'//,
       ));
 
       $this->addColumn('content', array(
 			'header'    => Mage::helper('produp1')->__('File Notes'),
 			//'width'     => '150px',
-			'index'     => 'content',
+			'index'     => 'content'//,
       ));
 
       $this->addColumn('status', array(
@@ -73,8 +76,9 @@ class TRU_ProdUp1_Block_Adminhtml_ProdUp1_Grid extends Mage_Adminhtml_Block_Widg
 		
 		$this->addExportType('*/*/exportCsv', Mage::helper('produp1')->__('CSV'));
 		$this->addExportType('*/*/exportXml', Mage::helper('produp1')->__('XML'));
-	  
-      return parent::_prepareColumns();
+	  //echo('tester2');
+      return $this;
+  		//return parent::_prepareColumns();
   }
 
     protected function _prepareMassaction()
@@ -117,6 +121,9 @@ class TRU_ProdUp1_Block_Adminhtml_ProdUp1_Grid extends Mage_Adminhtml_Block_Widg
   public function getRowUrl($row)
   {
       return $this->getUrl('*/*/edit', array('id' => $row->getId()));
+  }
+  public function getGridUrl(){
+  	return $this->getUrl('*/*/grid', array('_current'=>true));
   }
 
 }
