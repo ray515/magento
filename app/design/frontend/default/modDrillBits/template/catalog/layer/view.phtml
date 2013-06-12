@@ -17,19 +17,94 @@
  */
 ?>
 <?php
-if($fStat = "ct"){
+//tmp design pattern
+//<dt class="code" id="code">Name</dt>
+//	<dd id="code">
+//		<ol><li id="code" data-code="code" data-val="val">val</li></ol>
+//	</dd>
+
+$session=Mage::getSingleton('core/session', array('name'=>'frontend'));
+
+$thisPage=$this->getRequest()->getParams()['id'];
+
+function pgCol($thisPage){
+	$cataCol=Mage::getModel('catalog/category')
+	->load($thisPage) //$thisPage
+	->getProductcollection();
+	foreach($cataCol as $cc){
+		$pList[]=$cc->getId();
+	}
+	return $pList; //prod id's for category
+}
+
+$ctFilt = $session->getData('ctFilt');
+if(count($ctFilt<0)){
+	$ctFilt = array_pad($ctFilt, 1, "~:~");
+}
+
+
+if(count(pgCol($thisPage))>0){
+	$fJSON=json_decode(Mage::helper('gfilter')->getFilterData(pgCol($thisPage)));
+
+	$jOut="";
+	foreach($fJSON as $fj1=>$fj2){
+		foreach($fj2 as $fj3=>$fj4){
+			$cfct=0;
+			foreach($ctFilt as $tf){
+				$tf1 = str_getcsv($tf,':')[0];
+				if($fj1 == $tf1){
+					$jOut.='<dt class="'.$fj1.'" id="'.$fj1.'">'.$fj3.'<div id="selPar"></div></dt><dd id="'.$fj1.'"><ol>';
+					$cfct++;
+				}
+			}
+			if($cfct==0){
+			$jOut.='<dt class="'.$fj1.'" id="'.$fj1.'">'.$fj3.'</dt><dd id="'.$fj1.'"><ol>';
+			}
+			
+		}
+			$vals=str_getcsv($fj4,',');
+			foreach($vals as $val){
+				$cfct1=0;
+				foreach($ctFilt as $cf){
+					$cf1 = str_getcsv($cf,':')[1];
+					if(rtrim($val,'"') == rtrim($cf1,'"')){
+						$jOut.='<li id="'.$fj1.'" data-code="'.$fj1.'" data-val="'.$val.'" class="liTouch">'.$val.'<div id="selLi"></div></li>';
+						$cfct1++;
+					}
+				}
+				if($cfct1==0){
+					$jOut.='<li id="'.$fj1.'" data-code="'.$fj1.'" data-val="'.$val.'" class="liStart">'.$val.'</li>';
+				}
+			}
+			$jOut.='</ol></dd>';
+		}
+	
 	$filterBase='<div id="leftFilter" class="block block-layered-nav">
 		<div class="block-title">
 			<strong><span>Shop By</span></strong>
 		</div>
 		<p id="filterTitle" class="block-subtitle">Shopping Options</p>		
-		<dl id="narrow-by-list">
+		<dl id="narrow-by-list">'.$jOut.'
 		</dl>
- 		<div id="filterCtl">
+ 		<!--<div id="filterCtl">
  			<div id="filterList"><p></p><ul></ul></div>
- 		</div>
+ 		</div>-->
+		
 	</div>';
 print_r($filterBase);
+
+?>
+<script type="text/javascript">
+<!--
+jQuery('#narrow-by-list').accordion({
+	collapsible:true,
+	active:false,
+	heightStyle:"content"
+});
+//-->
+</script>
+<?php 
+
 }else{
 if($this->canShowBlock()): ?>
 echo('fire');
