@@ -36,13 +36,33 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 		if($_POST['JSONin']){
 			$this->filterRes($_POST['JSONin'],$_POST['pCol']);
 		}
+		
+		if($_REQUEST['cartinator']=='add'){
+			$this->cartinator($_REQUEST['pId']);
+		}
+		
 		if(!$_REQUEST && !$_POST && !$_GET){
 			echo "<h3>Public Methods in gfilter</h3>";
 			foreach(get_class_methods($this) as $cm){
 				$reflect = new ReflectionMethod($this,$cm);
 				if($reflect->isPublic()){echo $cm.'<br/>';}}}}
+		
+		
 
 	public function nsAction(){echo "Gfilter_Gfilter";}
+	
+	public function cartinator($pId){
+		$item = $pId;
+		$cart = Mage::getSingleton('checkout/cart');
+		$product = Mage::getModel('catalog/product')
+		->setStoreId(Mage::app()->getStore()->getId())
+		->load($pId);
+		$cart->addProduct($product,1);
+		$cart->save();
+		Mage::getSingleton('checkout/session')->setCartWasUpdated(true);
+		return 'Cart Updated';
+	}
+	
 	
 	public function filterRes($JSONin,$pCol="n/a"){
 		$ji=json_decode($JSONin); 
@@ -65,10 +85,17 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 				foreach($ji as $ji1=>$ji2){
 				$prodByCat->addAttributeToFilter($ji1,$ji2);
 				}
-			$prodByCat->load();			
+			//$prodByCat->load();
+			//$this->setProductCollection($prodByCat);		
 			$resCount=count($prodByCat);
 			if($resCount > 0){
 				print_r('<div id="prodList"><ol>');
+				//pager init
+				//$this->getMode('list');
+		//		echo $this->getToolbarHtml();
+				$_iterator = 0;
+				
+				echo ($pager);
 				foreach($prodByCat as $prod){
 					print_r('<li>');
 					$pClass			= str_replace('"','',$prod->getName());							// clean product name to be used as class for selector in dialog functionallity.
@@ -150,14 +177,14 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 				<!--
 				jQuery(document).ready(function($){
 				//add to cart action
-				$('.addToCart').click(function(){
+				/*$('.addToCart').click(function(){
 					var cartUrl = $(this).data('link');
 					var cartIt = $.post(cartUrl);
 					cartIt.done(function(data){
 						location.reload();
 					});
 				});
-				
+				*/				
 				
 					//compare action
 						

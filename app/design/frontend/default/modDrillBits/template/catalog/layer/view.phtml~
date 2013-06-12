@@ -1,0 +1,84 @@
+<?php
+/**
+ * Magento
+ *
+ * Another Magento Page Destroyed by Eric ;)
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Category layered navigation
+ *
+ * @see Mage_Catalog_Block_Layer_View
+ */
+?>
+<?php
+if($fStat = "ct"){
+	$filterBase='<div id="leftFilter" class="block block-layered-nav">
+		<div class="block-title">
+			<strong><span>Shop By</span></strong>
+		</div>
+		<p id="filterTitle" class="block-subtitle">Shopping Options</p>		
+		<dl id="narrow-by-list">
+			<p>There must be more than one product to filter.</p>
+		</dl>
+	</div>';
+print_r($filterBase);
+}else{
+if($this->canShowBlock()): ?>
+<div id="leftFilter" class="block block-layered-nav">
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Shop By') ?></span></strong>
+    </div>
+    <div class="block-content">
+        <?php echo $this->getStateHtml() ?>
+        <?php if ($this->getLayer()->getState()->getFilters()): ?>
+            <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+        <?php endif; ?>
+        <?php if($this->canShowOptions()): ?>
+            <p id="filterTitle" class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
+            <dl id="narrow-by-list">
+                <?php $_filters = $this->getFilters() ?>
+                <?php foreach ($_filters as $_filter): ?>
+                <?php if($_filter->getItemsCount()): ?>
+                    <dt><?php echo $this->__($_filter->getName()) ?></dt>
+                    <dd id=id<?php echo $this->__($_filter->getName())?>><?php echo $_filter->getHtml() ?></dd>
+                <?php endif; ?>
+                <?php endforeach; ?>
+            </dl>
+            <script type="text/javascript">decorateDataList('narrow-by-list')</script>
+        <?php endif; ?>		
+	</div>
+	<?php if($_GET['qRec']):?>
+	<div id="deepSearch" class="block-content">
+		<p id='deepSearchTitle' class="block-subtitle"></p>
+		<dl id="deepList">
+			<dt id="deepTitle">Popular Search Terms</dt>
+			<dd id="deepRes" class="dr1" style="display:block;">
+				<ol class="ol1">
+					<li></li>
+				</ol>
+			</dd>
+		</dl>
+	</div>
+		<?php endif; ?>      
+</div>
+<?php endif; 
+if($_GET['qRec']){
+?>
+<script type="text/javascript">
+<!--
+	//hide data for search lol
+	jQuery('#idCategory').hide();
+	jQuery('#idPrice').hide();
+	jQuery('#idManufacturer').hide();
+//-->
+</script>
+<?php 
+}
+}
+?>

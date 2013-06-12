@@ -1,5 +1,5 @@
 <?php
-class TRU_ProdUp1_Block_Produp1 extends Mage_Core_Block_Template
+class TRU_Produp1_Block_Produp1 extends Mage_Core_Block_Template
 {
 	public function _prepareLayout()
     {
