@@ -2,7 +2,8 @@
 class Searcher_Solr_Helper_Data extends Mage_Core_Helper_Abstract
 {
 	public function sURL(){
-			return 'http://65.60.97.68:8983/solr/KTS1/';
+	//		return 'http://65.60.97.68:8983/solr/KTS1/';
+			return 'http://127.0.01:8983/solr/KTS1/';
 	}
 	public function bURL(){
 			return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
