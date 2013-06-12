@@ -1,6 +1,6 @@
 <?php
 
-class TRU_ProdUp1_Block_Adminhtml_ProdUp1_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+class TRU_ProdUp1_Block_Adminhtml_Produp1_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     public function __construct()
     {

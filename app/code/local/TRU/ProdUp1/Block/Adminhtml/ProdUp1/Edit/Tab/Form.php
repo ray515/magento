@@ -1,6 +1,6 @@
 <?php
 
-class TRU_ProdUp1_Block_Adminhtml_ProdUp1_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
+class TRU_ProdUp1_Block_Adminhtml_Produp1_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
 {
   protected function _prepareForm()
   {
