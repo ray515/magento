@@ -1,0 +1,65 @@
+<?php 
+$thisPgLoc=$this->getRequest()->getOriginalPathInfo();
+$thisPage=$this->getRequest()->getParams()['id'];
+$pgCol=pgCol($thisPage);
+$prodCol= Mage::getResourceModel('catalog/product_collection')
+	->addAttributetoFilter('attribute_set_id','104')
+	->addAttributeToSelect('*')	
+	->addIdFilter($pgCol)
+	->load();
+if($prodCol) {
+	foreach($prodCol as $prod){
+		array_push($tmp,$prod->getCt_mats());
+	}
+}
+$atList = Mage::getModel('catalog/product')->load($prod->getID());
+$atNames=array_keys($prod->getData());
+foreach($atNames as $atn){
+	$atn=$atn;
+}
+$accArr=array();
+$prAt = Mage::getResourceModel('catalog/product_attribute_collection');	
+	foreach($prAt as $pa1){
+		$atCode=$pa1->getAttribute_code();
+		$atLabel=$pa1->getFrontend_label();
+		if( strpos($atCode,'ct_')=== 0){
+			$accArr[$atCode]=$atLabel;
+		}
+	}
+	foreach($accArr as $l1=>$l2){
+		foreach($prodCol as $prod1){
+			$tVal = $prod1->getResource()->getAttribute($l1)->getFrontend()->getValue($prod1);
+			if($tVal){
+				if(strstr($accArr2[$l2],$tVal)==false){
+					$accArr2[$l1]=$accArr2[$l1].$tVal.',';
+				}
+			}
+		}
+	}
+	print_r('<div id="filterBox"><h3>Filter</h3>');
+	print_r('<form id="ctFilter" name="ctFilter" action="'.$thisPgLoc.'" method="POST"><div id="accordion">');
+	foreach($accArr2 as $l1=>$l2){
+		$atName=$prod1->getResource()->getAttribute($l1)->getFrontend()->getLabel($prod1);
+		print_r('<h3 class="accordion_toggle"><strong>'.$atName.'</strong></h3><div class="accordion_content" id="brand">');
+		
+		$accCont=str_getcsv($l2,',');
+		foreach($accCont as $outty){
+			if($outty != ""){
+				if($_POST[urlencode($l1)]){
+					$x=$_POST[urlencode($l1)];
+						if(in_array($outty,$x) && $_POST['rf']!=true){
+							$ckd="checked";
+							print_r('<input type="checkbox" name="'.urlencode($l1).'[]" value="'.$outty.'" '.$ckd.'>&nbsp;'.$outty."<br/>");
+						}else{	
+							print_r('<input type="checkbox" name="'.urlencode($l1).'[]" value="'.$outty.'">&nbsp;'.$outty."<br/>");
+						}						
+				}else{
+					print_r('<input type="checkbox" name="'.urlencode($l1).'[]" value="'.$outty.'">&nbsp;'.$outty."<br/>");
+				}
+			}
+		}
+		echo '<br/><button id="goBut">Filter</button>&nbsp;&nbsp;';
+		echo'</div>';
+	}
+	echo '<button id="clrBut"><strong>Clear Filter</strong></button></form></div>';
+?>

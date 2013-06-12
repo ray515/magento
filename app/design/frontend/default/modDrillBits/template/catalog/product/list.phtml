@@ -1,0 +1,208 @@
+<?php
+/**
+ * Magento destroyed by Eric <<<;-)
+ *
+ *
+ * @category    design
+ * @package     default_modern_2
+ * @copyright   Copyright (c) 2013 Kens Tool Supply
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php
+/**
+ * Product list template
+ * @see Mage_Catalog_Block_Product_List
+ */
+//flag to use ct filter view
+$fStat='ct';
+echo '<div id=fStat style="visibility:hidden" >'.$fStat.'</div>';
+//set page loc info
+$thisPgLoc=$this->getRequest()->getOriginalPathInfo();
+$thisPage=$this->getRequest()->getParams()['id'];
+
+function pgCol($thisPage){
+	$cataCol=Mage::getModel('catalog/category')
+	->load($thisPage) //$thisPage
+	->getProductcollection();
+//print_r(count($cataCol));
+	foreach($cataCol as $cc){
+		$pList[]=$cc->getId(); 
+	}
+	return $pList; //prod id's for category
+}
+
+$pgCol=pgCol($thisPage); //cata prod id's
+
+//collection
+$prodByCat = Mage::getResourceModel('catalog/product_collection')
+			->addIdFilter($pgCol)
+			->addAttributetoSelect(array('entity_id','entity_type_id','attribute_set_id','type_id','sku','created_at','updated_at','has_options','required_options','meta_title','meta_description','name','spec_model','url_key','options_container','url_path','ct_brand','ct_mats','ct_length_name','ct_sz_name','ct_flute_no','ct_tot_length','ct_coat','ct_corner_rad','ct_cut_length','ct_heli_deg','ct_hrc','ct_sub_cat','thumbnail','small_image','image','thumbnail_label','small_image_label','image_label','status','tax_class_id','visibility','enable_googlecheckout','ct_use_hsteel','use_alum','use_asteel','use_ciron','use_csteel','use_hsteel','use_nickel','use_ssteel','use_tit','wheel_size','manufacturer','price','description','short_description','in_depth','is_salable','is_in_stock'))
+			->load();
+//print_r(count($prodByCat));
+
+//set tab header array
+/*
+if($prodByCat) {
+	foreach($prodByCat as $product){
+		if(!in_array($product->getCtBrand(),$ct_tabs) && $product->getCtBrand()!=null){
+			$ct_tabs[]=$product->getCtBrand();
+		}}}
+*/
+//var_dump($prodByCat);
+// start tabs section
+/*
+print_r('<div id="tabs"><ul><li id="fResTab"><a href="#fRes"><span>Filter Results1</span></li>');
+$tabCt=1;
+foreach($ct_tabs as $ct_tab){
+		print_r('<li id="'.$tabCt.'"><a href="#'.urlencode($ct_tab).'"><span>'.$ct_tab.'</span></a></li>');
+		$tabCt++;
+}
+print_r("</ul>");
+*/
+//end build tab
+
+//filter results shell
+print_r('<div id="fRes"></div>');
+$panCt=1;
+//foreach($ct_tabs as $ct_tab){
+$ct_tab=1;
+		echo '<div id="'.urlencode($ct_tab).'" data-ct="'.$panCt.'" class="tabDia" ><ol>';
+		$prodCol = $this->getLoadedProductCollection()
+					->load();
+//var_dump($prodCol);
+		$this->getMode('list');
+		echo $this->getToolbarHtml();
+		foreach($prodCol as $prod){
+			
+			print_r('<li>');
+			//Product detail listing
+			$prodAttCol = Mage::getResourceModel('eav/entity_attribute_collection')
+						->setEntityTypeFilter(10)
+						->getData();
+			$attStr="";
+			foreach($prodAttCol as $attCol){
+				if($prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod)!=null && $attCol['frontend_label']!=null && $attCol['used_in_product_listing']==1 && $attCol['is_visible_on_front']==1){
+					$attStr = $attStr.'<li>'.$attCol['frontend_label'].':'.$prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod).'</li>';
+				}}
+			$lgPict			= Mage::helper('catalog/image')->init($prod,'small_image');
+			$_helperComp 	= Mage::helper('catalog/product_compare')->getAddUrl($prod);
+		$searchListing='	<div id="'.$prod->getId().'a" class="'.str_replace('"','',$prod->getName()).'">
+									<div id="searchListing">
+										<div id="slTarget" data-me="'.$prod->getId().'a" class="'.str_replace('"','',$prod->getName()).'">
+											<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>					
+											<div id="slTable">
+												<span class="slTitle">'.$prod->getName().'</span><br/>
+												<span class="slDesc">'.$prod->getShortDescription().'</span>
+											</div>
+										</div>
+										<div id="slAction">
+											<span class="price lostingPrice">$'.number_format($prod->getPrice(),2).'</span>
+											<p id="cartBut">
+												<button type="button" id="listLink" data-p="'.$prod->getId().'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button>													
+											</p>							
+										</div>
+									</div>
+								</div>';
+			$dialog='	<div id="dialog1" class="'.$prod->getId().'a">
+							<table id="diaTable1">
+								<tr id="diaTableTop">
+									<td id="diaTable1Img"><img src="'.$lgPict->resize(225).'"></td>
+									<td id="diaTable1Data">
+										<div class="dataTabs">
+											<ul>
+												<li><a href="#tab-1">Product Information</a></li>
+												<li><a href="#tab-2">Product Details</a></li>
+											</ul>
+											<div id="tab-1">
+												<p>'.$prod->getShortDescription().'</p>
+											</div>
+											<div id="tab-2">
+												<p>'.$attStr.'</p>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr id="diaTableBot"><td id="diaTable1Comp"><a href="'.Mage::getUrl('/').$prod->getUrl_key().'.html">View Product Page</a></td>
+													 <td id="diaTable1Action">
+														<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
+														<div id=diaTableActionPrice><button type="button" data-p="'.$prod->getId().'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">$'.number_format($prod->getPrice(),2).' '.$this->__('Add to Cart').'</span></span></button></div>
+													</td>
+								</tr>
+							</table>
+						</div>';
+												
+					print_r($searchListing.$dialog);	
+					print_r('</li>');		
+				}
+				print_r('</ol></div>'); //close prodList
+				print_r('<hr/>');
+//		}
+
+//echo '</div>';
+echo '<div id="listCon"></div>';
+$pCol = json_encode($pgCol); 
+//print_r($prodByCat);
+echo $pCol;
+$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+// end tab content
+?>
+<script type="text/javascript">
+<!--
+//captin... full filteration system activated
+//jQuery("#tabs").tabs();
+var fJSON=<?php echo(Mage::helper('gfilter')->getFilterData($prodByCat)); ?>; // filter data$prodByCat
+alert(fJSON);
+//test
+
+var jsCol=<?php echo($pCol); ?>;                                              // product collection JSON - product id's
+var fLoc="<?php echo($solrPg); ?>";											  // page data
+
+jQuery(function($){
+
+// prod info dialog
+$('.tabDia ol>li #dialog1').dialog({
+	autoOpen: false,
+	width:	665,
+	height:	300,
+	show:	{effect: "blind",duration: 1000},
+	hide:	{effect: "explode",duration: 1000}
+});
+
+// add to cart action
+$('.addToCart').click(function(){
+	var p = $(this).data('p');
+	var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
+	var cartIt = $.post(nURL,{'cartinator':'add','pId':p});
+	cartIt.done(function(data){
+		location.reload();
+	});
+});
+
+//add to comp action
+$('.addToComp').click(function(){
+	var p = $(this).data('link');
+//	var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
+
+	
+	var compIt = $.post(p);
+	compIt.done(function(data){
+		location.reload();
+	});
+});
+
+// prod overlays
+$('.tabDia').on('click','#slTarget',function(){
+	var myid='.'+$(this).data('me');
+	var myTitle=$(this).attr('class');
+	if($(myid).dialog('isOpen')==false){
+		$(myid).dialog('open');
+		$(myid).dialog('option','title',myTitle);
+		$('.dataTabs').tabs();
+	}
+});
+
+});
+-->
+</script>

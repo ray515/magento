@@ -1,19 +1,19 @@
 <?php
 
-class TRU_ProdUp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_action
+class TRU_Produp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_action
 {
 
 	protected function _initAction() {
 		$this->loadLayout()
 			->_setActiveMenu('produp1/items')
-			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));
-		
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Items Manager'), Mage::helper('adminhtml')->__('Item Manager'));	
 		return $this;
 	}   
  
 	public function indexAction() {
 		$this->_initAction()
 		     ->renderLayout();
+		echo('tester');
 	}
 
 	public function editAction() {
@@ -483,8 +483,11 @@ class TRU_ProdUp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
                                                 //	echo "no md image<br/>";
                                                 }
                                                 if($data[$i]['image']){
-                                                	$img="C:\\xampp\\htdocs\\magento\\media\\catalog\\test\\".$data[$i]['image'];
-	                                           		$newproduct->addImageToMediaGallery($img,array('thumbnail','small_image','image'),false,false);	
+                                                	//dev
+                                                	//$img="C:\\xampp\\htdocs\\magento\\media\\catalog\\test\\".$data[$i]['image'];
+	                                           		//stg
+                                                	$img="/var/www/kts/magento/media/catalog/import/".$data[$i]['image'];
+                                                	$newproduct->addImageToMediaGallery($img,array('thumbnail','small_image','image'),false,false);	
                                            			$gal = $newproduct->getData('media_gallery');
                                            			$lImage = array_pop($gal['images']);
                                            			$lImage['label'] = $data[$i]['image_label'];
@@ -655,8 +658,11 @@ class TRU_ProdUp1_Adminhtml_Produp1Controller extends Mage_Adminhtml_Controller_
                                                 //	echo "no md image<br/>";
                                                 }
                                                 if($data[$i]['image']){
-                                                	$img="C:\\xampp\\htdocs\\magento\\media\\catalog\\test\\".$data[$i]['image'];
-	                                           		$newproduct->addImageToMediaGallery($img,array('thumbnail','small_image','image'),false,false);	
+                                                	//dev
+                                                	//$img="C:\\xampp\\htdocs\\magento\\media\\catalog\\test\\".$data[$i]['image'];
+	                                           		//stg
+	                                           		$img="/var/www/kts/magento/media/catalog/import/".$data[$i]['image'];
+                                                	$newproduct->addImageToMediaGallery($img,array('thumbnail','small_image','image'),false,false);	
                                            			$gal = $newproduct->getData('media_gallery');
                                            			$lImage = array_pop($gal['images']);
                                            			$lImage['label'] = $data[$i]['image_label'];
