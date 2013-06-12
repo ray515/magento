@@ -1,7 +1,6 @@
 
 <?php
-if($_GET['qRec']): 
-$solrPg=Mage::helper('solr')->bURL();
+if($_GET['qRec']):
 
 $resStr=urlencode($_REQUEST['qRec']);
 $url=Mage::helper('solr')->sURL().'select?rows=1000&wt=json&q='.$resStr;
@@ -19,173 +18,79 @@ foreach($result['response']['docs'] as $rOut1){
 }
 //send prod data to session that is used by local/Mage/catalog/block/Product/List.php to build conditional product collections or filtered collections.
 $session = Mage::getSingleton('core/session', array('name'=>'frontend'));
-$session->setData('sID1',$sID1);
-echo('priceClick: '.$session->getData('solrFilter-price').'<br/>'.json_encode($session->getData('priceClick')).'<hr/>catClick: '.$session->getData('solrFilter-cat').'<br/>'.json_encode($session->getData('catClick')).'<hr/>manClick: '.json_encode($session->getData('manClick')).'<hr/>');
+
+//use search
+$session->setData('useSearch',1);
+
+//clear session data on search change
+if($session->getData('solrFilter-qRec')!=$_GET['qRec']){
+	//nullify p,m,c,oneArr
+	$session->setData('solrFilter-price',null);
+	$session->setData('solrFilter-man',null);
+	$session->setData('solrFilter-cat',null);
+	$session->setData('oneArr',null);
+}
+//set new search param
+$session->setData('solrFilter-qRec',$_GET['qRec']);
+//set filter base
+$session->setData('aFilt',$sID1);
+//set collection data
+if(!$session->getData('oneArr') || count($session->getData('oneArr'))==count($sID1)){
+$session->setData('oneArr',$sID1);
+}
+//test output:
+//echo("priceSet: ".$session->getData('solrFilter-price').'<br/>');
+//echo("manSet: ".$session->getData('solrFilter-man').'<br/>');
+//echo("catSet: ".$session->getData('solrFilter-cat').'<br/>');
+//echo("qRec: ".$session->getData('solrFilter-qRec').'<br/>');
+//echo("oneArr count: ".count($session->getData('oneArr')).'<br/>');
+//echo("aFilt count: ".count($session->getData('aFilt')));
 ?>
  <script type="text/javascript">
  jQuery(document).ready(function ($){
-	//
+	 var nURL = 'http://'+document.URL.split('/')[2];
 	$('#search').val('<?php echo($_REQUEST['qRec']) ?>');
-	//TODO: Combine filter request into single request
-	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'price'}, function(data){ $('#idPrice').html(data); },'html');
-	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'manu'}, function(data){ $('#idManufacturer').html(data); },'html');
-	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'cata'}, function(data){ $('#idCategory').html(data); },'html');
-	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'sug'}, function(data){ $('#deepRes ol').html(data); },'html');
-//	$.post('<?php echo($solrPg); ?>solr/sub/index/',{term:$('#search').val(),action:'sc',type:'prod'}, function(data){ $('#solrBurn').html(data); diaRun(); statRun();},'html');
 	
-	function statRun(){
-		if($.cookie('p') && $.cookie('p')!='0' ){ filterPrep('p',$.cookie('p')); }
-		if($.cookie('m') && $.cookie('m')!='0' ){ filterPrep('m',$.cookie('m')); }
-		if($.cookie('c') && $.cookie('c')!='0' ){ filterPrep('m',$.cookie('c')); }
-	}	
-
-	// click action price
-	$('#idPrice').on('click','.priceLI',function(e){ filterPrep('p',$(this).html()),'000'; });
-	// reset action price
-	$('#idPrice').on('click','.fClr',function(e){
-		$('#idPrice li').removeClass('liTouch').addClass('liStart');
-		//$.cookie('p','0');
-			$.post('<?php echo($solrPg); ?>solr/sub/index/',{'action':'priceClr'},function(data){$('#outTest').html(data); location.reload()},'html');
-			$('div#prodList ol>li>div').each(function(){
-			$(this).data('p',1);
-		});
-		// filter function
-	//	vCt();
+	$('.priceLI').on('click',function(e){ 
+		var sel = $(this).html();
+		var base = sel.split(' ');
+		var lPrice = base[0].substring(1,base[0].length);
+		var hPrice = base[2].substring(1,base[2].length);
+		$.post(nURL+'/solr/sub/index/',{'action':'priceClick','lp':lPrice,'hp':hPrice,'sfp':sel},function(data){$('#outTest').html(data); uGoNow();},'html');
+	});
+	$('#fClrPrice').on('click',function(e){
+		$.post(nURL+'/solr/sub/index/',{'action':'priceClr'},function(data){$('#outTest').html(data); uGoNow();},'html');
 	});
 
-	$('#idManufacturer').on('click','.manuLI',function(e){ filterPrep('m',$(this).html()),'000'; });
-	$('#idManufacturer').on('click','.fClr',function(e){
-		$('#idManufacturer li').removeClass('liTouch').addClass('liStart');
-//		$.cookie('m','0');
-		$.post('<?php echo($solrPg); ?>solr/sub/index/',{'action':'manuClr'},function(data){$('#outTest').html(data); location.reload()},'html');
-		$('div#prodList ol>li>div').each(function(){
-			$(this).data('m',1);
-		});
-	//	vCt();
+	$('#manuOL').on('click','.manuLI',function(e){ 
+		var sel = $(this).html();
+		var id = $(this).data('id');
+		$.post(nURL+'/solr/sub/index/',{'action':'manClick','man':id,'sfm':sel},function(data){$('#outTest').html(data); uGoNow();},'html'); 
+	});
+	$('#fClrManu').on('click',function(e){
+		$.post(nURL+'/solr/sub/index/',{'action':'manClr'},function(data){$('#outTest').html(data); uGoNow();},'html');
 	});
 
-	$('#idCategory').on('click','.cataLI',function(e){
-		 filterPrep('c' , $(this).html() , $(this).data('cid') ); 
+	$('#cataOL').on('click','.cataLI',function(e){
+		var sel = $(this).html();
+		var id = $(this).data('cid');
+		$.post(nURL+'/solr/sub/index/',{'action':'catClick','cat':id,'sfc':sel},function(data){$('#outTest').html(data); uGoNow();},'html');	  
 	});
-	$('#idCategory').on('click','.fClr',function(e){
-		$('#idCategory li').removeClass('liTouch').addClass('liStart');
-		//$.cookie('c','0');
-		$.post('<?php echo($solrPg); ?>solr/sub/index/',{'action':'catClr'},function(data){$('#outTest').html(data); location.reload()},'html');
-		$('div#prodList ol>li>div').each(function(){
-			$(this).data('c',1);
-		});
-		//vCt();
+	$('#fClrCata').on('click',function(e){
+		$.post(nURL+'/solr/sub/index/',{'action':'catClr'},function(data){$('#outTest').html(data); uGoNow();},'html');
 	});
+
+	function uGoNow(){
+		location.reload();
+		uWaitNow();
+		return;
+	}
 	
-	// filter prep action	
-	function filterPrep(action,sel,id){
-		if(action=='p'){
-
-			var base = sel.split(' ');
-			var lPrice = base[0].substring(1,base[0].length);
-			var hPrice = base[2].substring(1,base[2].length);
-			//alert(lPrice+':'+hPrice);
-			$.post('<?php echo($solrPg); ?>solr/sub/index/',{'action':'priceClick','lp':lPrice,'hp':hPrice,'sfp':sel},function(data){$('#outTest').html(data); location.reload();},'html');
-			/*
-		  	//get the filter base
-			var t = $("li:contains('"+sel+"')")
-			var base = sel;
-			base = base.split(' ');
-			var n1 = new Number(base[0].substring(1));
-			var n2 = new Number(base[2].substring(1));
-			$(t).siblings().removeClass('liTouch').addClass('liStart');
-			$(t).addClass('liTouch');
-			
-			$.cookie('p',sel);
-			//run the test
-			$('div#prodList ol>li>div').each(function(){
-				var dat=$(this).data('filter');
-				var datArr=dat.split(',');
-				if(datArr[1] < n1){
-					$(this).data('p',0);
-				}else if(datArr[1] > n2){
-					$(this).data('p',0);
-				}else{
-					$(this).data('p',1);
-				}
-			});
-			*/
-		}else if(action=='c'){
-			var cBase = sel;
-			$.post('<?php echo($solrPg); ?>solr/sub/index/',{'action':'catClick','cat':id,'sfc':sel},function(data){$('#outTest').html(data); location.reload();},'html');
-			
+	function uWaitNow(){
+		$('#waiter').fadeIn('fast');
+	}
 /*
-			var t = $("li:contains('"+sel+"')");
-			var cBase = sel.substring(0,sel.length-4);
-			$(t).siblings().removeClass('liTouch').addClass('liStart');
-			$(t).addClass('liTouch');
-			$.cookie('c',sel);
-			$('div#prodList ol>li>div').each(function(){
-				var dat=$(this).data('filter').split(',');
-				dat.shift();dat.shift();
-				for(i=0;i<dat.length;i++){
-					if(dat[i]==cBase){
-						$(this).data('c',1);
-						break;
-					}else{
-						$(this).data('c',0);
-					}
-				}
-			});
-*/
-
-		}else if(action=='m'){
-			var mBase = sel;
-			$.post('<?php echo($solrPg); ?>solr/sub/index/',{'action':'manuClick','sfc':sel},function(data){$('#outTest').html(data); location.reload();},'html');
-			
-/*			var t = $("li:contains('"+sel+"')");
-			var mBase = sel.substring(0,sel.length-4);
-			alert(mBase);
-			$(t).siblings().removeClass('liTouch').addClass('liStart');
-			$(t).addClass('liTouch');
-			$.cookie('m',sel);
-			$('div#prodList ol>li>div').each(function(){
-				var dat=$(this).data('filter').split(',')[0];
-				if(dat==mBase){
-					$(this).data('m',1);
-				}else{
-					$(this).data('m',0);
-				}
-			});
-*/	
-		}else{
-			alert('ERROR');
-		}
-		// to filter function
-		vCt();
-	}
-	// filter action function - the business end of the filter stick
-	function vCt(){
-		$.cookie('sTerm',$('#search').val());
-		$('div#prodList ol>li>div').each(function(){
-			if($(this).data('p')==1 && $(this).data('c')==1 && $(this).data('m')==1){
-				$(this).show();
-			}else{
-				$(this).hide();
-			} 
-		});
-	}
-
-	function diaRun(){
-		//dialog set
-		$('#prodList ol>li #dialog').dialog({ autoOpen:false,width:665,height:300,modal:true,show:{effect:"blind",duration:1000},hide:{effect:"explode",duration:1000} });
-	}
-
-	//dialog fire
-	$('body').on('click','#slTarget1',function(e){
-		var did='.'+$(this).data('me');
-		$(did).dialog('open');
-		$(did).dialog('option','title',$(this).attr('class'));
-		$('.dataTabs').tabs();
-	});
-
-	//add to cart action
-	
+//add to cart action	
 	$('body').on('click','#listLink',function(e){
 		var cartUrl = $(this).data('link');
 		var cartIt = $.post(cartUrl);
@@ -193,27 +98,9 @@ echo('priceClick: '.$session->getData('solrFilter-price').'<br/>'.json_encode($s
 				location.reload();
 			});
 	});
-	
-/*	$('.addToCart').click(function(){
-		var cartUrl = $(this).data('link');
-		var cartIt = $.post(cartUrl);
-			cartIt.done(function(data){
-				location.reload();
-			});
-	});
-*/		
-
+		
 //compare action
-
 	$('body').on('click','#compIt',function(e){
-		var compUrl = $(this).data('link');
-		var compIt = $.post(compUrl);
-			compIt.done(function(data){
-				location.reload();
-			});
-	});
-
-/*	$('.addToComp').click(function(){
 		var compUrl = $(this).data('link');
 		var compIt = $.post(compUrl);
 			compIt.done(function(data){
@@ -225,16 +112,10 @@ echo('priceClick: '.$session->getData('solrFilter-price').'<br/>'.json_encode($s
  </script>
 <div id="solrWrap">
 <input type="hidden" id="bodySearch" name="qRec" value="" />
-<!--	<form id="body_mini_form" action="#" method="get">
-		<div class="body-search">
-			<input id="bodySearch" class="input-text" type="text" name="qRec"><button id="goBut" type="submit" class="body-button" />
-		</div>
-	</form>  -->
-	<div id="pSearch">you are at the solrSurfr</div>
+	<div id="pSearch"></div>
 	<div id="solrBurn"><h3>Search Results</h3><br/></div>
 	<div id='outTest'></div>
-	
-
+	<div id='waiter' class='hideMe waitOver'><div class='waitMsg'></div></div>
 </div>
 <?php else:; ?>
 <div>Error.</div>

@@ -122,22 +122,36 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
     protected function _beforeToHtml()
     {
         $toolbar = $this->getToolbarBlock();
-
+        //init session data
+        $session=Mage::getSingleton('core/session', array('name'=>'frontend'));
         // oh my - Eric Cookie Business
-        if($_COOKIE['KTS_FS1']){
+//        if($_COOKIE['KTS_FS1'] && $_COOKIE['KTS_FS1']!=''){
+//       	//$filterSelection=$_COOKIE['KTS_FS1'];
+//        	$filterArr=str_getcsv($_COOKIE['KTS_FS1'],',');
+//        	foreach($filterArr as $fi1){
+//        		$fTmp=str_getcsv($fi1,':');
+//        		$fArr2[]=array($fTmp[0],$fTmp[1]);
+//        	}
+//        }
+        
+        //no cookies needed...yay.
+        if($session->getData('ctFilt') && count($session->getData('ctFilt')>0)){
         	//$filterSelection=$_COOKIE['KTS_FS1'];
-        	$filterArr=str_getcsv($_COOKIE['KTS_FS1'],',');
+        	$filterArr=$session->getData('ctFilt');
         	foreach($filterArr as $fi1){
         		$fTmp=str_getcsv($fi1,':');
         		$fArr2[]=array($fTmp[0],$fTmp[1]);
         	}
         }
+        
         //TODO: convert KTS_FS1 to session instead of cookie.
-        $session=Mage::getSingleton('core/session', array('name'=>'frontend'));
-        $filterDat1=$session->getData('sID1');
-        if($session->getData('oneArr')!=null){
+        
+  //      $filterDat1=$session->getData('sID1');
+        if($session->getData('oneArr') && $session->getData('useSearch')==1){
         $filterDat2=$session->getData('oneArr');
         }
+//test        
+ //       print_r('<script>alert("'.$session->getData('useSearch').'");</script>');
         
         // called prepare sortable parameters
         $collection = $this->_getProductCollection();
@@ -146,7 +160,7 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
         		$collection->addAttributeToFilter($fArr[0],$fArr[1]);
         	}
         }
-        //if(count($filterDat1>0)){$collection->addIdFilter(array($filterDat1));}
+//        if(count($filterDat1>0)){$collection->addIdFilter(array($filterDat1));}
         if($filterDat2){$collection->addIdFilter(array($filterDat2));}
         
         

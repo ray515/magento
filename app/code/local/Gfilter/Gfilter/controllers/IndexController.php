@@ -36,6 +36,9 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 		if($_POST['JSONin']){
 			$this->filterRes($_POST['JSONin'],$_POST['pCol']);
 		}
+		if($_REQUEST['ctFilt']){
+			$this->setFilterData($_REQUEST['ctFilt'],$_REQUEST['addMe']);
+		}
 		
 		if($_REQUEST['cartinator']=='add'){
 			$this->cartinator($_REQUEST['pId']);
@@ -63,6 +66,39 @@ class Gfilter_Gfilter_IndexController extends Mage_Core_Controller_Front_Action{
 		return 'Cart Updated';
 	}
 	
+	public function setFilterData($action,$addMe){
+		$session=Mage::getSingleton('core/session', array('name'=>'frontend'));
+		if($action=='add'){
+			if($session->getData('ctFilt')){
+				$ctFilt=$session->getData('ctFilt');
+				$ctTestRes=0;$myct=0;
+				for($i=0;$i<count($ctFilt);$i++){
+					$t1=str_getcsv($ctFilt[$i],':');
+					$t2=str_getcsv($addMe,':');
+					if( $t1[0]== $t2[0]){
+						unset($ctFilt[$i]);	
+						if( $t1[1]!= $t2[1]){
+							$ctFilt[$i]=$addMe;
+						}			
+						$ctTestRes++;
+					}
+				}
+				if($ctTestRes==0){
+					$ctFilt[count($ctFilt)]=$addMe;
+				}
+				$session->setData('ctFilt',$ctFilt);
+			}else{
+				$ctFilt[0]=$addMe;
+				$session->setData('ctFilt',$ctFilt);
+			}
+		}
+		
+		if($action=='kill'){
+			$session->setData('ctFilt',null);
+		}
+		//echo('this is a test');
+			echo('ctFilt: '.json_encode($session->getData('ctFilt')).'<br/>x test: '.$x.'<hr/>');
+	}
 	
 	public function filterRes($JSONin,$pCol="n/a"){
 		$ji=json_decode($JSONin); 
