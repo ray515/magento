@@ -4,10 +4,11 @@
  *
  *
  * @category    design
- * @package     default_modern_2
+ * @package     default_modern
  * @copyright   Copyright (c) 2013 Kens Tool Supply
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
+// Results from solrSurfr list
 ?>
 
 <?php
@@ -15,23 +16,7 @@
  * Product list template
  * @see Mage_Catalog_Block_Product_List
  */
-//flag to use ct filter view
-$fStat='ct';
-echo '<div id=fStat style="visibility:hidden" >'.$fStat.'</div>';
-//set page loc info
-$thisPgLoc=$this->getRequest()->getOriginalPathInfo();
-$thisPage=$this->getRequest()->getParams()['id'];
 
-function pgCol($thisPage){
-	$cataCol=Mage::getModel('catalog/category')
-	->load($thisPage) //$thisPage
-	->getProductcollection();
-	foreach($cataCol as $cc){
-		$pList[]=$cc->getId(); 
-	}
-	return $pList; //prod id's for category
-}
-$pgCol=pgCol($thisPage); //cata prod id's
 
 //filter results shell
 print_r('<div id="fRes"></div>');
@@ -40,7 +25,8 @@ print_r('<div id="fRes"></div>');
 
 		echo '<div id="'.urlencode($ct_tab).'" data-ct="'.$panCt.'" class="tabDia" ><ol>';
 		$prodCol = $this->getLoadedProductCollection()
-					->load();
+		->load();
+		
 //var_dump($prodCol);
 		$this->getMode('list');
 		echo $this->getToolbarHtml();

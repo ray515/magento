@@ -6,9 +6,7 @@
 jQuery(document).ready(function($){
 
 // dialog home end	
-	if($('#fStat').html()=='ct'){
-		$("#tabs").tabs('option','active',1);
-		$("#fResTab").hide();
+/*	if($('#fStat').html()=='ct'){
 		//init selection
 		if(!fSel){
 			var fSel = new Array();
@@ -125,7 +123,7 @@ jQuery(document).ready(function($){
 		getit.done(function(data){
 			$('#fRes').html(data);
 		});
-*/		
+		
 		$("#fResTab").show();
 		$('#fRes').show();
 		$("#tabs").tabs('option','active',0);
@@ -174,8 +172,8 @@ jQuery(document).ready(function($){
 		$.removeCookie('KTS_FS1');
 		$.cookie('KTS_FS1',fSel.toString());
 		return "dead";
-	}
-	
+	}*/
+/*	
 	function cleanTxt(ttc){
 		tIn=ttc.replace(/(?:\$| *\([^)]*\) *)/g, "");
 		return tIn;
@@ -194,5 +192,6 @@ jQuery(document).ready(function($){
 	 $('#goBut').click(function(){
 			$('#ctFilter').submit();
 	});
+*/
 });
 

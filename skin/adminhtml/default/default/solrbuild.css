@@ -1,0 +1,14 @@
+/**
+ * Magento
+ *
+ * CSS to support the solr build admin pannel
+ * 
+ */
+/******************************************/
+
+#sb {width:765px;padding:10px 10px; border:1px solid #EEE;}
+#sb #ctrCenter{margin:0 0 20px 510px;}
+#sb li{display:inline;}
+#sb button{width:125px}
+
+/******************************************/
