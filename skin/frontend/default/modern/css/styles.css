@@ -28,9 +28,9 @@ body a:hover {color:#585858;}
 .bulletlist {line-height:30px;font-size:12px;}
 
 /************** Nav Menu Start **************/
-#menu226, #menu68, #menu132, #menu230, #menu18 {margin:5.5px 0 0;}
-#menu226 .parentMenu span, #menu68 .parentMenu span, #menu132 .parentMenu span, #menu230 .parentMenu span, #menu18 .parentMenu span{text-indent:-9999px;}
-#menu226 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/cutting_tools_nav.png) no-repeat right;width:95px;height:15px;}
+#menu236, #menu68, #menu132, #menu230, #menu18 {margin:5.5px 0 0;}
+#menu236 .parentMenu span, #menu68 .parentMenu span, #menu132 .parentMenu span, #menu230 .parentMenu span, #menu18 .parentMenu span{text-indent:-9999px;}
+#menu236 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/cutting_tools_nav.png) no-repeat right;width:95px;height:15px;}
 #menu68 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/power_tools_nav.png) no-repeat right;width:107px;height:15px;}
 #menu132 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/cordless_tools_nav.png) no-repeat right;width:128px;height:15px;}
 #menu230 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/woodworking_tools_nav.png) no-repeat right;width:118px;height:15px;}
