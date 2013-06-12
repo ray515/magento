@@ -1,41 +1,19 @@
 <?php
 /**
- * Magento
- * 
- * @category    Mage
- * @package     Mage_Page
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-
-/**
  * Searcher Solr IndexController
  *
  * @category   Searcher
  * @package    Searcher_Solr
  * @author     KTS Web Team <eric.gould@etoolsrus.com>
  */
-
-/**
- * 
- * @author EricG
- *
- */
 class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
-	/**
-	 * @name indexAction
-	 * @param qRec='search term'
-	 * @return array collection of results from solr search
-	 * @param sku=sku 
-	 * @param nova=nova 
-	 */
 	public function indexAction(){
 		if($_REQUEST['test']||$_POST['test']){print_r("<h1>TRU Solr Tools.</h1>");}
 		//$this->loadLayout();
 		//$this->renderLayout();
 		if($_REQUEST['qRec'] || $_POST['qRec']){
 			//$this->searchRes($_REQUEST['qRec']);
-			$this->sr1($_REQUEST['qRec']);
+			//$this->sr1($_REQUEST['qRec']);
 		}
 		if($_REQUEST['sug']){
 			$this->searchMage1($_REQUEST['sug']);
@@ -70,6 +48,9 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		echo "Searcher_Solr";
 	}
 	
+	
+	// search index
+	//TODO: only include active items
 	public function getCataIds($sDir){
 		print_r('<h3>Update Complete</h3>');
 		$prodCol=Mage::getModel('catalog/product')->getCollection();

@@ -1,0 +1,322 @@
+<?php
+/**
+ * Magento destroyed by Eric <<<;-)
+ *
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2013 Kens Tool Supply
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+// Results from solrSurfr list
+?>
+
+<?php
+/**
+ * Product list template
+ * @see Mage_Catalog_Block_Product_List
+ */
+
+
+//filter results shell
+print_r('<div id="fRes"></div>');
+
+//foreach($ct_tabs as $ct_tab){
+
+		echo '<div id="'.urlencode($ct_tab).'" data-ct="'.$panCt.'" class="tabDia" ><ol>';
+		$prodCol = $this->getLoadedProductCollection()
+		->load();
+		
+//var_dump($prodCol);
+		$this->getMode('list');
+		echo $this->getToolbarHtml();
+		foreach($prodCol as $prod){
+			
+			print_r('<li>');
+			//Product detail listing
+			$prodAttCol = Mage::getResourceModel('eav/entity_attribute_collection')
+						->setEntityTypeFilter(10)
+						->getData();
+			$attStr="";
+			foreach($prodAttCol as $attCol){
+				if($prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod)!=null && $attCol['frontend_label']!=null && $attCol['used_in_product_listing']==1 && $attCol['is_visible_on_front']==1){
+					$attStr = $attStr.'<li>'.$attCol['frontend_label'].':'.$prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod).'</li>';
+				}}
+			$lgPict			= Mage::helper('catalog/image')->init($prod,'small_image');
+			$_helperComp 	= Mage::helper('catalog/product_compare')->getAddUrl($prod);
+		$searchListing='	<div id="'.$prod->getId().'a" class="'.str_replace('"','',$prod->getName()).'">
+									<div id="searchListing">
+										<div id="slTarget" data-me="'.$prod->getId().'a" class="'.str_replace('"','',$prod->getName()).'">
+											<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>					
+											<div id="slTable">
+												<span class="slTitle">'.$prod->getName().'</span><br/>
+												<span class="slDesc">'.$prod->getShortDescription().'</span>
+											</div>
+										</div>
+										<div id="slAction">
+											<span class="price lostingPrice">$'.number_format($prod->getPrice(),2).'</span>
+											<p id="cartBut">
+												<button type="button" id="listLink" data-p="'.$prod->getId().'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button>													
+											</p>							
+										</div>
+									</div>
+								</div>';
+			$dialog='	<div id="dialog1" class="'.$prod->getId().'a hideMe">
+							<table id="diaTable1">
+								<tr id="diaTableTop">
+									<td id="diaTable1Img"><img src="'.$lgPict->resize(225).'"></td>
+									<td id="diaTable1Data">
+										<div class="dataTabs">
+											<ul>
+												<li><a href="#tab-1">Product Information</a></li>
+												<li><a href="#tab-2">Product Details</a></li>
+											</ul>
+											<div id="tab-1">
+												<p>'.$prod->getShortDescription().'</p>
+											</div>
+											<div id="tab-2">
+												<p>'.$attStr.'</p>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr id="diaTableBot"><td id="diaTable1Comp"><a href="'.Mage::getUrl('/').$prod->getUrl_key().'.html">View Product Page</a></td>
+													 <td id="diaTable1Action">
+														<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
+														<div id=diaTableActionPrice><button type="button" data-p="'.$prod->getId().'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">$'.number_format($prod->getPrice(),2).' '.$this->__('Add to Cart').'</span></span></button></div>
+													</td>
+								</tr>
+							</table>
+						</div>';
+												
+					print_r($searchListing.$dialog);	
+					print_r('</li>');		
+				}
+				print_r('</ol></div>'); //close prodList
+				print_r('<hr/>');
+//		}
+
+//echo '</div>';
+echo '<div id="listCon"></div>';
+$pCol = json_encode($pgCol); 
+//print_r($prodByCat);
+//echo $pCol;
+$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+// end tab content
+?>
+<script type="text/javascript">
+<!--
+//captin... full filteration system activated
+//jQuery("#tabs").tabs();
+var fJSON=<?php echo(Mage::helper('gfilter')->getFilterData($pgCol)); ?>; // filter data$prodByCat
+var jsCol=<?php echo($pCol); ?>;                                              // product collection JSON - product id's
+var fLoc="<?php echo($solrPg); ?>";											  // page data
+
+jQuery(function($){
+
+// prod info dialog
+$('.tabDia ol>li #dialog1').dialog({
+	autoOpen: false,
+	width:	665,
+	height:	300,
+	show:	{effect: "blind",duration: 1000},
+	hide:	{effect: "explode",duration: 1000}
+});
+
+// filter selection js
+if($('#fStat').html()=='ct'){
+	//init selection
+	if(!fSel){
+		var fSel = new Array();
+		fSel[0]="";
+	}
+	$.each(fJSON, function(i,item){
+		$.each(item,function(j,k){
+			$('#narrow-by-list').append('<dt class="'+i+'" id="'+i+'">'+j+'</dt><dd id="'+i+'"><ol></ol></dd>');
+			var ata= new Array();
+			ata = k.split(',');
+			$.each(ata,function(l,i1){
+				i1=i1.split('"')[0];
+				$('#'+i+' ol').append('<li id="'+i+'" data-code="'+i+'" data-val="'+i1+'">'+i1+'</li>');
+			});
+		});
+	});
+//	$('#narrow-by-list').append('<dt>Reset Filter</dt><dd><button id="fResetBut">Reset Filter</button></dd>');
+//	$('#narrow-by-list').append('<button id="fResetBut">Reset Filter</button>');
+	//init cookies
+	if(!$.cookie('KTS_FS1')){
+		$.cookie('KTS_FS1',fSel.toString());
+	}else{
+		pageInit(jsCol);
+	}
+
+	$('#narrow-by-list').accordion({
+		collapsible:true,
+		active:false
+	});
+
+	$('#narrow-by-list ol>li').click(function(){
+		var fOut;
+		var ff=$(this).data('code');
+		if($(this).attr('class')=="liTouch"){
+			$(this).removeClass('liTouch').addClass('liStart');
+			$('#'+ff+' #selPar').remove();
+			$('#'+ff+' #selLi').remove();
+			fOut=$(this).data('code')+':'+$(this).html();
+			killTest=killSel(fOut,fSel,'kill');
+			//filterInit(fSel,jsCol);
+		}else{
+			$(this).siblings().removeClass('liTouch').addClass('liStart');
+			$('#'+ff+' #selPar').remove();
+			$('#'+ff+' #selLi').remove();
+			fOut=$(this).data('code')+':'+$(this).html();
+			killTest=killSel(fOut,fSel,'updt');
+			if(killTest="dead"){
+				addSel(fOut);
+				$(this).removeClass('liStart').addClass('liTouch');
+				$('#'+ff).append('<div id="selPar"></div>');
+				$(this).append('<div id="selLi"></div>');
+			}
+		};
+//		};
+		window.location.replace(document.URL);				
+	});
+}else{ }
+
+function pageInit(jsCol){	
+	
+	var cTemp = $.cookie('KTS_FS1');
+	if(cTemp.charAt(0)==','){
+		cTemp=cTemp.substring(1,cTemp.length);
+		
+	}
+	fSel=deDup(cTemp.split(','));
+	$.cookie('KTS_FS1',fSel.toString());
+	var i;
+	//alert(fSel);
+	for(i=0;i<fSel.length;i++){
+		var t1=fSel[i].split(':');
+		$('#narrow-by-list #'+t1[0]).find("[data-val='"+t1[1]+"']").append('<div id="selLi"></div>').addClass('liTouch');
+		$('#narrow-by-list .'+t1[0] ).append('<div id="selPar"></div>');
+		$('#filterList p').html('Your Current Filter:');
+		$('#filterList ul').append('<li><strong>'+$('#narrow-by-list #'+t1[0]).html()+'</strong>:'+t1[1]+'</li>');
+	}
+	//filterInit(fSel,jsCol);
+}
+
+function filterInit(fSel,jsCol){
+	var cTemp1 = fSel.toString();
+	if(cTemp1.charAt(0)==','){
+		cTemp1=cTemp.substring(1,cTemp1.length);
+	}
+	var fSel=cTemp1.split(',');
+	if(fSel[0].length!=0){
+	var filterJSON='{';
+	for(var i=0; i<fSel.length;i++){
+		var x=fSel[i].split(':');
+		filterJSON = filterJSON+'"'+x[0]+'": "'+x[1]+'"';
+		if(i != fSel.length-1){filterJSON=filterJSON+',';}
+	}
+	filterJSON = filterJSON+'}';
+
+	
+/*
+* for ajax (no paging)
+* 
+	var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
+	var bURL = nURL;
+	var getit = $.post(bURL,{JSONin:filterJSON,pCol:jsCol});
+	getit.done(function(data){
+		$('#fRes').html(data);
+	});
+*/		
+	$("#fResTab").show();
+	$('#fRes').show();
+	$("#tabs").tabs('option','active',0);
+	
+	}else{
+		$("#tabs").tabs('option','active',1);
+		$("#fResTab").hide();
+		//$('#fRes').hide();html("We did not find any results based on your filter options.<br/>Please change the last option you selected to another value.");
+	}
+	
+}
+
+function addSel(newSel){
+	alert('newSel: '+newSel);
+	fSel[fSel.length]=newSel;
+	fSel=deDup(fSel);		
+	$.cookie('KTS_FS1', fSel.toString());
+}
+
+function killSel(killSel,fSel,action){
+	var killSel1;
+	var pos2;
+	var killSel0;
+
+	killSel0  = killSel.split(':');
+	killSel1  = killSel0[0];
+	if(action=='updt'){
+		pos2=0;
+		for (var i=0; i<fSel.length;i++){
+			if(fSel[i].match(killSel1)==killSel1){
+				fSel.splice(i,1);
+				pos2++;
+			}
+		}
+	}
+	if(action=='kill'){
+		
+		for (var i=0; i<fSel.length;i++){
+			if(fSel[i].match(killSel)==killSel){
+				fSel.splice(i,1);
+			}
+		}
+	}
+	
+	fSel=deDup(fSel);
+	$.removeCookie('KTS_FS1');
+	$.cookie('KTS_FS1',fSel.toString());
+	return "dead";
+}
+function deDup(arr) {
+	  var i,len=arr.length,out=[],obj={};for (i=0;i<len;i++) {  obj[arr[i]]=0;  } for (i in obj) { out.push(i);  } return out;
+	}
+
+
+// add to cart action
+$('.addToCart').click(function(){
+	var p = $(this).data('p');
+	var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
+	var cartIt = $.post(nURL,{'cartinator':'add','pId':p});
+	cartIt.done(function(data){
+		location.reload();
+	});
+});
+
+//add to comp action
+$('.addToComp').click(function(){
+	var p = $(this).data('link');
+//	var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
+
+	
+	var compIt = $.post(p);
+	compIt.done(function(data){
+		location.reload();
+	});
+});
+
+// prod overlays
+$('.tabDia').on('click','#slTarget',function(){
+	var myid='.'+$(this).data('me');
+	var myTitle=$(this).attr('class');
+	if($(myid).dialog('isOpen')==false){
+		$(myid).dialog('open');
+		$(myid).dialog('option','title',myTitle);
+		$('.dataTabs').tabs();
+	}
+});
+
+});
+-->
+</script>

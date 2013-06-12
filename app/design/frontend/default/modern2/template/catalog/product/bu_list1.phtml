@@ -1,0 +1,228 @@
+<?php
+/**
+ * Magento destroyed by Eric <<<;-)
+ *
+ *
+ * @category    design
+ * @package     default_modern_2
+ * @copyright   Copyright (c) 2013 Kens Tool Supply
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php
+/**
+ * Product list template
+ * @see Mage_Catalog_Block_Product_List
+ */
+
+//flag to use ct filter view
+$fStat='ct';
+echo '<div id=fStat style="visibility:hidden" >'.$fStat.'</div>';
+//set page loc info
+$thisPgLoc=$this->getRequest()->getOriginalPathInfo();
+$thisPage=$this->getRequest()->getParams()['id'];
+
+function pgCol($thisPage){
+	$cataCol=Mage::getModel('catalog/category')
+	->load($thisPage)
+	->getProductcollection();
+
+	foreach($cataCol as $cc){
+		$pList[]=$cc->getId(); 
+	}
+	return $pList; //prod id's for category
+}
+
+function filterStat($pgCol){
+	$filters=array("filter_use","filter_attr");
+	$pgFilters= Mage::getResourceModel('catalog/product_collection')
+			  ->addIdFilter($pgCol)
+			  ->addAttributeToSelect($filters)
+			  ->load();
+	foreach($pgFilters as $filterOut){
+		if($filterOut->getFilter_attr()>0){$fOut[0][]=1;}
+		if($filterOut->getFilter_use()>0){$fOut[1][]=1;}
+	}
+	if(array_sum($fOut[0])>0){$f1Out[0]=1;}else{$f1Out[0]=0;}
+	if(array_sum($fOut[1])>0){$f1Out[1]=1;}else{$f1Out[1]=0;}
+	return $f1Out;
+}
+
+$pgCol=pgCol($thisPage); //cata prod id's
+
+//load collection of id's from cata
+$prodByCat= Mage::getResourceModel('catalog/product_collection')
+->addIdFilter($pgCol)
+->addAttributeToSelect('*');
+$_helper = $this->helper('catalog/output');
+$prodByCat->load();
+
+//building array for tabs, in this case using ct_mats for tabs.
+
+//set tab header array
+if($prodByCat) {
+	foreach($prodByCat as $product){
+		if(!in_array($product->getCtMats(),$ct_tabs) && $product->getCtMats()!=null){
+			$ct_tabs[]=$product->getCtMats();
+
+		}
+	}	
+}
+
+// start tabs section
+print_r('<div id="tabs"><ul><li id="fResTab"><a href="#fRes"><span>Filter Results1</span></li>');
+$tabCt=1;
+foreach($ct_tabs as $ct_tab){
+		print_r('<li id="'.$tabCt.'"><a href="#'.urlencode($ct_tab).'"><span>'.$ct_tab.'</span></a></li>');
+		$tabCt++;
+}
+print_r("</ul>");
+//end build tab
+
+//filter results shell
+print_r('<div id="fRes"></div>');
+$panCt=1;
+foreach($ct_tabs as $ct_tab){
+		echo '<div id="'.urlencode($ct_tab).'" data-ct="'.$panCt.'" class="tabDia" ><ol>';
+		$prodCol= Mage::getResourceModel('catalog/product_collection')
+			->addAttributetoFilter('ct_mats',$ct_tab)
+			->addIdFilter($pgCol)
+			->addAttributeToSelect('*')
+			->load();
+
+		foreach($prodCol as $prod){
+			print_r('<li>');
+			$pClass			= str_replace('"','',$prod->getName());				// clean product name to be used as class for selector in dialog functionallity.
+			$name			= $prod->getName();						// get product name
+			$desc			= $prod->getDescription();					// get product description
+			$sDesc			= $prod->getShortDescription();					// get product short description
+			//Product detail listing
+			$prodAttCol = Mage::getResourceModel('eav/entity_attribute_collection')
+						->setEntityTypeFilter(10)
+						->getData();
+			$attStr="";
+			foreach($prodAttCol as $attCol){
+				if($prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod)!=null && $attCol['frontend_label']!=null && $attCol['used_in_product_listing']==1 && $attCol['is_visible_on_front']==1){
+					$attStr =$attStr.'<li>'.$attCol['frontend_label'].':'.$prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod).'</li>';
+				}}
+			$included		= $prod->getIncluded();						// get what is included with product                                               
+			$setLocation 	= $this->getRequest()->getOriginalPathInfo(); 				// parent page location, depricatated, test then take out or add actual location of parent.					
+			$urlKey 		= $prod->getUrl_key().'.html';					// get URL Key from attributes
+			$price			= '$'.number_format($prod->getPrice(),2);			// get and format price
+			$lgPict			= Mage::helper('catalog/image')->init($prod,'image');		// get pict, just get large image and resize as needed via resize() function
+			$_helperCart 	= Mage::helper('checkout/cart')->getAddUrl($prod);			// cart helper, depricated, test then take out. functionality replaced with ajax method.
+			$_helperComp 	= Mage::helper('catalog/product_compare')->getAddUrl($prod);	// compare helper, depricated, test then take out. functionality replaced with ajax method.
+//TODO: test and take out dep items from above.
+			$searchListing='	<div id="'.$prod->getId().'a" class="'.$pClass.'">
+							<div id="searchListing">
+							<div id="slTarget" data-me="'.$prod->getId().'a" class="'.$pClass.'">
+							<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>					
+							<div id="slTable">
+							<span class="slTitle">'.$name.'</span><br/>
+							<span class="slDesc">'.$desc.'</span>
+						</div>
+										</div>
+										<div id="slAction">
+											<span class="price lostingPrice">'.$price.'</span>
+											<p id="cartBut">
+												<button type="button" id="listLink" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button>
+											</p>							
+										</div>
+									</div></div>';
+			$dialog='	<div id="dialog1" class="'.$prod->getId().'a">
+							<table id="diaTable1">
+								<tr id="diaTableTop"><td id="diaTable1Img"><img src="'.$lgPict->resize(225).'"></td><td id="diaTable1Data">
+										<div class="dataTabs">
+												<ul>
+													<li><a href="#tab-1">Product Information</a></li>
+													<li><a href="#tab-2">Product Details</a></li>
+													<li><a href="#tab-3">In The Box</a></li>
+												</ul>
+													<div id="tab-1">
+													<p>'.$sDesc.'</p>
+													</div>
+													<div id="tab-2">
+													<p>'.$attStr.'</p>
+													</div>
+												 	<div id="tab-3">
+													<p><ol>'.$included.'</ol></p>
+													</div>
+										</div>
+										</td><tr>
+								<tr id="diaTableBot"><td id="diaTable1Comp"><a href="'.Mage::getUrl('/').$urlKey.'">View Product Page</a></td><td id="diaTable1Action">
+										<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
+										<div id=diaTableActionPrice><button type="button" data-link="'.$_helperCart.'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">'.$price.' '.$this->__('Add to Cart').'</span></span></button></div></td></tr>
+							</table>
+						</div>';
+												
+					print_r($searchListing.$dialog);
+					print_r('</li>');
+				
+				}
+				print_r('</ol></div>'); //close prodList
+//				print_r('</div>'); //close fList
+				print_r('<hr/>');
+		}
+
+echo '</div>';
+echo '<div id="listCon"></div>';
+$pCol = json_encode($pgCol); 
+$solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+// end tab content
+?>
+<script type="text/javascript">
+<!--
+//captin... full filteration system activated
+jQuery("#tabs").tabs();
+var fJSON=<?php echo(Mage::helper('gfilter')->getFilterData($prodByCat)); ?>;
+var jsCol=<?php echo($pCol); ?>;
+var fLoc="<?php echo($solrPg); ?>";
+
+jQuery(function($){
+	//prod info dialog
+	$('.tabDia ol>li #dialog1').dialog({
+		autoOpen: false,
+		width: 665,
+		height: 300,
+		show:{
+			effect: "blind",
+			duration: 1000
+			},
+		hide: {
+			effect: "explode",
+			duration: 1000
+			}
+	});
+
+	$('.tabDia').on('click','#slTarget',function(){
+		var myid='.'+$(this).data('me');
+//		alert(myid);
+		var myTitle=$(this).attr('class');
+//alert($(myid).dialog('isOpen'));
+		if($(myid).dialog('isOpen')==false){
+			$(myid).dialog('open');
+			$(myid).dialog('option','title',myTitle);
+			$('.dataTabs').tabs();
+		}
+	});
+});
+-->
+</script>
+<script type="eric" id="FilterUse">
+<?php //$thisPgLoc=$this->getRequest()->getOriginalPathInfo();
+print_r('<div><h3>Filter by Material</h3><form id="use_form" action="'.$thisPgLoc.'" method="post">');
+print_r('	<select name="use_mat">');
+print_r('		<option value="use_alum">Aluminum Alloy</option>');
+print_r('		<option value="use_csteel">Carbon Steel</option>');
+print_r('		<option value="use_asteel">Alloy Steel</option>');
+print_r('		<option value="use_hsteel">Hardened Steel</option>');
+print_r('		<option value="use_nickel">Nickel/Inconel Alloy</option>');
+print_r('		<option value="use_ssteel">Stainless Steel</option>');
+print_r('		<option value="use_ciron">Cast Iron</option>');
+print_r('		<option value="use_tit">Titanium</option>');
+print_r('	</select>');
+print_r('	<button type="submit">Find My Tool</button>');
+print_r('</form></div><br/><hr/>');
+?>
+</script>

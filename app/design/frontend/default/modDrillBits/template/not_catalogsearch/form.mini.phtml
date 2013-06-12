@@ -1,0 +1,24 @@
+<?php
+/**
+ * Magento
+ *
+ * @category    design
+ * @package     default_modern_mod
+ */
+?>
+
+<form id="search_mini_form" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
+    <div class="form-search">
+        <label for="search">Search</label>
+        <input id="search" type="text" name="mini-search" value="" class="input-text" />
+        <button type="submit" title="Go" class="button"><span>Go</span></button>
+        <!-- div id="search_autocomplete" class="search-autocomplete"></div -->
+        <script type="text/javascript">
+        //<![CDATA[
+            $('#search').autocomplete({ //autocomplete for main search 
+			source: function(request,response){$.getJSON('http://127.0.0.1/solr/index/index',{sug:request.term,sDir:'KTS_DEV'},response);}
+		});
+        //]]>
+        </script>
+    </div>
+</form>
