@@ -19,10 +19,11 @@
 // filter test for speed improvement
 //
 		$session = Mage::getSingleton('core/session', array('name'=>'frontend'));
+		$aFilt1=$session->getData('aFilt');
 		$collection = Mage::getResourceModel('catalog/product_collection')
 //		->addAttributeToSelect('price','manufacturer','category_ids')
 		->addAttributeToSelect('*')
-		->addIdFilter($session->getData('aFilt'));
+		->addIdFilter($aFilt1);
 		
 		foreach ($collection as $prodp){
 			//Price Information//

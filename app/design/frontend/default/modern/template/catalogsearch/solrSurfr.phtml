@@ -1,9 +1,10 @@
 
 <?php
 if($_GET['qRec']):
-
-$resStr=urlencode($_REQUEST['qRec']);
-$url=Mage::helper('solr')->sURL().'select?rows=1000&wt=json&q='.$resStr;
+//http://65.60.97.68:8983/solr/KTS1/
+//$resStr=urlencode($_REQUEST['qRec']);
+//$url=Mage::helper('solr')->sURL().'select?rows=1000&wt=json&q='.$resStr;
+$url='http://65.60.97.68:8983/solr/KTS1/select?rows=1000&wt=json&q='.urlencode($_REQUEST['qRec']);
 $solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 // using curl method
 $ch = curl_init();
@@ -18,9 +19,6 @@ foreach($result['response']['docs'] as $rOut1){
 }
 //send prod data to session that is used by local/Mage/catalog/block/Product/List.php to build conditional product collections or filtered collections.
 $session = Mage::getSingleton('core/session', array('name'=>'frontend'));
-
-//use search
-$session->setData('useSearch',1);
 
 //clear session data on search change
 if($session->getData('solrFilter-qRec')!=$_GET['qRec']){
@@ -39,12 +37,14 @@ if(!$session->getData('oneArr') || count($session->getData('oneArr'))==count($sI
 $session->setData('oneArr',$sID1);
 }
 //test output:
-//echo("priceSet: ".$session->getData('solrFilter-price').'<br/>');
-//echo("manSet: ".$session->getData('solrFilter-man').'<br/>');
-//echo("catSet: ".$session->getData('solrFilter-cat').'<br/>');
-//echo("qRec: ".$session->getData('solrFilter-qRec').'<br/>');
-//echo("oneArr count: ".count($session->getData('oneArr')).'<br/>');
-//echo("aFilt count: ".count($session->getData('aFilt')));
+/*
+echo("priceSet: ".$session->getData('solrFilter-price').'<br/>');
+echo("manSet: ".$session->getData('solrFilter-man').'<br/>');
+echo("catSet: ".$session->getData('solrFilter-cat').'<br/>');
+echo("qRec: ".$session->getData('solrFilter-qRec').'<br/>');
+echo("oneArr count: ".count($session->getData('oneArr')).'<br/>');
+echo("aFilt count: ".count($session->getData('aFilt')));
+*/
 ?>
  <script type="text/javascript">
  jQuery(document).ready(function ($){

@@ -136,6 +136,12 @@ jQuery(function($){
 		$('#waiter').fadeIn('fast');
 	}
 
+	$('#narrow-by-list').accordion({
+		collapsible:true,
+		active:false,
+		heightStyle:"content"
+	});
+	
 	// add to cart action
 	$('.addToCart').click(function(){
 		var p = $(this).data('p');
