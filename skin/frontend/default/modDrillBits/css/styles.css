@@ -31,21 +31,14 @@
 body { background:#a7a7a7 url(http://www.etoolsrus.net/new_site/images/bg.png) repeat-y; font:11px/1.55 arial, helvetica, sans-serif; color:#444; text-align:center; background-position:center; }
 
 /************** Nav Menu Start **************/
-#menu154 { margin: 5.5px 0px 0px 20px; }
-#menu154 .parentMenu { background: url(http://www.etoolsrus.net/new_site/images/tool-clearance.png)  no-repeat; width:75px; height:15px; }
-#menu154 .parentMenu span { text-indent:-9999px; }
-#menu155 { margin: 5.5px 0px 0px 20px; }
-#menu155 .parentMenu { background: url(http://www.etoolsrus.net/new_site/images/power-tool-specials.png)  no-repeat; width:63px; height:15px; }
-#menu155 .parentMenu span { text-indent:-9999px; }
-#menu132 { margin: 5.5px 0px 0px 20px; }
-#menu132 .parentMenu { background: url(http://www.etoolsrus.net/new_site/images/cordless-tools.png)  no-repeat; width:113px; height:15px; }
-#menu132 .parentMenu span { text-indent:-9999px; }
-#menu10 { margin: 5.5px 0px 0px 20px; }
-#menu10 .parentMenu { background: url(http://www.etoolsrus.net/new_site/images/shop_by_category_menu.png)  no-repeat; width:125px; height:15px; }
-#menu10 .parentMenu span { text-indent:-9999px; }
-#menu18 { margin: 5.5px 0px 0px 20px; }
-#menu18 .parentMenu { background: url(http://www.etoolsrus.net/new_site/images/deals_week.png)  no-repeat; width:116px; height:15px; }
-#menu18 .parentMenu span { text-indent:-9999px; }
+#menu236, #menu68, #menu132, #menu230, #menu18 {margin:5.5px 0 0;}
+#menu236 .parentMenu span, #menu68 .parentMenu span, #menu132 .parentMenu span, #menu230 .parentMenu span, #menu18 .parentMenu span{text-indent:-9999px;}
+#menu236 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/cutting_tools_nav.png) no-repeat right;width:95px;height:15px;}
+#menu68 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/power_tools_nav.png) no-repeat right;width:107px;height:15px;}
+#menu132 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/cordless_tools_nav.png) no-repeat right;width:128px;height:15px;}
+#menu230 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/woodworking_tools_nav.png) no-repeat right;width:118px;height:15px;}
+#menu18 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/deals_week.png) no-repeat right;width:136px;height:15px;}
+
 /************** Nav Menu End **************/
 
 /************** Item description **************/
