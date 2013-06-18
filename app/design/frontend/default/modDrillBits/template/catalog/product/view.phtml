@@ -2,26 +2,11 @@
 /**
  * Magento
  *
- * NOTICE OF LICENSE
  *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
  *
  * @category    design
  * @package     default_modern
- * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ *
  */
 
 /**
@@ -93,7 +78,7 @@
             <div><?php echo $this->getChildHtml('ctIco') ?></div> 
             <div>
             <?php 
-// flute logit
+// flute logic
 $fNo=$_product->getCt_flute_no();
 switch($fNo){
 	case '2':
@@ -114,24 +99,31 @@ switch($fNo){
 	case 'm':
 		$fNo1 = "ct_fl_m";
 		break;
+        default:
+                $fNo1 = "ct_fl_none";
+                break;
 }            
 // radius logic
-$cRad=$_product->getCt_corner_rad();
+$cRad=$_product->getCt_end_type();
+//print_r('TEST'.$cRad);
 switch($cRad){
-	case 'square':
+	case 'Square':
 		$cRad1 = "ct_end_sq";
 		break;
-	case 'ball':
+	case 'Ball':
 		$cRad1 = "ct_end_ball";
 		break;
 	case '90':
 		$cRad1 = "ct_end_90";
 		break;
-	case 'rough':
+	case 'Rough':
 		$cRad1 = "ct_end_rough";
 		break;
+        case 'Radius':
+                $cRad1 = "ct_end_rad";
+                break;
 	default:
-		$cRad1 = "ct_end_rad";
+		$cRad1 = "ct_end_none";
 		break;	
 }
 //helix logic
@@ -158,28 +150,34 @@ switch($hDeg){
 	case '60';
 		$hDeg1 = "ct_heli_60";
 		break;
+        default:
+                $hDeg1 = "ct_heli_none";
+                break;
 }
 // hrc logic
 $hrc=$_product->getCt_hrc();
 switch($hrc){
 	case 'up to 35';
-	$hrc1 = "ct_hrc_to35";
-	break;
+            $hrc1 = "ct_hrc_to35";
+            break;
 	case '30-40';
-	$hrc1 = "ct_hrc_3040";
-	break;
+            $hrc1 = "ct_hrc_3040";
+            break;
 	case 'up to 50';
-	$hrc1 = "ct_hrc_to50";
-	break;
+            $hrc1 = "ct_hrc_to50";
+            break;
 	case 'up to 40';
-	$hrc1 = "ct_hrc_to40";
-	break;
+            $hrc1 = "ct_hrc_to40";
+            break;
 	case '<40';
-	$hrc1 = "ct_hrc_lt40";
-	break;
+            $hrc1 = "ct_hrc_lt40";
+            break;
 	case '60';
-	$hrc1 = "ct_hrc_60";
-	break;
+            $hrc1 = "ct_hrc_60";
+            break;
+        default:
+            $hrc1 = "ct_hrc_none";
+            break;
 }
 
 $matAL=$_product->getAttributeText('use_alum');

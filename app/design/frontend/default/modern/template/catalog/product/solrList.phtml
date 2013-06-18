@@ -22,8 +22,8 @@ print_r('<div id="fRes"></div>');
 
 	echo '<div id="'.urlencode($ct_tab).'" data-ct="'.$panCt.'" class="tabDia" ><ol>';
 		$prodCol = $this->getLoadedProductCollection()
-		->addIdFilter(array($sID1))
-		->load();
+		->addIdFilter(array($sID1));
+//		->load();
 
 //var_dump($prodCol);
 		$this->getMode('list');
