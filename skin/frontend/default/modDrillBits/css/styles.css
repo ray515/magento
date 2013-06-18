@@ -2255,7 +2255,9 @@ ul li {list-style-type: none;}
 #matTI{width:15px;height:15px;}
 .goodDot{width:15px; height:15px; background-image:url(../images/ct_sprites/ct_sprite_icon_all.png); background-position:-280px -155px;}
 .bestDot{width:15px; height:15px; background-image:url(../images/ct_sprites/ct_sprite_icon_all.png); background-position:-280px -140px;}
-.noDot{width:15px; height:15px; background-color:red;}
+.noDot{width:15px; height:15px;}
+tr .legandSize{height:15px;}
+.legandTxt{float:left;}
 
 /* View Icons */
 #ctIco{width:100%;}
@@ -2266,12 +2268,14 @@ ul li {list-style-type: none;}
 .ct_end_ball{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-140px 0px;}
 .ct_end_90{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-210px 0px;}
 .ct_end_rough{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-280px 0px;}
+.ct_end_none{width:70px;height:70px;}
 .ct_fl_2{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-350px 0px;}
 .ct_fl_3{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-420px 0px;}
 .ct_fl_4{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-490px 0px;}
 .ct_fl_5{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-560px 0px;}
 .ct_fl_6{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-630px 0px;}
 .ct_fl_m{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position: 0px -70px;}
+.ct_fl_none{width:70px;height:70px;}
 .ct_heli_30{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-70px -70px;}
 .ct_heli_20{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-140px -70px;}
 .ct_heli_45{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-210px -70px;}
@@ -2279,12 +2283,14 @@ ul li {list-style-type: none;}
 .ct_heli_35{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-350px -70px;}
 .ct_heli_40{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-420px -70px;}
 .ct_heli_3238{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-490px -70px;}
+.ct_heli_none{width:70px;height:70px;}
 .ct_hrc_to35{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-560px -70px;}
 .ct_hrc_3040{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-630px -70px;}
 .ct_hrc_to50{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position: 0px -140px;}
 .ct_hrc_to40{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-70px -140px;}
 .ct_hrc_60{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-140px -140px;}
 .ct_hrc_lt40{width:70px;height:70px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-210px -140px;}
+.ct_hrc_none{width:70px;height:70px;}
 
 /*.goodDot{width:15px;height:15px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-280px -140px;}
 .bestDot{width:15px;height:15px;background-image:url(../images/ct_sprites/ct_sprite_icon_all.png);background-position:-280px -170px;}*/
