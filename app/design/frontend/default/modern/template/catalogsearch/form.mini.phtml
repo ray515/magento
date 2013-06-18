@@ -18,8 +18,6 @@ $solrSvr=Mage::helper('solr')->sUrl();
 			$('#search').val("Search KensToolSupply.com");
 			$('#search').focus(  function(){  if($('#search').val(srchTxt)){  $('#search').val("");  }  });
 			$('#search').blur(  function(){  if(!$('#search').val()){  $('#search').val(srchTxt);  }  });
-//			$.cookie('KTS-SOLR','<?php echo($solrSvr); ?>');
-//			$.cookie('KTS-SOLR-b','<?php echo($solrPg); ?>');
         });
         //]]>
         </script>
