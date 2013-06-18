@@ -538,7 +538,7 @@ tr.summary-details-excluded {font-style:italic;}
 
 /* Header ================================================================================ */
 .logo {float:left;}
-.header-container {}
+.header-container {margin: -26px 0px 0px 0px;}
 .header {margin:0 0 12px;}
 .header .logo {float:left;text-decoration:none !important;}
 .header .logo strong {position:absolute;top:-999em;left:-999em;width:0;height:0;font-size:0;line-height:0;text-indent:-999em;overflow:hidden;}
@@ -559,7 +559,7 @@ tr.summary-details-excluded {font-style:italic;}
 .quick-access .links li.last a {padding:0;background:none;}
 .top-bar {padding:3px 12px 2px 12px;border:1px solid #CCC;border-bottom-color:#CCC;background:#efefef;line-height:21px;}
 .top-bar .breadcrumbs {float:left;width:880px;overflow:hidden;}
-.form-search {position:absolute;top:79px;width:350px;z-index:999;}
+.form-search {position:relative;top:87px;width:350px;z-index:999;}
 .form-search label {float:left;text-indent:-9999px;font-size:12px;font-weight:bold;width:0;margin:1px 10px 0 0;padding:0 5px 0 0;color:#787778;}
 .form-search input.input-text {float:left;width:252px;height:17px;text-indent:3px;font-size:12px;background:#D0D0D0 url(http://www.etoolsrus.net/new_site/images/search_form_bg.png) no-repeat; margin:0;border:0;-moz-border-radius:5px 0 0 5px;-webkit-border-radius:5px 0 0 5px;border-radius:5px 0 0 5px;}
 .form-search button.button {float:left;}
