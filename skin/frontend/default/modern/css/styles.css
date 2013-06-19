@@ -14,6 +14,24 @@
 body {background:#a7a7a7 url(http://www.etoolsrus.net/new_site/images/bg.png) repeat-y;font:11px/1.55 arial,helvetica,sans-serif;color:#444;text-align:center;background-position:center;}
 body a:hover {color:#585858;}
 
+/************** Item quick view **************/
+
+#diaTable1Comp a {
+    border: 1px solid #820000 !important;
+    border-radius: 5px 5px 5px 5px !important;
+    margin: 0 !important;
+    padding: 5px 19px !important;
+    width: 25px !important;
+	background: #ff4245 !important; /* Old browsers */
+background: -moz-linear-gradient(top, #ff4245 1%, #ff0004 100%) !important; /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ff4245), color-stop(100%,#ff0004))!important; /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #ff4245 1%,#ff0004 100%)!important; /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #ff4245 1%,#ff0004 100%)!important; /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #ff4245 1%,#ff0004 100%)!important; /* IE10+ */
+background: linear-gradient(to bottom, #ff4245 1%,#ff0004 100%)!important; /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff4245', endColorstr='#ff0004',GradientType=0 )!important; /* IE6-9 */
+}
+
 /************** Item description **************/
 .zoom-notice {visibility:hidden;height:1px;}
 .more-views h2 {visibility:hidden;height:1px;}
