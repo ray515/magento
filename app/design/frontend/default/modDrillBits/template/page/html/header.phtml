@@ -11,6 +11,7 @@
 ?>
 <div class="header-container">
     <div class="header">
+    <?php echo $this->getChildHtml('topSearch') ?>
         <?php if ($this->getIsHomePage()):?>
         <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1> 
         <?php else:?>
@@ -28,5 +29,5 @@
     </div>
     <?php echo $this->getChildHtml('topBar') ?>
     <?php echo $this->getChildHtml('topContainer'); ?>
-    <?php echo $this->getChildHtml('topSearch') ?>
+    
 </div>
