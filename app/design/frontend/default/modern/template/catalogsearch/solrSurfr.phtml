@@ -1,18 +1,13 @@
 
 <?php
 if($_GET['qRec']):
-//http://65.60.97.68:8983/solr/KTS1/
-//$resStr=urlencode($_REQUEST['qRec']);
-//$url=Mage::helper('solr')->sURL().'select?rows=1000&wt=json&q='.$resStr;
 $url='http://65.60.97.68:8983/solr/KTS1/select?rows=1000&wt=json&q='.urlencode($_REQUEST['qRec']);
 $solrPg=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
-// using curl method
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $output=curl_exec($ch);
 $result=json_decode($output, TRUE);
-//var_dump($result);
 foreach($result['response']['docs'] as $rOut1){
 	$sID[] = $rOut1['sku'];
 	$sID1[]=$rOut1['id'];
@@ -89,7 +84,8 @@ echo("aFilt count: ".count($session->getData('aFilt')));
 	function uWaitNow(){
 		$('#waiter').fadeIn('fast');
 	}
-/*
+/*   
+ * Keeping examples of addToCar and addToComp //will move later
 //add to cart action	
 	$('body').on('click','#listLink',function(e){
 		var cartUrl = $(this).data('link');
@@ -107,7 +103,9 @@ echo("aFilt count: ".count($session->getData('aFilt')));
 				location.reload();
 			});
 	});
-*/
+
+ *
+ **/
 });
  </script>
 <div id="solrWrap">

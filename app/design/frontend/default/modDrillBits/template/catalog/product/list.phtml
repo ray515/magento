@@ -7,160 +7,145 @@
  * @package     default_modern_2
  * @copyright   Copyright (c) 2013 Kens Tool Supply
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
-?>
-
-<?php
-/**
+ *
  * Product list template
  * @see Mage_Catalog_Block_Product_List
  */
-
-//inst session
-$session=Mage::getSingleton('core/session', array('name'=>'frontend'));
-//temp for testing
-//echo '<div id="listCon">'.var_dump($session->getData('ctFilt')).'</div>';
-
-//filter results shell
-print_r('<div id="fRes"></div>');
-
-		echo '<div id="'.urlencode($ct_tab).'" data-ct="'.$panCt.'" class="tabDia" ><ol>';
-		$prodCol = $this->getLoadedProductCollection();
-		if(count($prodCol)<1){
-			echo('<p class="noResult">We did not find any products that match your filter choices.<br/>Please try anotehr filter combination.</p>');
-		}
-		$this->getMode('list');
-		echo $this->getToolbarHtml();
-		foreach($prodCol as $prod){
-			
-			print_r('<li>');
-			//Product detail listing
-			$prodAttCol = Mage::getResourceModel('eav/entity_attribute_collection')
-						->setEntityTypeFilter(10)
-						->getData();
-			$attStr="";
-			foreach($prodAttCol as $attCol){
-				if($prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod)!=null && $attCol['frontend_label']!=null && $attCol['used_in_product_listing']==1 && $attCol['is_visible_on_front']==1){
-					$attStr = $attStr.'<li>'.$attCol['frontend_label'].':'.$prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod).'</li>';
-				}}
-			$lgPict			= Mage::helper('catalog/image')->init($prod,'small_image');
-			$_helperComp 	= Mage::helper('catalog/product_compare')->getAddUrl($prod);
-			$searchListing='	<div id="'.$prod->getId().'a" class="'.str_replace('"','',$prod->getName()).'">
-									<div id="searchListing">
-										<div id="slTarget" data-me="'.$prod->getId().'a" class="'.str_replace('"','',$prod->getName()).'">
-											<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>					
-											<div id="slTable">
-												<span class="slTitle">'.$prod->getName().'</span><br/>
-												<span class="slDesc">'.$prod->getShortDescription().'</span>
-											</div>
-										</div>
-										<div id="slAction">
-											<span class="price lostingPrice">$'.number_format($prod->getPrice(),2).'</span>
-											<p id="cartBut">
-												<button type="button" id="listLink" data-p="'.$prod->getId().'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span>'.$this->__('Add to Cart').'</span></span></button>													
-											</p>							
-										</div>
-									</div>
-								</div>';
-			$dialog='	<div id="dialog1" class="'.$prod->getId().'a hideMe">
-							<table id="diaTable1">
-								<tr id="diaTableTop">
-									<td id="diaTable1Img"><img src="'.$lgPict->resize(225).'"></td>
-									<td id="diaTable1Data">
-										<div class="dataTabs">
-											<ul>
-												<li><a href="#tab-1">Product Information</a></li>
-												<li><a href="#tab-2">Product Details</a></li>
-											</ul>
-											<div id="tab-1">
-												<p>'.$prod->getShortDescription().'</p>
-											</div>
-											<div id="tab-2">
-												<p>'.$attStr.'</p>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr id="diaTableBot"><td id="diaTable1Comp"><a href="'.Mage::getUrl('/').$prod->getUrl_key().'.html">View Product Page</a></td>
-													 <td id="diaTable1Action">
-														<div id=diaTableActionPrice><input type=hidden class=addToCompData value="'.$_helperComp.'"><button type="button" data-link="'.$_helperComp.'" title="'.$this->__('Compare') .'" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
-														<div id=diaTableActionPrice><button type="button" data-p="'.$prod->getId().'" title="'.$this->__('Add to Cart') .'" class="addToCart button btn-cart" ><span><span class="price listingPrice">$'.number_format($prod->getPrice(),2).' '.$this->__('Add to Cart').'</span></span></button></div>
-													</td>
-								</tr>
-							</table>
-						</div>';
+echo('<div id="ctResults" class="tabDia" ><ol>');
+$prodCol = $this->getLoadedProductCollection();
+if(count($prodCol)<1){
+    echo('<p class="noResult">We did not find any products that match your filter choices.<br/>Please try anotehr filter combination.</p>');
+}
+echo $this->getToolbarHtml();
+foreach($prodCol as $prod){
+echo ('<li>');
+//Product detail listing
+$prodAttCol = Mage::getResourceModel('eav/entity_attribute_collection')
+            ->setEntityTypeFilter(10)
+            ->getData();
+$attStr="";
+foreach($prodAttCol as $attCol){
+    if($prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod)!=null && $attCol['frontend_label']!=null && $attCol['used_in_product_listing']==1 && $attCol['is_visible_on_front']==1){
+        $attStr = $attStr.'<li>'.$attCol['frontend_label'].':'.$prod->getResource()->getAttribute($attCol['attribute_code'])->getFrontend()->getValue($prod).'</li>';
+}}
+$lgPict = Mage::helper('catalog/image')->init($prod,'small_image');
+$_helperComp = Mage::helper('catalog/product_compare')->getAddUrl($prod);
+$searchListing='<div id="'.$prod->getId().'a">
+                    <div id="searchListing">
+                        <div id="slTarget" data-me="'.$prod->getId().'a" data-link="'.Mage::getUrl('/').$prod->getUrl_key().'" class="'.str_replace('"','',$prod->getName()).' prodLink">
+                    	<div id="slImg"><img src="'.$lgPict->resize(125).'"></div>					
+                    	<div id="slTable">
+                            <span class="slTitle">'.$prod->getName().':'.$prod->getId().'</span><br/>
+                            <span class="slDesc">'.$prod->getShortDescription().'</span>
+                    	</div>
+                    </div>
+                    <div id="slAction">
+                        <span class="price lostingPrice">$'.number_format($prod->getPrice(),2).'</span>
+			<p id="cartBut">
+                            <button type="button" id="prodAdd" data-link="'.$prod->getId().'" title="Add To Cart" class="addToCart button btn-cart" ><span><span>Add to Cart</span></span></button><br/>
+                            <button type="button" id="prodComp" data-link="'.$_helperComp.'" title="Compare" class="addToComp button btn-cart" ><span><span>Compare Product</span></span></button><br/>
+                            <button type="button" id="prodView" data-me="'.$prod->getId().'a" data-title="'.str_replace('"','',$prod->getName()).'" data-link="'.Mage::getUrl('/').$prod->getUrl_key().'" title="Quick View" class="quickView button btn-cart" ><span><span>Quick View</span></span></button><br/>
+                        </p>							
+                    </div>
+		</div>';
+ 
+$dialog='<div id="dialog1" class="'.$prod->getId().'a hideMe">
+            <table id="diaTable1">
+                <tr id="diaTableTop">
+                    <td id="diaTable1Img"><img src="'.$lgPict->resize(225).'"></td>
+                    <td id="diaTable1Data">
+                    	<div class="dataTabs">
+                            <ul>
+                                <li><a href="#tab-1">Product Information</a></li>
+                    		<li><a href="#tab-2">Product Details</a></li>
+                            </ul>
+                            <div id="tab-1">
+                                <p>'.$prod->getShortDescription().'</p>
+                            </div>
+                            <div id="tab-2">
+                                <p>'.$attStr.'</p>
+                            </div>
+                        </div>
+                    </td>
+		</tr>
+		<tr id="diaTableBot">
+                    <td id="diaTable1Action" colspan="2">
+                        <div id=diaTableActionPrice><button type="button" data-link="'.$_helperComp.'" title="Compare" class="addToComp button btn-cart"><span><span class="price listingPrice">'.$this->__('Compare').'</span></span></button></div>
+			<div id=diaTableActionPrice><button type="button" data-link="'.$prod->getId().'" title="Add to Cart" class="addToCart button btn-cart" ><span><span class="price listingPrice">$'.number_format($prod->getPrice(),2).' '.$this->__('Add to Cart').'</span></span></button></div>
+			<div id=diaTableActionPrice><button type="button" data-link="'.Mage::getUrl('/').$prod->getUrl_key().'" title="Product Page Link" class="prodLink button btn-cart" ><span><span class="price listingPrice">View Product Page</span></span></button></div>
+                    </td>
+		</tr>
+            </table>
+	</div>';
 												
-					print_r($searchListing.$dialog);	
-					echo('</li>');		
-				}
-				echo('</ol></div>'); //close prodList
-				echo('<hr/>');
-				echo("<div id='waiter' class='hideMe waitOver'><div class='waitMsg'></div></div>");
+echo ($searchListing.$dialog);	
+}
+echo ('</ol></div>'); //close prodList
+echo("<div id='waiter' class='hideMe waitOver'><div class='waitMsg'></div></div>");
 ?>
 <script type="text/javascript">
-<!--
+//<!--
 jQuery(function($){
-	var nURL = 'http://'+document.URL.split('/')[2];
-	$('.tabDia').on('click','#slTarget',function(){
-		var myid='.'+$(this).data('me');
-		var myTitle=$(this).attr('class');
-		$(myid).dialog({
-			autoOpen:true,
-			title: myTitle,
-			width: 665,
-			height: 300,
-			show: {effect: "blind",duration:1000},
-			hide:{effect:"explode",duration:1000}
-		});
-		$('.dataTabs').tabs();
-	});
+// add to cart action
+    $('.addToCart').click(function(){
+    	var p = $(this).data('link');
+    	var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
+    	var cartIt = $.post(nURL,{'cartinator':'add','pId':p});
+    	cartIt.done(function(data){
+    		location.reload();
+    	});
+    });
 
-	//for test only
-	$('#listCon').on('click',function(e){
-		$.post(nURL+'/gfilter/index/index/',{'ctFilt':'kill'},function(data){$('#listCon').html(data);},'html');
-		});
-
-	// filter actions
-	$('#narrow-by-list ol>li').on('click',function(e){
-		$(this).siblings().removeClass('liTouch').addClass('liStart');
-		$(this).removeClass('liStart').addClass('liTouch');
-		$.post(nURL+'/gfilter/index/index/',{'ctFilt':'add','addMe':$(this).data('code')+':'+$(this).data('val')},function(data){$('#listCon').html(data); uGoNow(); },'html');
-	});
-    
-	function uGoNow(){
+//add to comp action
+    $('.addToComp').click(function(){
+	var p = $(this).data('link');	
+	var compIt = $.post(p);
+	compIt.done(function(data){
 		location.reload();
-		uWaitNow();
-	}
-
-	function uWaitNow(){
-		$('#waiter').fadeIn('fast');
-	}
-
-	$('#narrow-by-list').accordion({
-		collapsible:true,
-		active:false,
-		heightStyle:"content"
 	});
-	
-	// add to cart action
-	$('.addToCart').click(function(){
-		var p = $(this).data('p');
-		var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
-		var cartIt = $.post(nURL,{'cartinator':'add','pId':p});
-		cartIt.done(function(data){
-			uGoNow();
-		});
-	});
+    });
 
-	//add to comp action
-	$('.addToComp').click(function(){
-		var p = $(this).data('link');
-	//	var nURL = 'http://'+document.URL.split('/')[2]+'/gfilter/index/index/';
-		var compIt = $.post(p);
-		compIt.done(function(data){
-			uGoNow();
-		});
+    $('.prodLink').on('click',function(e){
+        document.location=$(this).data('link')+'.html';
+    });
+
+// prod overlays
+    $('.quickView').on('click',function(e){
+	var myid='.'+$(this).data('me');
+	var myTitle=$(this).data('title');
+	$(myid).dialog({
+            autoOpen:true,
+            title: myTitle,
+            width: 665,
+            height: 300,
+            show: {effect: "blind",duration:1000},
+            hide:{effect:"explode",duration:1000}
 	});
+	$('.dataTabs').tabs();
+    });
+
+// filter actions
+var nURL = 'http://'+document.URL.split('/')[2];
+    $('#narrow-by-list ol>li').on('click',function(e){
+	$(this).siblings().removeClass('liTouch').addClass('liStart');
+	$(this).removeClass('liStart').addClass('liTouch');
+	$.post(nURL+'/gfilter/index/index/',{'ctFilt':'add','addMe':$(this).data('code')+':'+$(this).data('val')},function(data){$('#listCon').html(data); uGoNow(); },'html');
+    });
+    
+function uGoNow(){
+    location.reload();
+    uWaitNow();
+}
+
+function uWaitNow(){
+    $('#waiter').fadeIn('fast');
+}
+    
+    $('#narrow-by-list').accordion({
+        collapsible:true,
+	active:false,
+	heightStyle:"content"
+    });
 });
--->
+//-->
 </script>

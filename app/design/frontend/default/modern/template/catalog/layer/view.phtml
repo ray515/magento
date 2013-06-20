@@ -16,17 +16,13 @@
 						<p id="filterTitle" class="block-subtitle">Shopping Options</p>
 						<dl id="narrow-by-list">';
 		echo($html1);
-// filter test for speed improvement
-//
 		$session = Mage::getSingleton('core/session', array('name'=>'frontend'));
 		$aFilt1=$session->getData('aFilt');
 		$collection = Mage::getResourceModel('catalog/product_collection')
-//		->addAttributeToSelect('price','manufacturer','category_ids')
 		->addAttributeToSelect('*')
 		->addIdFilter($aFilt1);
-		
+//Price Information		
 		foreach ($collection as $prodp){
-			//Price Information//
 			$_price=$prodp->getPrice();
 			if(array_key_exists($_price,$priceArr)){
 				$priceArr[$_price]++;
@@ -35,10 +31,8 @@
 			}
 			$priceInfo=$priceArr;
 		}
-		// price structure
 		ksort($priceInfo);
 		$priceTempArr=array_sum(array_keys($priceInfo));
-		$priceAvg=$priceTempArr/count($priceInfo);
 		$pv=array_keys($priceInfo);
 		foreach($pv as $nv){
 			$n=intval($nv);
@@ -64,27 +58,26 @@
 		$pFilt=trim($session->getData('solrFilter-price'));
 		$priceOut='<dt>Price</dt><dd><ol id="priceOL">';
 		foreach($priceSetArr as $psa1=>$psa1a){
-			$psa1Fix=str_getcsv($psa1,'(');
-			if($psa1 == $pFilt){
+			if($psa1 == $pFilt && $psa1a){
 				$priceOut.= '<li class="priceLI liTouch">'.$psa1.' </li>';
 			}else{
-				$priceOut.='<li class="priceLI liStart">'.$psa1.' </li>';//('.count($psa1a).')
+				$priceOut.='<li class="priceLI liStart">'.$psa1.' </li>';
 			}
-		}   $priceOut.= '</ol><div id="fClrPrice" class="fClr">Reset</div></dd>';
+		}   
+                $priceOut.= '</ol><div id="fClrPrice" class="fClr">Reset</div></dd>';
 		
 		// cat information
 		foreach ($collection as $prodc){
 			$_cid=$prodc->getCategoryIds();
 			foreach($_cid as $_catID){
 				$_cat = Mage::getSingleton('catalog/category')->load($_catID);
-				$_catInfo=$_catID;
 				$cataInfo[$_catID]=$_cat->getName();
 			}
 		}
-		$pFilt=trim($session->getData('solrFilter-cat'));
+		$cFilt=trim($session->getData('solrFilter-cat'));
 		$cataOut='<dt>Category</dt><dd><ol id="cataOL">';
 		foreach($cataInfo as $ci=>$ciCt){
-			if($pFilt == $ciCt){
+			if($cFilt == $ciCt){
 				$cataOut=$cataOut.'<li class="cataLI liTouch" data-cId="'.$ci.'">'.$ciCt.'</li>';
 			}else{
 				$cataOut=$cataOut.'<li class="cataLI liStart" data-cId="'.$ci.'">'.$ciCt.'</li>';
@@ -98,10 +91,10 @@
 			$mnm=$prodm->getAttributeText('manufacturer');
 			$manuInfo[$mid]=$mnm;
 		}
-		$pFilt=trim($session->getData('solrFilter-man'));
+		$mFilt=trim($session->getData('solrFilter-man'));
 		$manuOut='<dt>Manufacturer</dt><dd><ol id="manuOL">';
 		foreach($manuInfo as $mi=>$miCt){
-			if($pFilt == $miCt){
+			if($mFilt == $miCt){
 				$manuOut=$manuOut.'<li class="manuLI liTouch" data-id="'.$mi.'">'.$miCt.'</li>';
 			}else{
 				$manuOut=$manuOut.'<li class="manuLI liStart" data-id="'.$mi.'">'.$miCt.'</li>';
@@ -110,10 +103,7 @@
 		$manuOut=$manuOut.'</ol><div id="fClrManu" class="fClr">Reset</div></dd>';
 		
 		echo($priceOut.$cataOut.$manuOut);		
-		
-//		foreach($_filters as $filter){
-//			echo('		<dt>'.$filter.'</dt><dd id="id'.$filter.'">No Filter Information Found</dd>');
-//		}
+
 		echo('	</dl></div>');
 		$html2 = '	<div id="deepSearch" class="block-content">
 						<p id="deepSearchTitle" class="block-subtitle"></p>
@@ -130,7 +120,7 @@
 		';
 	echo($html2);
 	}else{
-		// orig file info
+// orig file info
 		if($this->canShowBlock()){
 			echo('<div id="leftFilter" class="block block-layered-nav">');
 			echo('	<div class="block-title">');
