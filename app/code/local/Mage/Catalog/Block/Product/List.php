@@ -134,11 +134,10 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
         $filterDat2=$session->getData('oneArr');
         }
 //test        
-<<<<<<< HEAD
-       print_r('<script>alert("'.$session->getData('useSearch').'");</script>');
-=======
+//       print_r('<script>alert("'.$session->getData('useSearch').'");</script>');
+
 //        print_r('<script>alert("'.$session->getData('useSearch').'");</script>');
->>>>>>> 972b7c78a19210f41ec1823fc9459aa117e337e2
+
         
         // called prepare sortable parameters
         $collection = $this->_getProductCollection();
