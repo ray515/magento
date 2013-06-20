@@ -14,6 +14,24 @@
 body {background:#a7a7a7 url(http://www.etoolsrus.net/new_site/images/bg.png) repeat-y;font:11px/1.55 arial,helvetica,sans-serif;color:#444;text-align:center;background-position:center;}
 body a:hover {color:#585858;}
 
+/************** Item quick view **************/
+
+#diaTable1Comp a {
+    border: 1px solid #820000 !important;
+    border-radius: 5px 5px 5px 5px !important;
+    margin: 0 !important;
+    padding: 5px 19px !important;
+    width: 25px !important;
+	background: #ff4245 !important; /* Old browsers */
+background: -moz-linear-gradient(top, #ff4245 1%, #ff0004 100%) !important; /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ff4245), color-stop(100%,#ff0004))!important; /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #ff4245 1%,#ff0004 100%)!important; /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #ff4245 1%,#ff0004 100%)!important; /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #ff4245 1%,#ff0004 100%)!important; /* IE10+ */
+background: linear-gradient(to bottom, #ff4245 1%,#ff0004 100%)!important; /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff4245', endColorstr='#ff0004',GradientType=0 )!important; /* IE6-9 */
+}
+
 /************** Item description **************/
 .zoom-notice {visibility:hidden;height:1px;}
 .more-views h2 {visibility:hidden;height:1px;}
@@ -28,9 +46,9 @@ body a:hover {color:#585858;}
 .bulletlist {line-height:30px;font-size:12px;}
 
 /************** Nav Menu Start **************/
-#menu226, #menu68, #menu132, #menu230, #menu18 {margin:5.5px 0 0;}
-#menu226 .parentMenu span, #menu68 .parentMenu span, #menu132 .parentMenu span, #menu230 .parentMenu span, #menu18 .parentMenu span{text-indent:-9999px;}
-#menu226 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/cutting_tools_nav.png) no-repeat right;width:95px;height:15px;}
+#menu236, #menu68, #menu132, #menu230, #menu18 {margin:5.5px 0 0;}
+#menu236 .parentMenu span, #menu68 .parentMenu span, #menu132 .parentMenu span, #menu230 .parentMenu span, #menu18 .parentMenu span{text-indent:-9999px;}
+#menu236 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/cutting_tools_nav.png) no-repeat right;width:95px;height:15px;}
 #menu68 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/power_tools_nav.png) no-repeat right;width:107px;height:15px;}
 #menu132 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/cordless_tools_nav.png) no-repeat right;width:128px;height:15px;}
 #menu230 .parentMenu {background:url(http://www.etoolsrus.net/new_site/images/woodworking_tools_nav.png) no-repeat right;width:118px;height:15px;}
@@ -538,7 +556,7 @@ tr.summary-details-excluded {font-style:italic;}
 
 /* Header ================================================================================ */
 .logo {float:left;}
-.header-container {}
+.header-container {margin: -26px 0px 0px 0px;}
 .header {margin:0 0 12px;}
 .header .logo {float:left;text-decoration:none !important;}
 .header .logo strong {position:absolute;top:-999em;left:-999em;width:0;height:0;font-size:0;line-height:0;text-indent:-999em;overflow:hidden;}
@@ -559,7 +577,7 @@ tr.summary-details-excluded {font-style:italic;}
 .quick-access .links li.last a {padding:0;background:none;}
 .top-bar {padding:3px 12px 2px 12px;border:1px solid #CCC;border-bottom-color:#CCC;background:#efefef;line-height:21px;}
 .top-bar .breadcrumbs {float:left;width:880px;overflow:hidden;}
-.form-search {position:absolute;top:79px;width:350px;z-index:999;}
+.form-search {position:relative;top:87px;width:350px;z-index:999;}
 .form-search label {float:left;text-indent:-9999px;font-size:12px;font-weight:bold;width:0;margin:1px 10px 0 0;padding:0 5px 0 0;color:#787778;}
 .form-search input.input-text {float:left;width:252px;height:17px;text-indent:3px;font-size:12px;background:#D0D0D0 url(http://www.etoolsrus.net/new_site/images/search_form_bg.png) no-repeat; margin:0;border:0;-moz-border-radius:5px 0 0 5px;-webkit-border-radius:5px 0 0 5px;border-radius:5px 0 0 5px;}
 .form-search button.button {float:left;}
@@ -1726,4 +1744,6 @@ div.shipping h2 {text-indent:6px;font-size: 15px; color: #333333;}
 #tab-3{overflow-x:HIDDEN;overflow-y:SCROLL !important;height:130px;margin:5px 0;}
 #tab-3 li{border-bottom:1px solid #555;}
 .hideMe{display:none;}
+.waitOver{background:transparent url(images/overlay.png) repeat top left;position:fixed;top:0px;bottom:0px;left:0px;right:0px;z-index:999;}
+.waitMsg{width:150px;height:40px;margin:120px auto; background:url("images/spinner_squares_circle.gif") no-repeat scroll 50% 5px white;border-radius:10px;}
 /* ======================================================================================= */

@@ -101,8 +101,6 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
     public function getLoadedProductCollection()
     {
         return $this->_getProductCollection();
-        //$getColOut = $this->_getProductCollection();
-        //return $getColOut;
     }
 
     /**
@@ -122,35 +120,32 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
     protected function _beforeToHtml()
     {
         $toolbar = $this->getToolbarBlock();
-
-        // oh my - Eric Cookie Business
-        if($_COOKIE['KTS_FS1']){
-        	//$filterSelection=$_COOKIE['KTS_FS1'];
-        	$filterArr=str_getcsv($_COOKIE['KTS_FS1'],',');
+        //init session data
+        $session=Mage::getSingleton('core/session', array('name'=>'frontend'));
+        if($session->getData('ctFilt') && count($session->getData('ctFilt')>0)){
+        	$filterArr=$session->getData('ctFilt');
         	foreach($filterArr as $fi1){
         		$fTmp=str_getcsv($fi1,':');
         		$fArr2[]=array($fTmp[0],$fTmp[1]);
         	}
         }
-        //TODO: convert KTS_FS1 to session instead of cookie.
-        $session=Mage::getSingleton('core/session', array('name'=>'frontend'));
-        $filterDat1=$session->getData('sID1');
-        if($session->getData('oneArr')!=null){
+
+        if($session->getData('oneArr') && $session->getData('useSearch')==1){
         $filterDat2=$session->getData('oneArr');
         }
+//test        
+//        print_r('<script>alert("'.$session->getData('useSearch').'");</script>');
         
         // called prepare sortable parameters
         $collection = $this->_getProductCollection();
+        if($fArr2){
         if(count($fArr2)>0){
         	foreach($fArr2 as $fArr){
         		$collection->addAttributeToFilter($fArr[0],$fArr[1]);
         	}
-        }
-        //if(count($filterDat1>0)){$collection->addIdFilter(array($filterDat1));}
+        }}
         if($filterDat2){$collection->addIdFilter(array($filterDat2));}
-        
-        
-	//	$collection->addAttributeToFilter('ct_length_name','Stub')->addAttributeToFilter('ct_flute_no',2);
+
         // use sortable parameters
         if ($orders = $this->getAvailableOrders()) {
             $toolbar->setAvailableOrders($orders);
@@ -212,9 +207,6 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
      */
     public function getToolbarHtml($f1='x')
     {
-       // if($f1!='x'){
-        //	$this->_getProductCollection();
-      //  }
     	return $this->getChildHtml('toolbar');
     }
 
