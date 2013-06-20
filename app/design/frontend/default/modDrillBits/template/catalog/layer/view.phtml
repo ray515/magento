@@ -7,26 +7,14 @@
  * @package     base_default
  * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
-?>
-<?php
-/**
+
  * Category layered navigation
  *
  * @see Mage_Catalog_Block_Layer_View
  */
-?>
-<?php
-//tmp design pattern
-//<dt class="code" id="code">Name</dt>
-//	<dd id="code">
-//		<ol><li id="code" data-code="code" data-val="val">val</li></ol>
-//	</dd>
-
 $session=Mage::getSingleton('core/session', array('name'=>'frontend'));
-
-$thisPage=$this->getRequest()->getParams()['id'];
-
+$thisPage1=$this->getRequest()->getParams();
+$thisPage = $thisPage1['id'];
 function pgCol($thisPage){
 	$cataCol=Mage::getModel('catalog/category')
 	->load($thisPage) //$thisPage
@@ -34,14 +22,13 @@ function pgCol($thisPage){
 	foreach($cataCol as $cc){
 		$pList[]=$cc->getId();
 	}
-	return $pList; //prod id's for category
+	return $pList;
 }
 
 $ctFilt = $session->getData('ctFilt');
 if(count($ctFilt<0)){
 	$ctFilt = array_pad($ctFilt, 1, "~:~");
 }
-
 
 if(count(pgCol($thisPage))>0){
 	$fJSON=json_decode(Mage::helper('gfilter')->getFilterData(pgCol($thisPage)));
@@ -51,7 +38,8 @@ if(count(pgCol($thisPage))>0){
 		foreach($fj2 as $fj3=>$fj4){
 			$cfct=0;
 			foreach($ctFilt as $tf){
-				$tf1 = str_getcsv($tf,':')[0];
+				$tf1a = str_getcsv($tf,':');
+                                $tf1=$tf1a[0];
 				if($fj1 == $tf1){
 					$jOut.='<dt class="'.$fj1.'" id="'.$fj1.'">'.$fj3.'<div id="selPar"></div></dt><dd id="'.$fj1.'"><ol>';
 					$cfct++;
@@ -66,7 +54,8 @@ if(count(pgCol($thisPage))>0){
 			foreach($vals as $val){
 				$cfct1=0;
 				foreach($ctFilt as $cf){
-					$cf1 = str_getcsv($cf,':')[1];
+					$cf1a = str_getcsv($cf,':');
+                                        $cf1 = $cf1a[1];
 					if(rtrim($val,'"') == rtrim($cf1,'"')){
 						$jOut.='<li id="'.$fj1.'" data-code="'.$fj1.'" data-val="'.$val.'" class="liTouch">'.$val.'<div id="selLi"></div></li>';
 						$cfct1++;
