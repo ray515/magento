@@ -34,7 +34,7 @@ public function bigBang(){
 	$prodCol1=Mage::getModel('catalog/product')
 	->getCollection()
 	->addAttributeToSelect('id')
-	->addIdFilter('6359')
+//	->addIdFilter('6359')
 	->addFieldToFilter('status',Mage_Catalog_Model_Product_Status::STATUS_ENABLED);
 	
 	$setId=0;

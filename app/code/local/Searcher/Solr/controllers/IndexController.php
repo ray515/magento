@@ -18,14 +18,8 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 		if($_REQUEST['sug']){
 			$this->searchMage1($_REQUEST['sug']);
 		}
-		if($_REQUEST['sku']){
-			$this->getCataIds($_REQUEST['sDir']);
-		}
 		if($_POST['sug1']){
 			$this->searchMage($_POST['sug1']);
-		}
-		if($_REQUEST['nova']){
-			$this->superNova($_REQUEST['sDir']);
 		}
 		if($_POST['ajax']){
 			echo $this->ajaxRes($_POST['qRec'],$_POST['sDir']);
@@ -46,64 +40,6 @@ class Searcher_Solr_IndexController extends Mage_Core_Controller_Front_Action{
 
 	public function nsAction(){
 		echo "Searcher_Solr";
-	}
-	
-	
-	// search index
-	//TODO: only include active items
-	public function getCataIds($sDir){
-		print_r('<h3>Update Complete</h3>');
-		$prodCol=Mage::getModel('catalog/product')->getCollection();
-		$prodCol->addAttributeToSelect('*');
-		echo "<hr/>";
-		foreach($prodCol as $p1){
-			$cata1				= $p1->getCategoryIds();
-			$tOut['id']			= $p1->getId();
-			$cOut="";
-			foreach($cata1 as $cata){
-				$_cat=Mage::getModel('catalog/category')->load($cata);
-				$cOut=$cOut.$_cat->getName()." ";
-			}			
-			$priceIn			= str_getcsv($p1->getPrice(),'.');
-			$priceOut			= $priceIn[0].'.00';
-			$cOut				= rtrim($cOut,',');
-			$tOut['cat']		= rtrim(str_replace('+','',$cOut));
-			$tOut['sku']		= $p1->getSku();
-			$nameTemp 			= strip_tags($p1->getName());
-			$nameTemp 			= str_replace('&mdash; ','',$nameTemp);
-			$tOut['name']		= strip_tags($nameTemp);
-			$tOut['manu']		= $p1->getAttributeText('manufacturer');
-			$tOut['url']		= $p1->getProductUrl();
-			$tOut['features']	= strip_tags($p1->getShortDescription());
-			$tOut['price']		= (float)$priceOut;
-			$tOut1['doc']		= $tOut;
-			$tOut2['add']		= $tOut1;
-			$jOut				= $jOut.json_encode($tOut2);
-			//var_dump($jOut);
-		}
-		//echo $jOut;
-		echo '<br/><br/>';
-		echo "<hr/>";
-		$url					= Mage::helper('solr')->sURL().'update/json?commit=true';
-		$Client 				= new Zend_Http_Client($url);
-		$Client					->resetParameters()
-								->setMethod(Zend_Http_Client::POST)
-								->setHeaders('Content-type','application/json')
-								->setRawData($jOut);
-		$response				= $Client->request();
-		echo $response.'<hr/>';
-	
-	}
-	
-	public function superNova($sDir){
-		$xml					= "<delete><query>*:*</query></delete>";
-		$Client					= new Zend_Http_Client(Mage::helper('solr')->sURL().'update');
-		$Client					->resetParameters()
-								->setMethod(Zend_Http_Client::POST)
-								->setHeaders('Content-type','text/xml')
-								->setRawData($xml);
-		$response				= $Client->request();
-		echo $response.'<hr/>';	
 	}
 
 	public function searchMage($sRec){
