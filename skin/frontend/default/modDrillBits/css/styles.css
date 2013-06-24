@@ -15,6 +15,12 @@ body {background:#a7a7a7 url(http://www.etoolsrus.net/new_site/images/bg.png) re
 body a:hover {color:#585858;}
 
 
+#prodAdd {width:138px; height: 33px; background: url(http://etoolsrus.net/new_site/images/searchcart_sprite.png); text-indent:-9999px }
+#prodComp {width:138px; height: 19px; background: url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px -33px; text-indent:-9999px }
+#prodView {margin: 6px 0px 0px 0px; width:138px; height: 24px; background: url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px 24px; text-indent:-9999px }
+
+
+
 
 /************** Item description **************/
 .zoom-notice {visibility:hidden;height:1px;}
@@ -1879,15 +1885,25 @@ tr .legandSize{height:15px; background:#333;}
 #mainImage{margin-bottom:20px;}
 
 /* search listings */
-#searchListing{width:100%; postiton:relative;float:left; border-bottom:1px solid #555;cursor:hand;cursor:pointer;}
+#searchListing{width:710px; postiton:relative; float:left; border-bottom:1px solid #ccc;cursor:hand;cursor:pointer;margin:0px 0px 0px 7px;}
 #slImg{float:left;width:20%;}
-#slTable{width:410px;float:left;}
+#slTable{width:400px;float:left; padding:5px 5px 0px 0px;}
 .slTitle{font-weight:bold;}
 #listTable{width:100%;}
 #listTable caption{font-weight:bold;}
 #listTable .col1{width:80%;}
 #listTable .col2{width:20%;}
 .listingPrice{font-size:10px !important;}
+
+#cartBut #prodAdd span span {width:13px; margin: 0px 0px 0px -6px; height: 33px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png); text-indent:-9999px }
+#cartBut #prodAdd span {width:132px; height: 33px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png); text-indent:-9999px }
+#cartBut #prodComp span span {width:13px; margin: 0px 0px 0px -6px; height: 19px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px -33px; text-indent:-9999px }
+#cartBut #prodComp span {width:132px; height: 19px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px -33px; text-indent:-9999px }
+#cartBut #prodView span span {margin: 0px 0px 0px -6px; width:1px; height: 24px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px 24px; text-indent:-9999px }
+#cartBut #prodView span {margin: 0px 0px 0px 0px; width:132px; height: 24px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px 24px; text-indent:-9999px }
+
+#cartBut #prodView .btn-cart {margin: 6px 0px 0px 0px; width:138px; height: 24px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px 24px; text-indent:-9999px }
+#slAction .price {font-size: 25px; font-weight: 700; white-space: nowrap !important;}
 
 #diaTable1{width:100%;}
 #diaTableImg{width:250px;}
