@@ -455,7 +455,7 @@ p.required {font-size:11px;text-align:right;color:#EB340A;}
 
 /* Toolbar */
 .toolbar {margin-left:6px;background:#eee;width:672px;}
-.toolbar .pager {padding:3px 8px;margin-left:-14px;border-right:1px solid #d9dde3;}
+.toolbar .pager {padding:3px 8px;margin-left:-14px;border-right:0px solid #d9dde3;}
 .toolbar .sorter {margin-left:-14px;border-left:1px solid #d9dde3;border-bottom:1px solid #d9dde3;}
 .toolbar-bottom {}
 
@@ -963,10 +963,10 @@ margin:0 0 0 -6px;height:35px;width:150px;background:url(http://etoolsrus.net/ne
 
 /* Add to Links + Add to Cart */
 .add-to-box {margin:10px 0;width:175px;height:100px;}
-.add-to-box .add-to-cart {margin:10px 0;height:80px;border:1px solid #CCC;background-color:#efefef;padding:10px;text-align:right;}
+.add-to-box .add-to-cart {margin:10px 0;height:80px;border:1px solid #CCC;background-color:#efefef;padding:10px;text-align:right; border-radius:4px 0px 0px 4px;}
 .add-to-box .add-to-cart .paypal-logo {float:left;}
 .add-to-box .or {display:none !important;}
-.add-to-box .add-to-links {margin:10px 0;text-align:left;width:169px;height:100px;position:relative;top:-112px;right:-174px;border:1px solid #CCC;background-color:#efefef;}
+.add-to-box .add-to-links {margin:10px 0;text-align:left;width:169px;height:100px;position:relative;top:-112px;right:-174px;border:1px solid #CCC;background-color:#efefef;border-radius:0px 4px 4px 0px;}
 .add-to-box .add-to-links li .separator {list-style-type:none;display:none !important;}
 
 /* KTSRM Add *************** */
@@ -1722,14 +1722,26 @@ div.shipping h2 {text-indent:6px;font-size: 15px; color: #333333;}
 #deepSearch li{cursor:hand;cursor:pointer;}
 
 /* search listings */
-#searchListing{width:100%; postiton:RELATIVE;float:LEFT; border-bottom:1px solid #555;cursor:HAND;cursor:POINTER;}
-#slImg{float:LEFT;width:20%;}
-#slTable{width:410px;float:LEFT;}
+#searchListing{width:710px; postiton:relative; float:left; border-bottom:1px solid #ccc;cursor:hand;cursor:pointer;margin:0px 0px 0px 7px; padding:6px 0px 6px 0px;}
+#slImg{float:left;width:20%;}
+#slTable{width:400px;float:left; padding:5px 5px 0px 0px;}
 #listTable{width:100%;}
 #listTable caption{font-weight:BOLD;}
 #listTable .col1{width:80%;}
 #listTable .col2{width:20%;}
 .listingPrice{font-size:20px !important;}
+
+#cartBut #prodAdd span span {width:13px; margin: 0px 0px 0px -6px; height: 33px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png); text-indent:-9999px }
+#cartBut #prodAdd span {width:132px; height: 33px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png); text-indent:-9999px }
+#cartBut #prodComp span span {width:13px; margin: 0px 0px 0px -6px; height: 19px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px -33px; text-indent:-9999px }
+#cartBut #prodComp span {width:132px; height: 19px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px -33px; text-indent:-9999px }
+#cartBut #prodView span span {margin: 0px 0px 0px -6px; width:1px; height: 24px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px 24px; text-indent:-9999px }
+#cartBut #prodView span {margin: 6px 0px 0px 0px; width:132px; height: 24px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px 24px; text-indent:-9999px }
+
+#cartBut #prodView .btn-cart {margin: 6px 0px 0px 0px; width:138px; height: 24px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px 24px; text-indent:-9999px }
+#slAction .price {font-size: 25px; font-weight: 700; white-space: nowrap !important;}
+
+
 #diaTable1{width:100%;}
 #diaTableImg{width:250px;}
 #diaTableData{width:100% !important;}
