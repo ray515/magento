@@ -786,7 +786,7 @@ tr.summary-details-excluded {font-style:italic;}
 .category-title h1 {padding:3px 0;color:#5b9400;font-size:1.6em;font-weight:bold;line-height:1.25;display:none;}
 .category-image {width:100%;overflow:hidden;margin:0 0 10px;text-align:center;}
 .category-image img {}
-.category-description {margin:0 0 10px;margin-left:15px;width:685px;}
+.category-description {margin:0 0 10px;margin-left:8px;width:685px;}
 .category-products {}
 
 /* View Type:Grid */
@@ -1741,7 +1741,7 @@ div.shipping h2 {text-indent:6px;font-size: 15px; color: #333333;}
 #cartBut #prodView .btn-cart {margin: 6px 0px 0px 0px; width:138px; height: 24px; background: transparent url(http://etoolsrus.net/new_site/images/searchcart_sprite.png) 0px 24px; text-indent:-9999px }
 #slAction .price {font-size: 25px; font-weight: 700; white-space: nowrap !important;}
 
-
+.slTitle{font-weight:bold;}
 #diaTable1{width:100%;}
 #diaTableImg{width:250px;}
 #diaTableData{width:100% !important;}

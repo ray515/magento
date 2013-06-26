@@ -687,7 +687,7 @@ tr.summary-details-excluded {font-style:italic;}
 
 /* Block:Layered Navigation */
 .block-layered-nav {border:0;}
-.block-layered-nav .block-title {border:0;padding:0;margin:0 0 6px;height:13px;background:url(../images/bkg_block-layered-title.gif) 0 0 no-repeat;text-indent:-999em;overflow:hidden;}
+.block-layered-nav .block-title {border:0;padding:0;margin:0 0 0px;height:0px;background:url() 0 0 no-repeat;text-indent:-999em;overflow:hidden;}
 .block-layered-nav .block-content {padding:0;}
 .block-layered-nav .block-subtitle {margin:0;background:#d08900;font-size:12px;font-weight:bold;padding:2px 10px;color:#FFF;}
 .block-layered-nav dt {font-weight:bold;border-top:0px solid #FFF;padding:8px 10px 0 10px;font-size:11px;}
@@ -738,7 +738,6 @@ color: #555555/*{fcDefault}*/;
     padding: 1px;
     text-indent: 10px !important;
 	font-size: 11px !important;
-	text-transform:uppercase !important;
 	color: #555555;
 	font: Arial, Helvetica, sans-serif !important;
 }
@@ -752,6 +751,8 @@ color: #555555/*{fcDefault}*/;
     line-height: 1.35;
     margin: 0 0 1px;
     padding: 2px;
+	font: Arial, Helvetica, sans-serif !important;
+	
 }
 
 /* Block:Cart */
@@ -841,7 +842,7 @@ color: #555555/*{fcDefault}*/;
 .category-title h1 {padding:3px 0;color:#5b9400;font-size:1.6em;font-weight:bold;line-height:1.25;display:none;}
 .category-image {width:100%;overflow:hidden;margin:0 0 10px;text-align:center;}
 .category-image img {}
-.category-description {margin:0 0 10px;margin-left:15px;width:685px;}
+.category-description {margin:0 0 10px;margin-left:8px;width:685px;}
 .category-products {}
 
 /* View Type:Grid */
@@ -1940,7 +1941,7 @@ tr .legandSize{height:15px; background:#333;}
 /* search listings */
 #searchListing{width:710px; postiton:relative; float:left; border-bottom:1px solid #ccc;cursor:hand;cursor:pointer;margin:0px 0px 0px 7px;}
 #slImg{float:left;width:20%;}
-#slTable{width:400px;float:left; padding:5px 5px 0px 0px;}
+#slTable{width:400px;float:left; padding:5px 5px 0px 0px; height:90px;}
 .slTitle{font-weight:bold;}
 #listTable{width:100%;}
 #listTable caption{font-weight:bold;}
