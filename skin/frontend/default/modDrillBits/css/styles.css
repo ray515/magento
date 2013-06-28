@@ -1941,7 +1941,7 @@ tr .legandSize{height:15px; background:#333;}
 /* search listings */
 #searchListing{width:710px; postiton:relative; float:left; border-bottom:1px solid #ccc;cursor:hand;cursor:pointer;margin:0px 0px 0px 7px;}
 #slImg{float:left;width:20%;}
-#slTable{width:400px;float:left; padding:5px 5px 0px 0px; height:90px;}
+#slTable{width:390px;float:left; padding:5px 15px 0px 0px; min-height:90px;}
 .slTitle{font-weight:bold;}
 #listTable{width:100%;}
 #listTable caption{font-weight:bold;}
@@ -1987,5 +1987,35 @@ tr .legandSize{height:15px; background:#333;}
 .waitMsg{width:150px;height:40px;margin:120px auto; background:url("images/spinner_squares_circle.gif") no-repeat scroll 50% 5px white;border-radius:10px;}
 .noResult{color:red;}
 
+/* quick view mod */
+
+.slDesc {height:90px}
+.element.style {}
+.ui-dialog {
+    left: 0;
+    outline: 0 none;
+    padding: 0px !important;
+    position: absolute;
+    top: 0;
+}
+
+.ui-widget-header {
+    background: url("images/ui-bg_highlight-soft_75_cccccc_1x100.png") repeat-x scroll 50% 50% #CCCCCC;
+    border: 0 solid #C3C3C3 !important;
+    color: #222222;
+    font-weight: bold;
+}
+.ui-tabs {
+    padding: 0;
+    position: relative;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active {
+    margin-bottom: 0;
+    padding-bottom: 1px;
+}
+.ui-widget .ui-widget {
+    font-size: 11px;
+}
 
 /* ======================================================================================= */
