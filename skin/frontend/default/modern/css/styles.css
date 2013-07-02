@@ -685,7 +685,7 @@ tr.summary-details-excluded {font-style:italic;}
 
 /* Block:Layered Navigation */
 .block-layered-nav {border:0;}
-.block-layered-nav .block-title {border:0;padding:0;margin:0 0 6px;height:13px;background:url(../images/bkg_block-layered-title.gif) 0 0 no-repeat;text-indent:-999em;overflow:hidden;}
+.block-layered-nav .block-title {border:0;padding:0;margin:0 0 0px;height:0px;background:url() 0 0 no-repeat;text-indent:-999em;overflow:hidden;}
 .block-layered-nav .block-content {padding:0;}
 .block-layered-nav .block-subtitle {margin:0;background:#d08900;font-size:12px;font-weight:bold;padding:2px 10px;color:#FFF;}
 .block-layered-nav dt {font-weight:bold;border-top:1px solid #FFF;padding:8px 10px 0 10px;font-size:12px;}
